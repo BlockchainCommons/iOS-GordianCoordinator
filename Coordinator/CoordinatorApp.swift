@@ -1,20 +1,24 @@
-//
-//  CoordinatorApp.swift
-//  Coordinator
-//
-//  Created by Wolf McNally on 5/18/22.
-//
-
 import SwiftUI
+
+let initializeCloudKitSchema = false
 
 @main
 struct CoordinatorApp: App {
-    let persistenceController = PersistenceController.shared
-
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            if initializeCloudKitSchema {
+                Text("Initializing CloudKit Schema...")
+                    .font(.title)
+                Text("Stop after Xcode says 'no more requests to execute', then use CloudKit Console to ensure the schema was created correctly.")
+                    .padding()
+                    .onAppear {
+                        _ = PersistenceController.shared.container
+                    }
+            } else {
+                AccountsList()
+                    .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+                    .symbolRenderingMode(.hierarchical)
+            }
         }
     }
 }

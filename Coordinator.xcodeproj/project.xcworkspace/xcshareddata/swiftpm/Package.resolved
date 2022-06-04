@@ -1,0 +1,104 @@
+{
+  "pins" : [
+    {
+      "identity" : "bcswiftfoundation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/blockchaincommons/BCSwiftFoundation",
+      "state" : {
+        "revision" : "da03387cfe2bb090ad057fe76c28439404461ea4",
+        "version" : "3.0.4"
+      }
+    },
+    {
+      "identity" : "blake3-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/BlockchainCommons/blake3-swift.git",
+      "state" : {
+        "revision" : "632c0d1315e2c2d33c279499e140f5690d96f1c2",
+        "version" : "0.1.1"
+      }
+    },
+    {
+      "identity" : "crypto-traits-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nixberg/crypto-traits-swift",
+      "state" : {
+        "revision" : "edbb488fbe7a09572e889e026a5aa07e0feb1198",
+        "version" : "0.2.1"
+      }
+    },
+    {
+      "identity" : "cryptoswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/krzyzanowskim/CryptoSwift.git",
+      "state" : {
+        "revision" : "039f56c5d7960f277087a0be51f5eb04ed0ec073",
+        "version" : "1.5.1"
+      }
+    },
+    {
+      "identity" : "endianbytes-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nixberg/endianbytes-swift",
+      "state" : {
+        "revision" : "c09b87de7948c2e95d2a9c3faba34ab2cb24ba3b",
+        "version" : "0.4.0"
+      }
+    },
+    {
+      "identity" : "flexer",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ChimeHQ/Flexer.git",
+      "state" : {
+        "revision" : "fc83238259c8be6eade1af40d81c41e235e1d178",
+        "version" : "0.1.0"
+      }
+    },
+    {
+      "identity" : "secp256k1-zkp.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/BlockchainCommons/secp256k1-zkp.swift.git",
+      "state" : {
+        "revision" : "e8f21c7d8d4dd7ac778e51427b908194f3fd9d82",
+        "version" : "0.5.1"
+      }
+    },
+    {
+      "identity" : "swift-algorithms",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-algorithms",
+      "state" : {
+        "revision" : "b14b7f4c528c942f121c8b860b9410b2bf57825e",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "swift-numerics",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-numerics",
+      "state" : {
+        "revision" : "0a5bc04095a675662cf24757cc0640aa2204253b",
+        "version" : "1.0.2"
+      }
+    },
+    {
+      "identity" : "urkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/BlockchainCommons/URKit.git",
+      "state" : {
+        "revision" : "0c48811b55ffb641172d40e17facf2a3fcef6694",
+        "version" : "7.0.2"
+      }
+    },
+    {
+      "identity" : "wolfbase",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/wolfmcnally/WolfBase.git",
+      "state" : {
+        "revision" : "81a1ddeb4e21dadc34ed23faed3b61e475eb4fab",
+        "version" : "4.0.0"
+      }
+    }
+  ],
+  "version" : 2
+}
