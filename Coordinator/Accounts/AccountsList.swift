@@ -9,15 +9,18 @@ import LifeHash
 fileprivate let logger = Logger(subsystem: Application.bundleIdentifier, category: "AccountsList")
 
 struct AccountsList: View {
-    @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(sortDescriptors: [], animation: .default)
-    private var accounts: FetchedResults<Account>
+    @ObservedObject var viewModel: AccountsViewModel
+    
     @State private var isDetailValid: Bool = true
     @State private var selectionID: UUID? = nil
-
-    var sortedAccounts: [Account] {
-        accounts.sorted()
+    @State private var accountForDeletion: Account?
+    
+    var viewContext: NSManagedObjectContext {
+        viewModel.context
+    }
+    
+    init(viewModel: AccountsViewModel) {
+        self.viewModel = viewModel
     }
 
     var body: some View {
@@ -63,6 +66,12 @@ struct AccountsList: View {
     
     @ViewBuilder
     var list: some View {
+        let isAlertPresented = Binding<Bool> {
+            accountForDeletion != nil
+        } set: { _ in
+        }
+
+        let accounts = viewModel.accounts
         if accounts.isEmpty {
             VStack {
                 Spacer()
@@ -73,11 +82,34 @@ struct AccountsList: View {
             .padding()
         } else {
             List {
-                ForEach(sortedAccounts) { account in
+                ForEach(accounts) { account in
                     Item(account: account, isDetailValid: $isDetailValid, selectionID: $selectionID)
+                        .swipeActions {
+                            Button(role: .destructive) {
+                                accountForDeletion = account
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        }
                 }
                 .onMove(perform: moveItem)
-                .onDelete(perform: deleteItems)
+                .onDelete { _ in }
+            }
+            .alert("Delete Account",
+                   isPresented: isAlertPresented,
+                   presenting: accountForDeletion
+            ) { account in
+                Button(role: .destructive) {
+                    deleteItem(account: account)
+                    accountForDeletion = nil
+                } label: {
+                    Text("Delete")
+                }
+                Button("Cancel", role: .cancel) {
+                    accountForDeletion = nil
+                }
+            } message: { _ in
+                Text("This action is not undoable.")
             }
         }
     }
@@ -99,7 +131,6 @@ struct AccountsList: View {
             NavigationLink(tag: account.accountID, selection: $selectionID) {
                 Text("\(account)")
             } label: {
-//            NavigationLink(destination: SeedDetail(seed: seed, saveWhenChanged: true, isValid: $isSeedDetailValid, selectionID: $selectionID), tag: seed.id, selection: $selectionID) {
                 VStack {
 #if targetEnvironment(macCatalyst)
                     Spacer().frame(height: 10)
@@ -120,10 +151,11 @@ struct AccountsList: View {
     private func addItem() {
         withAnimation {
             let ordinal: Ordinal
+            let accounts = viewModel.accounts
             if accounts.isEmpty {
                 ordinal = Ordinal()
             } else {
-                ordinal = sortedAccounts.first!.ordinal.before
+                ordinal = accounts.first!.ordinal.before
             }
             _ = Account(context: viewContext, policy: .threshold(quorum: 2, signers: 3), ordinal: ordinal)
 
@@ -137,10 +169,17 @@ struct AccountsList: View {
             }
         }
     }
+    
+    private func deleteItem(account: Account) {
+        guard let index = viewModel.accounts.firstIndex(of: account) else {
+            return
+        }
+        deleteItems(offsets: [index])
+    }
 
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
-            let accounts = sortedAccounts
+            let accounts = viewModel.accounts
             offsets.map { accounts[$0] }.forEach(viewContext.delete)
 
             do {
@@ -160,14 +199,15 @@ struct AccountsList: View {
             return
         }
 
-        let account = sortedAccounts[index]
+        let accounts = viewModel.accounts
+        let account = accounts[index]
         if newOffset == 0 {
-            account.ordinal = sortedAccounts.first!.ordinal.before
-        } else if newOffset == sortedAccounts.count {
-            account.ordinal = sortedAccounts.last!.ordinal.after
+            account.ordinal = accounts.first!.ordinal.before
+        } else if newOffset == accounts.count {
+            account.ordinal = accounts.last!.ordinal.after
         } else {
-            let beforeOrdinal = sortedAccounts[newOffset - 1].ordinal
-            let afterOrdinal = sortedAccounts[newOffset].ordinal
+            let beforeOrdinal = accounts[newOffset - 1].ordinal
+            let afterOrdinal = accounts[newOffset].ordinal
             account.ordinal = Ordinal(after: beforeOrdinal, before: afterOrdinal)
         }
         do {
@@ -200,8 +240,8 @@ struct AccountsList: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        AccountsList().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AccountsList().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+//    }
+//}

@@ -15,10 +15,18 @@ struct CoordinatorApp: App {
                         _ = PersistenceController.shared.container
                     }
             } else {
-                AccountsList()
-                    .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
-                    .symbolRenderingMode(.hierarchical)
+                MainView()
             }
         }
+    }
+}
+
+struct MainView: View {
+    @StateObject private var viewModel = AccountsViewModel(context: PersistenceController.shared.container.viewContext)
+
+    var body: some View {
+        AccountsList(viewModel: viewModel)
+//                    .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+            .symbolRenderingMode(.hierarchical)
     }
 }
