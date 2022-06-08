@@ -12,21 +12,24 @@ class Account: NSManagedObject {
         super.init(entity: entity, insertInto: context)
     }
     
-    init(context: NSManagedObjectContext, policy: Policy, ordinal: Ordinal) {
+    init(context: NSManagedObjectContext, accountID: UUID = UUID(), policy: Policy, ordinal: Ordinal) {
         super.init(entity: Account.entity(), insertInto: context)
-        self.accountID = UUID()
+        self.accountID = accountID
         self.policy = policy
         self.ordinal = ordinal
         self.name = LifeHashNameGenerator.generate(from: accountID)
     }
     
-    var policy: Policy {
+    var policy: Policy? {
         get {
-            try! Policy(encoded: policy_!)
+            guard let p = policy_ else {
+                return nil
+            }
+            return try! Policy(encoded: p)
         }
         
         set {
-            policy_ = newValue.encoded
+            policy_ = newValue?.encoded
         }
     }
     
@@ -111,11 +114,7 @@ extension Account: ObjectIdentifiable {
         .account
     }
     
-    var subtypes: [ModelSubtype] {
-        []
-    }
-    
-    var sizeLimitedQRString: (String, Bool) {
-        todo()
+    var instanceDetail: String? {
+        policy†
     }
 }

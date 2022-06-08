@@ -14,6 +14,7 @@ struct AccountsList: View {
     @State private var isDetailValid: Bool = true
     @State private var selectionID: UUID? = nil
     @State private var accountForDeletion: Account?
+    @State private var isAccountSetupPresented: Bool = false
     
     var viewContext: NSManagedObjectContext {
         viewModel.context
@@ -27,12 +28,17 @@ struct AccountsList: View {
         NavigationView {
             list
             .navigationTitle("Accounts")
+            .sheet(isPresented: $isAccountSetupPresented) {
+                AccountSetup(isPresented: $isAccountSetupPresented) {
+                    addItem($0)
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
                 }
                 ToolbarItem {
-                    Button(action: addItem) {
+                    Button(action: presentAccountSetup) {
                         Label("Add Account", systemImage: "plus")
                     }
                 }
@@ -93,7 +99,7 @@ struct AccountsList: View {
                         }
                 }
                 .onMove(perform: moveItem)
-                .onDelete { _ in }
+                .onDelete { _ in /* Handled by the swipe action and alert */ }
             }
             .alert("Delete Account",
                    isPresented: isAlertPresented,
@@ -129,7 +135,7 @@ struct AccountsList: View {
 
         var body: some View {
             NavigationLink(tag: account.accountID, selection: $selectionID) {
-                Text("\(account)")
+                AccountDetail(account: account, selectionID: $selectionID)
             } label: {
                 VStack {
 #if targetEnvironment(macCatalyst)
@@ -148,7 +154,11 @@ struct AccountsList: View {
         }
     }
 
-    private func addItem() {
+    private func presentAccountSetup() {
+        isAccountSetupPresented = true
+    }
+    
+    private func addItem(_ setup: AccountSetupModel) {
         withAnimation {
             let ordinal: Ordinal
             let accounts = viewModel.accounts
@@ -157,7 +167,9 @@ struct AccountsList: View {
             } else {
                 ordinal = accounts.first!.ordinal.before
             }
-            _ = Account(context: viewContext, policy: .threshold(quorum: 2, signers: 3), ordinal: ordinal)
+            let account = Account(context: viewContext, accountID: setup.accountID, policy: setup.policy, ordinal: ordinal)
+            account.name = setup.name
+            account.notes = setup.notes
 
             do {
                 try viewContext.save()
