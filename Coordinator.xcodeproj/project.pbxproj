@@ -12,6 +12,12 @@
 		7905B0252849AAB5008BC79D /* WolfOrdinal in Frameworks */ = {isa = PBXBuildFile; productRef = 7905B0242849AAB5008BC79D /* WolfOrdinal */; };
 		7905B0272849AC23008BC79D /* Memoized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7905B0262849AC23008BC79D /* Memoized.swift */; };
 		79241072283C268D00611B9F /* BCApp in Frameworks */ = {isa = PBXBuildFile; productRef = 79241071283C268D00611B9F /* BCApp */; };
+		79349B8F28506AB30058CF5D /* Slot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79349B8E28506AB30058CF5D /* Slot.swift */; };
+		79349B9128506DF70058CF5D /* SlotStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79349B9028506DF70058CF5D /* SlotStatus.swift */; };
+		79349B9328506E0B0058CF5D /* AccountStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79349B9228506E0B0058CF5D /* AccountStatus.swift */; };
+		79349B9528508E220058CF5D /* SlotList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79349B9428508E220058CF5D /* SlotList.swift */; };
+		79349BB328518E680058CF5D /* SlotDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79349BB228518E670058CF5D /* SlotDetail.swift */; };
+		79349BB52851A7660058CF5D /* SlotListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79349BB42851A7660058CF5D /* SlotListRow.swift */; };
 		7937A686284C114B00DE8E11 /* AccountsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7937A685284C114B00DE8E11 /* AccountsStorage.swift */; };
 		7937A688284C136000DE8E11 /* AccountsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7937A687284C136000DE8E11 /* AccountsViewModel.swift */; };
 		7937A68A284D145000DE8E11 /* AccountDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7937A689284D145000DE8E11 /* AccountDetail.swift */; };
@@ -28,6 +34,10 @@
 		799B54C1283DECA00043EB90 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B54C0283DECA00043EB90 /* ErrorMessage.swift */; };
 		799BA663283F0A1A00285135 /* WalletSweeper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799BA662283F0A1A00285135 /* WalletSweeper.swift */; };
 		799BA6662844A2DA00285135 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799BA6652844A2DA00285135 /* CloudKit.framework */; };
+		79C4DC5E2851E78F00CB3638 /* DesignTimeAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4DC5D2851E78F00CB3638 /* DesignTimeAccount.swift */; };
+		79C4DC602851E7C200CB3638 /* AccountProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4DC5F2851E7C200CB3638 /* AccountProtocol.swift */; };
+		79C4DC622851E7E500CB3638 /* DesignTimeSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4DC612851E7E500CB3638 /* DesignTimeSlot.swift */; };
+		79C4DC642851E80B00CB3638 /* SlotProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4DC632851E80B00CB3638 /* SlotProtocol.swift */; };
 		79CBB264284AF56300EBE0DE /* NoAccountSelected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CBB263284AF56300EBE0DE /* NoAccountSelected.swift */; };
 		79CBB266284B431900EBE0DE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79CBB265284B431800EBE0DE /* LaunchScreen.storyboard */; };
 		79EC776B2835BC65009E4466 /* CoordinatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EC776A2835BC65009E4466 /* CoordinatorApp.swift */; };
@@ -49,6 +59,7 @@
 		79EC77B028361F33009E4466 /* Tor in Frameworks */ = {isa = PBXBuildFile; productRef = 79EC77AF28361F33009E4466 /* Tor */; };
 		79EC77B328361F62009E4466 /* Hyperconnectivity in Frameworks */ = {isa = PBXBuildFile; productRef = 79EC77B228361F62009E4466 /* Hyperconnectivity */; };
 		79EC77B62836205F009E4466 /* Esplora in Frameworks */ = {isa = PBXBuildFile; productRef = 79EC77B52836205F009E4466 /* Esplora */; };
+		79EC7CA02851E00200A7C463 /* AccountStatusIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EC7C9F2851E00200A7C463 /* AccountStatusIndicator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +83,12 @@
 		7905B01F2849A123008BC79D /* Policy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Policy.swift; sourceTree = "<group>"; };
 		7905B0212849A50B008BC79D /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		7905B0262849AC23008BC79D /* Memoized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memoized.swift; sourceTree = "<group>"; };
+		79349B8E28506AB30058CF5D /* Slot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slot.swift; sourceTree = "<group>"; };
+		79349B9028506DF70058CF5D /* SlotStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotStatus.swift; sourceTree = "<group>"; };
+		79349B9228506E0B0058CF5D /* AccountStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStatus.swift; sourceTree = "<group>"; };
+		79349B9428508E220058CF5D /* SlotList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotList.swift; sourceTree = "<group>"; };
+		79349BB228518E670058CF5D /* SlotDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotDetail.swift; sourceTree = "<group>"; };
+		79349BB42851A7660058CF5D /* SlotListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotListRow.swift; sourceTree = "<group>"; };
 		7937A685284C114B00DE8E11 /* AccountsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsStorage.swift; sourceTree = "<group>"; };
 		7937A687284C136000DE8E11 /* AccountsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsViewModel.swift; sourceTree = "<group>"; };
 		7937A689284D145000DE8E11 /* AccountDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetail.swift; sourceTree = "<group>"; };
@@ -89,6 +106,10 @@
 		799BA662283F0A1A00285135 /* WalletSweeper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletSweeper.swift; sourceTree = "<group>"; };
 		799BA6652844A2DA00285135 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		799BA6672844A3AD00285135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		79C4DC5D2851E78F00CB3638 /* DesignTimeAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignTimeAccount.swift; sourceTree = "<group>"; };
+		79C4DC5F2851E7C200CB3638 /* AccountProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountProtocol.swift; sourceTree = "<group>"; };
+		79C4DC612851E7E500CB3638 /* DesignTimeSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignTimeSlot.swift; sourceTree = "<group>"; };
+		79C4DC632851E80B00CB3638 /* SlotProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotProtocol.swift; sourceTree = "<group>"; };
 		79CBB263284AF56300EBE0DE /* NoAccountSelected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoAccountSelected.swift; sourceTree = "<group>"; };
 		79CBB265284B431800EBE0DE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		79EC77672835BC65009E4466 /* Coordinator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coordinator.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +126,7 @@
 		79EC778C2835BC67009E4466 /* CoordinatorUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		79EC77992835BCF0009E4466 /* Coordinator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coordinator.entitlements; sourceTree = "<group>"; };
 		79EC779A2835BD92009E4466 /* ContentViewOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewOld.swift; sourceTree = "<group>"; };
+		79EC7C9F2851E00200A7C463 /* AccountStatusIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStatusIndicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +169,13 @@
 		79349B8D28506A800058CF5D /* Slot */ = {
 			isa = PBXGroup;
 			children = (
+				79C4DC632851E80B00CB3638 /* SlotProtocol.swift */,
+				79C4DC612851E7E500CB3638 /* DesignTimeSlot.swift */,
+				79349B8E28506AB30058CF5D /* Slot.swift */,
+				79349B9028506DF70058CF5D /* SlotStatus.swift */,
+				79349B9428508E220058CF5D /* SlotList.swift */,
+				79349BB42851A7660058CF5D /* SlotListRow.swift */,
+				79349BB228518E670058CF5D /* SlotDetail.swift */,
 			);
 			path = Slot;
 			sourceTree = "<group>";
@@ -155,7 +184,11 @@
 			isa = PBXGroup;
 			children = (
 				79CBB263284AF56300EBE0DE /* NoAccountSelected.swift */,
+				79C4DC5F2851E7C200CB3638 /* AccountProtocol.swift */,
 				7905B0212849A50B008BC79D /* Account.swift */,
+				79C4DC5D2851E78F00CB3638 /* DesignTimeAccount.swift */,
+				79349B9228506E0B0058CF5D /* AccountStatus.swift */,
+				79EC7C9F2851E00200A7C463 /* AccountStatusIndicator.swift */,
 				79EC776C2835BC65009E4466 /* AccountsList.swift */,
 				7937A689284D145000DE8E11 /* AccountDetail.swift */,
 				7937A685284C114B00DE8E11 /* AccountsStorage.swift */,
@@ -436,18 +469,28 @@
 				7905B0272849AC23008BC79D /* Memoized.swift in Sources */,
 				7937A68C284D1D0000DE8E11 /* AccountSetupModel.swift in Sources */,
 				79651E5A28484C6F00991464 /* AppChapter.swift in Sources */,
+				79349BB328518E680058CF5D /* SlotDetail.swift in Sources */,
 				799BA663283F0A1A00285135 /* WalletSweeper.swift in Sources */,
+				79349B9528508E220058CF5D /* SlotList.swift in Sources */,
 				79EC77772835BC67009E4466 /* CoordinatorModel.xcdatamodeld in Sources */,
+				79C4DC622851E7E500CB3638 /* DesignTimeSlot.swift in Sources */,
 				799B54C1283DECA00043EB90 /* ErrorMessage.swift in Sources */,
+				79349B8F28506AB30058CF5D /* Slot.swift in Sources */,
 				79651E5C2848903700991464 /* AppLogo.swift in Sources */,
+				79349B9128506DF70058CF5D /* SlotStatus.swift in Sources */,
 				7937A690284D7FBD00DE8E11 /* NameEditor.swift in Sources */,
 				7937A694284DB67D00DE8E11 /* PolicyPreset.swift in Sources */,
 				79EC779B2835BD92009E4466 /* ContentViewOld.swift in Sources */,
+				79C4DC602851E7C200CB3638 /* AccountProtocol.swift in Sources */,
+				79349B9328506E0B0058CF5D /* AccountStatus.swift in Sources */,
 				79CBB264284AF56300EBE0DE /* NoAccountSelected.swift in Sources */,
 				7937A686284C114B00DE8E11 /* AccountsStorage.swift in Sources */,
 				799B54BF283DC7D20043EB90 /* SyncButton.swift in Sources */,
 				7905B0202849A123008BC79D /* Policy.swift in Sources */,
 				7905B0222849A50B008BC79D /* Account.swift in Sources */,
+				79C4DC642851E80B00CB3638 /* SlotProtocol.swift in Sources */,
+				79C4DC5E2851E78F00CB3638 /* DesignTimeAccount.swift in Sources */,
+				79349BB52851A7660058CF5D /* SlotListRow.swift in Sources */,
 				79EC77742835BC67009E4466 /* Persistence.swift in Sources */,
 				79EC776D2835BC65009E4466 /* AccountsList.swift in Sources */,
 				7937A68A284D145000DE8E11 /* AccountDetail.swift in Sources */,
@@ -455,6 +498,7 @@
 				7937A698284DC8BB00DE8E11 /* NotesEditor.swift in Sources */,
 				7937A68E284D1D8D00DE8E11 /* AccountSetup.swift in Sources */,
 				79EC776B2835BC65009E4466 /* CoordinatorApp.swift in Sources */,
+				79EC7CA02851E00200A7C463 /* AccountStatusIndicator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

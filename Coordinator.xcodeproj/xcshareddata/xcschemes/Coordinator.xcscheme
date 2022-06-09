@@ -76,24 +76,24 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-_UIConstraintBasedLayoutLogUnsatisfiable NO"
+            argument = "-com.apple.CoreData.ConcurrencyDebug 0"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-com.apple.CoreData.ConcurrencyDebug 0"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
             argument = "-com.apple.CoreData.SQLDebug 0"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-com.apple.CoreData.MigrationDebug 0"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-com.apple.CoreData.CloudKitDebug 0"
-            isEnabled = "NO">
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-_UIConstraintBasedLayoutLogUnsatisfiable NO"
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
       <EnvironmentVariables>

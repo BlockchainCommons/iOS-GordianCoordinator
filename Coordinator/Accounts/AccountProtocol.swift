@@ -1,0 +1,14 @@
+import Foundation
+import BCApp
+
+protocol AccountProtocol: ObservableObject, Identifiable, ObjectIdentifiable {
+    associatedtype ID
+    associatedtype Slot: SlotProtocol
+
+    var id: ID { get }
+    var name: String { get set }
+    var notes: String { get set }
+    var slots: [Slot] { get }
+    var status: AccountStatus { get }
+    var policy: Policy { get }
+}

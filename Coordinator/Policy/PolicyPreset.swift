@@ -19,13 +19,13 @@ extension PolicyPreset {
     var policy: Policy {
         switch self {
         case .threshold1of1:
-            return .threshold(quorum: 1, signers: 1)
+            return .threshold(quorum: 1, slots: 1)
         case .threshold2of3:
-            return .threshold(quorum: 2, signers: 3)
+            return .threshold(quorum: 2, slots: 3)
         case .threshold3of5:
-            return .threshold(quorum: 3, signers: 5)
+            return .threshold(quorum: 3, slots: 5)
         case .threshold4of9:
-            return .threshold(quorum: 4, signers: 9)
+            return .threshold(quorum: 4, slots: 9)
         }
     }
 }

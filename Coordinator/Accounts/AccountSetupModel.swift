@@ -5,7 +5,7 @@ import LifeHash
 
 class AccountSetupModel: ObservableObject {
     let accountID: UUID
-    @Published var policy: Policy = .threshold(quorum: 2, signers: 3)
+    @Published var policy: Policy = .threshold(quorum: 2, slots: 3)
     @Published var name: String
     @Published var notes: String = ""
     

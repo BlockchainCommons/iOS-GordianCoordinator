@@ -1,6 +1,7 @@
 import SwiftUI
 import Combine
 import CoreData
+import WolfBase
 
 class AccountsViewModel: ObservableObject {
     let context: NSManagedObjectContext

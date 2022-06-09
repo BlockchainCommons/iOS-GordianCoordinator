@@ -6,14 +6,16 @@ struct NameEditor: View {
     @Binding var name: String
     @Binding var isValid: Bool
     @FocusState var focusedField: UUID?
+    let onValid: () -> Void
     let generateName: () -> String
     @State private var isEditing: Bool = false
     @StateObject private var validator = Validator()
     @State var myID = UUID()
     
-    init(_ name: Binding<String>, isValid: Binding<Bool>, focusedField: FocusState<UUID?>, generateName: @escaping () -> String) {
+    init(_ name: Binding<String>, isValid: Binding<Bool>, focusedField: FocusState<UUID?>, onValid: @escaping () -> Void, generateName: @escaping () -> String) {
         self._name = name
         self._focusedField = focusedField
+        self.onValid = onValid
         self.generateName = generateName
         self._isValid = isValid
     }
@@ -50,15 +52,18 @@ struct NameEditor: View {
                 menu
             }
         }
+        .formSectionStyle()
+        .font(.body)
         .onChange(of: name) { newValue in
             validator.subject.send(newValue)
         }
         .onReceive(validator.publisher) {
             isValid = $0.isValid
+            if isValid {
+                onValid()
+            }
         }
-        .formSectionStyle()
         .validation(validator.publisher)
-        .font(.body)
     }
     
     var menu: some View {
@@ -104,6 +109,8 @@ struct NameEditorHost: View {
 
     var body: some View {
         NameEditor($subject.name, isValid: $isValid, focusedField: _focusedField) {
+            // onValid
+        } generateName: {
             Lorem.bytewords(4)
         }
     }

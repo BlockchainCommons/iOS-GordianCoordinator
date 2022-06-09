@@ -50,7 +50,7 @@ struct PersistenceController {
         let viewContext = result.container.viewContext
         var ordinal = Ordinal()
         for _ in 0..<10 {
-            _ = Account(context: viewContext, policy: .threshold(quorum: 2, signers: 3), ordinal: ordinal)
+            _ = Account(context: viewContext, accountID: UUID(), policy: .threshold(quorum: 2, slots: 3), ordinal: ordinal)
         }
         do {
             try viewContext.save()

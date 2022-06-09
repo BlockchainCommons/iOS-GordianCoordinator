@@ -12,7 +12,6 @@ struct AccountsList: View {
     @ObservedObject var viewModel: AccountsViewModel
     
     @State private var isDetailValid: Bool = true
-    @State private var selectionID: UUID? = nil
     @State private var accountForDeletion: Account?
     @State private var isAccountSetupPresented: Bool = false
     
@@ -27,6 +26,7 @@ struct AccountsList: View {
     var body: some View {
         NavigationView {
             list
+                .frame(maxWidth: 600)
             .navigationTitle("Accounts")
             .sheet(isPresented: $isAccountSetupPresented) {
                 AccountSetup(isPresented: $isAccountSetupPresented) {
@@ -43,31 +43,11 @@ struct AccountsList: View {
                     }
                 }
             }
-            NoAccountSelected()
-        }
-        .toolbar {
-            ToolbarItemGroup(placement: .bottomBar) {
-                HStack(spacing: 10) {
-                    UserGuideButton<AppChapter>()
-                    ScanButton {
-                    }
-                }
-                
-                Spacer()
-                
-                Image.bcLogo
-                    .accessibility(hidden: true)
-                
-                Spacer()
-                
-                Button {
-
-                } label: {
-                    Image.settings
-                }
-                .accessibility(label: Text("Settings"))
+            .toolbar {
+                AppToolbar(isTop: true)
             }
         }
+        .navigationViewStyle(.stack)
     }
     
     @ViewBuilder
@@ -89,7 +69,7 @@ struct AccountsList: View {
         } else {
             List {
                 ForEach(accounts) { account in
-                    Item(account: account, isDetailValid: $isDetailValid, selectionID: $selectionID)
+                    Item(account: account, isDetailValid: $isDetailValid)
                         .swipeActions {
                             Button(role: .destructive) {
                                 accountForDeletion = account
@@ -123,19 +103,17 @@ struct AccountsList: View {
     struct Item: View {
         @ObservedObject var account: Account
         @Binding var isDetailValid: Bool
-        @Binding var selectionID: UUID?
         @StateObject var lifeHashState: LifeHashState
 
-        init(account: Account, isDetailValid: Binding<Bool>, selectionID: Binding<UUID?>) {
+        init(account: Account, isDetailValid: Binding<Bool>) {
             self.account = account
             self._isDetailValid = isDetailValid
-            self._selectionID = selectionID
             _lifeHashState = .init(wrappedValue: LifeHashState(input: account, version: .version2))
         }
 
         var body: some View {
-            NavigationLink(tag: account.accountID, selection: $selectionID) {
-                AccountDetail(account: account, selectionID: $selectionID)
+            NavigationLink {
+                AccountDetail(account: account, onValid: { Self.saveAccount(account) }, generateName: { Self.generateName(for: account) })
             } label: {
                 VStack {
 #if targetEnvironment(macCatalyst)
@@ -143,6 +121,7 @@ struct AccountsList: View {
 #endif
                     ObjectIdentityBlock(model: .constant(account), allowLongPressCopy: false)
                         .frame(height: 80)
+                        .padding()
 
 #if targetEnvironment(macCatalyst)
                     Spacer().frame(height: 10)
@@ -150,7 +129,20 @@ struct AccountsList: View {
 #endif
                 }
             }
+            .isDetailLink(true)
             .accessibility(label: Text("Account: \(account.accountID)"))
+        }
+
+        private static func saveAccount(_ account: Account) {
+            do {
+                try account.managedObjectContext!.save()
+            } catch {
+                logger.error("⛔️ \(error.localizedDescription)")
+            }
+        }
+        
+        private static func generateName(for account: Account) -> String {
+            LifeHashNameGenerator.generate(from: account.accountID)
         }
     }
 
@@ -257,3 +249,43 @@ struct AccountsList: View {
 //        AccountsList().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 //    }
 //}
+
+extension View {
+    func hidden(_ shouldHide: Bool) -> some View {
+        opacity(shouldHide ? 0 : 1)
+    }
+}
+
+struct AppToolbar: ToolbarContent {
+    let isTop: Bool
+    
+    init(isTop: Bool = false) {
+        self.isTop = isTop
+    }
+    
+    var body: some ToolbarContent {
+        ToolbarItemGroup(placement: .bottomBar) {
+            HStack(spacing: 10) {
+                UserGuideButton<AppChapter>()
+                ScanButton {
+                }
+                .hidden(!isTop)
+            }
+            
+            Spacer()
+            
+            Image.bcLogo
+                .accessibility(hidden: true)
+            
+            Spacer()
+            
+            Button {
+
+            } label: {
+                Image.settings
+            }
+            .accessibility(label: Text("Settings"))
+            .hidden(!isTop)
+        }
+    }
+}

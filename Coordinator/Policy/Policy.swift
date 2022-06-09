@@ -1,25 +1,33 @@
 import Foundation
 import WolfBase
-import CoreData
 
 enum Policy {
-    case threshold(quorum: Int, signers: Int)
+    case threshold(quorum: Int, slots: Int)
+}
+
+extension Policy {
+    var slots: Int {
+        switch self {
+        case .threshold(quorum: _, slots: let slots):
+            return slots
+        }
+    }
 }
 
 extension Policy: Codable {
     private enum CodingKeys: CodingKey {
         case type
         case quorum
-        case signers
+        case slots
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
-        case .threshold(quorum: let quorum, signers: let signers):
+        case .threshold(quorum: let quorum, slots: let slots):
             try container.encode("threshold", forKey: .type)
             try container.encode(quorum, forKey: .quorum)
-            try container.encode(signers, forKey: .signers)
+            try container.encode(slots, forKey: .slots)
         }
     }
     
@@ -29,8 +37,8 @@ extension Policy: Codable {
         switch type {
         case "threshold":
             let quorum = try container.decode(Int.self, forKey: .quorum)
-            let signers = try container.decode(Int.self, forKey: .signers)
-            self = .threshold(quorum: quorum, signers: signers)
+            let slots = try container.decode(Int.self, forKey: .slots)
+            self = .threshold(quorum: quorum, slots: slots)
         default:
             throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Unknown Policy type: \(type)"))
         }
@@ -48,8 +56,8 @@ extension Policy: Codable {
 extension Policy: CustomStringConvertible {
     var description: String {
         switch self {
-        case .threshold(quorum: let quorum, signers: let signers):
-            return "\(quorum) of \(signers)"
+        case .threshold(quorum: let quorum, slots: let slots):
+            return "\(quorum) of \(slots)"
         }
     }
 }

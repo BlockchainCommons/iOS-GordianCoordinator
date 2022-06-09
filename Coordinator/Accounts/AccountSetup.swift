@@ -10,10 +10,11 @@ struct AccountSetup: View {
     @StateObject var model = AccountSetupModel()
     @FocusState var focusedField: UUID?
     @State var isNameValid: Bool = true
+    @State var isNotesValid: Bool = true
     @State var shouldSave: Bool = false
     
     var isValid: Bool {
-        isNameValid
+        isNameValid && isNotesValid
     }
 
     var body: some View {
@@ -60,8 +61,8 @@ struct AccountSetup: View {
         let preset = Binding<PolicyPreset?>(
             get: {
                 switch model.policy {
-                case .threshold(let quorum, let signers):
-                    switch (quorum, signers) {
+                case .threshold(let quorum, let slots):
+                    switch (quorum, slots) {
                     case (1, 1):
                         return .threshold1of1
                     case (2, 3):
@@ -77,15 +78,15 @@ struct AccountSetup: View {
             }, set: { newValue in
                 switch newValue {
                 case .threshold1of1:
-                    model.policy = .threshold(quorum: 1, signers: 1)
+                    model.policy = .threshold(quorum: 1, slots: 1)
                 case .threshold2of3:
-                    model.policy = .threshold(quorum: 2, signers: 3)
+                    model.policy = .threshold(quorum: 2, slots: 3)
                 case .threshold3of5:
-                    model.policy = .threshold(quorum: 3, signers: 5)
+                    model.policy = .threshold(quorum: 3, slots: 5)
                 case .threshold4of9:
-                    model.policy = .threshold(quorum: 4, signers: 9)
+                    model.policy = .threshold(quorum: 4, slots: 9)
                 default:
-                    model.policy = .threshold(quorum: 1, signers: 1)
+                    model.policy = .threshold(quorum: 1, slots: 1)
                 }
             }
         )
@@ -95,12 +96,16 @@ struct AccountSetup: View {
     @ViewBuilder
     var name: some View {
         NameEditor($model.name, isValid: $isNameValid, focusedField: _focusedField) {
+            // onValid
+        } generateName: {
             LifeHashNameGenerator.generate(from: model.accountID)
         }
     }
     
     var notes: some View {
-        NotesEditor($model.notes, focusedField: _focusedField)
+        NotesEditor($model.notes, isValid: $isNotesValid, focusedField: _focusedField) {
+            // onValid
+        }
     }
 }
 

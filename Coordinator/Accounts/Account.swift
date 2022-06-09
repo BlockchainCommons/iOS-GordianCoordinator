@@ -7,42 +7,30 @@ import SwiftUI
 import LifeHash
 
 @objc(Account)
-class Account: NSManagedObject {
+class Account: NSManagedObject, AccountProtocol, ObjectIdentifiable {
+    let modelObjectType = ModelObjectType.account
+
+    // Don't remove this constructor even though it doesn't do anything: Core Data will crash.
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
     }
     
-    init(context: NSManagedObjectContext, accountID: UUID = UUID(), policy: Policy, ordinal: Ordinal) {
+    init(context: NSManagedObjectContext?, accountID: UUID, policy: Policy, ordinal: Ordinal) {
         super.init(entity: Account.entity(), insertInto: context)
         self.accountID = accountID
         self.policy = policy
         self.ordinal = ordinal
         self.name = LifeHashNameGenerator.generate(from: accountID)
-    }
-    
-    var policy: Policy? {
-        get {
-            guard let p = policy_ else {
-                return nil
-            }
-            return try! Policy(encoded: p)
-        }
+        let slots = policy.slots
+        self.status = .incomplete(slotsRemaining: slots)
         
-        set {
-            policy_ = newValue?.encoded
+        for index in 0..<slots {
+            let slot = Slot(context: context, index: index)
+            addSlot(slot)
         }
     }
     
-    var ordinal: Ordinal {
-        get {
-            try! Ordinal(encoded: ordinal_!)
-        }
-        
-        set {
-            ordinal_ = newValue.encoded
-        }
-    }
-    
+    @nonobjc
     var accountID: UUID {
         get {
             accountID_ ?? UUID()
@@ -53,20 +41,22 @@ class Account: NSManagedObject {
         }
     }
     
+    @nonobjc
     var name: String {
         get {
-            name_ ?? "untitled"
+            name_ ?? ""
         }
         set {
             let trimmed = newValue.trim()
             if trimmed.isEmpty {
-                name_ = nil
+                name_ = ""
             } else {
                 name_ = trimmed
             }
         }
     }
     
+    @nonobjc
     var notes: String {
         get {
             notes_ ?? ""
@@ -80,6 +70,70 @@ class Account: NSManagedObject {
                 notes_ = trimmed
             }
         }
+    }
+    
+    @nonobjc
+    var ordinal: Ordinal {
+        get {
+            try! Ordinal(encoded: ordinal_!)
+        }
+        
+        set {
+            ordinal_ = newValue.encoded
+        }
+    }
+
+    @nonobjc
+    var policy: Policy {
+        get {
+            try! Policy(encoded: policy_!)
+        }
+        
+        set {
+            policy_ = newValue.encoded
+        }
+    }
+    
+    @nonobjc
+    var status: AccountStatus {
+        get {
+            return try! AccountStatus(encoded: status_!)
+        }
+        
+        set {
+            status_ = newValue.encoded
+        }
+    }
+    
+    @nonobjc dynamic
+    var slots: [Slot] {
+        get {
+            guard
+                let s = slots_ as? Set<Slot> else {
+                return []
+            }
+            return s.sorted()
+        }
+    }
+    
+    @nonobjc dynamic
+    func addSlot(_ slot: Slot) {
+        addToSlots_(slot)
+    }
+
+    @nonobjc
+    var instanceDetail: String? {
+        policy†
+    }
+    
+    @nonobjc
+    var subtypes: [ModelSubtype] {
+        let subtype = ModelSubtype(
+            id: UUID().uuidString,
+            icon: AccountStatusIndicator(status: status)
+                .eraseToAnyView()
+        )
+        return [subtype]
     }
 }
 
@@ -106,15 +160,5 @@ extension ModelObjectType {
 extension Account: Fingerprintable {
     var fingerprintData: Data {
         accountID.fingerprintData
-    }
-}
-
-extension Account: ObjectIdentifiable {
-    var modelObjectType: ModelObjectType {
-        .account
-    }
-    
-    var instanceDetail: String? {
-        policy†
     }
 }

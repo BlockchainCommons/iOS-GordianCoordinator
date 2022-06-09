@@ -28,21 +28,21 @@ struct PolicyPicker: View {
 
 #if DEBUG
 
-class PolicyPickerSubject: ObservableObject {
+class PolicyPicker_Model: ObservableObject {
     @Published var policy: PolicyPreset = .threshold2of3
 }
 
-struct PolicyPickerHost: View {
-    @StateObject var subject = PolicyPickerSubject()
+struct PolicyPicker_Host: View {
+    @StateObject var model = PolicyPicker_Model()
     
     var body: some View {
-        PolicyPicker(selectedPreset: Binding($subject.policy))
+        PolicyPicker(selectedPreset: Binding($model.policy))
     }
 }
 
 struct PolicyPicker_Preview: PreviewProvider {
     static var previews: some View {
-        PolicyPickerHost()
+        PolicyPicker_Host()
 //            .previewLayout(.sizeThatFits)
             .padding()
             .preferredColorScheme(.dark)
