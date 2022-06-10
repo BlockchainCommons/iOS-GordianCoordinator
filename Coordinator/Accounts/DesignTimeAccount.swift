@@ -1,26 +1,30 @@
 import SwiftUI
 import BCApp
 import WolfBase
+import WolfOrdinal
 
 class DesignTimeAccount: ObservableObject, AccountProtocol {
     let modelObjectType = ModelObjectType.account
-    let accountID = UUID()
+    let accountID: UUID
     let policy: Policy
     let slots: [DesignTimeSlot]
 
     var id: UUID { accountID }
 
     var fingerprintData: Data {
-        id.fingerprintData
+        accountID.fingerprintData
     }
 
     @Published var name: String
     @Published var notes: String
+    @Published var ordinal: Ordinal
 
-    init(name: String, notes: String, policy: Policy) {
+    init(accountID: UUID, name: String, notes: String, policy: Policy, ordinal: Ordinal) {
+        self.accountID = accountID
         self.name = name
         self.notes = notes
         self.policy = policy
+        self.ordinal = ordinal
         
         var slots: [DesignTimeSlot] = []
         for index in 0..<policy.slots {

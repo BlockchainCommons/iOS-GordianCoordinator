@@ -3,49 +3,47 @@ import CoreData
 import BCApp
 import WolfBase
 import WolfOrdinal
-import os
 import LifeHash
+import os
 
 fileprivate let logger = Logger(subsystem: Application.bundleIdentifier, category: "AccountsList")
 
-struct AccountsList: View {
+struct AccountsList<AccountsViewModel, Account>: View
+where AccountsViewModel: AccountsViewModelProtocol, Account == AccountsViewModel.Account
+{
     @ObservedObject var viewModel: AccountsViewModel
     
     @State private var isDetailValid: Bool = true
     @State private var accountForDeletion: Account?
     @State private var isAccountSetupPresented: Bool = false
     
-    var viewContext: NSManagedObjectContext {
-        viewModel.context
-    }
-    
     init(viewModel: AccountsViewModel) {
         self.viewModel = viewModel
     }
-
+    
     var body: some View {
         NavigationView {
             list
                 .frame(maxWidth: 600)
-            .navigationTitle("Accounts")
-            .sheet(isPresented: $isAccountSetupPresented) {
-                AccountSetup(isPresented: $isAccountSetupPresented) {
-                    addItem($0)
-                }
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: presentAccountSetup) {
-                        Label("Add Account", systemImage: "plus")
+                .navigationTitle("Accounts")
+                .sheet(isPresented: $isAccountSetupPresented) {
+                    AccountSetup(isPresented: $isAccountSetupPresented) {
+                        addItem($0)
                     }
                 }
-            }
-            .toolbar {
-                AppToolbar(isTop: true)
-            }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        EditButton()
+                    }
+                    ToolbarItem {
+                        Button(action: presentAccountSetup) {
+                            Label("Add Account", systemImage: "plus")
+                        }
+                    }
+                }
+                .toolbar {
+                    AppToolbar(isTop: true)
+                }
         }
         .navigationViewStyle(.stack)
     }
@@ -56,7 +54,7 @@ struct AccountsList: View {
             accountForDeletion != nil
         } set: { _ in
         }
-
+        
         let accounts = viewModel.accounts
         if accounts.isEmpty {
             VStack {
@@ -69,7 +67,7 @@ struct AccountsList: View {
         } else {
             List {
                 ForEach(accounts) { account in
-                    Item(account: account, isDetailValid: $isDetailValid)
+                    Item(account: account, isDetailValid: $isDetailValid, saveChanges: viewModel.saveChanges)
                         .swipeActions {
                             Button(role: .destructive) {
                                 accountForDeletion = account
@@ -99,21 +97,23 @@ struct AccountsList: View {
             }
         }
     }
-
+    
     struct Item: View {
         @ObservedObject var account: Account
         @Binding var isDetailValid: Bool
         @StateObject var lifeHashState: LifeHashState
-
-        init(account: Account, isDetailValid: Binding<Bool>) {
+        let saveChanges: () -> Void
+        
+        init(account: Account, isDetailValid: Binding<Bool>, saveChanges: @escaping () -> Void) {
             self.account = account
             self._isDetailValid = isDetailValid
+            self.saveChanges = saveChanges
             _lifeHashState = .init(wrappedValue: LifeHashState(input: account, version: .version2))
         }
-
+        
         var body: some View {
             NavigationLink {
-                AccountDetail(account: account, onValid: { Self.saveAccount(account) }, generateName: { Self.generateName(for: account) })
+                AccountDetail(account: account, onValid: { saveChanges() }, generateName: { Self.generateName(for: account) })
             } label: {
                 VStack {
 #if targetEnvironment(macCatalyst)
@@ -122,7 +122,7 @@ struct AccountsList: View {
                     ObjectIdentityBlock(model: .constant(account), allowLongPressCopy: false)
                         .frame(height: 80)
                         .padding()
-
+                    
 #if targetEnvironment(macCatalyst)
                     Spacer().frame(height: 10)
                     Divider()
@@ -132,20 +132,12 @@ struct AccountsList: View {
             .isDetailLink(true)
             .accessibility(label: Text("Account: \(account.accountID)"))
         }
-
-        private static func saveAccount(_ account: Account) {
-            do {
-                try account.managedObjectContext!.save()
-            } catch {
-                logger.error("⛔️ \(error.localizedDescription)")
-            }
-        }
         
         private static func generateName(for account: Account) -> String {
             LifeHashNameGenerator.generate(from: account.accountID)
         }
     }
-
+    
     private func presentAccountSetup() {
         isAccountSetupPresented = true
     }
@@ -159,18 +151,9 @@ struct AccountsList: View {
             } else {
                 ordinal = accounts.first!.ordinal.before
             }
-            let account = Account(context: viewContext, accountID: setup.accountID, policy: setup.policy, ordinal: ordinal)
-            account.name = setup.name
-            account.notes = setup.notes
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+            _ = viewModel.newAccount(accountID: setup.accountID, name: setup.name, notes: setup.notes, policy: setup.policy, ordinal: ordinal)
+            
+            viewModel.saveChanges()
         }
     }
     
@@ -180,20 +163,12 @@ struct AccountsList: View {
         }
         deleteItems(offsets: [index])
     }
-
+    
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             let accounts = viewModel.accounts
-            offsets.map { accounts[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+            offsets.map { accounts[$0] }.forEach(viewModel.deleteAccount)
+            viewModel.saveChanges()
         }
     }
     
@@ -202,7 +177,7 @@ struct AccountsList: View {
         guard index != newOffset else {
             return
         }
-
+        
         let accounts = viewModel.accounts
         let account = accounts[index]
         if newOffset == 0 {
@@ -214,17 +189,11 @@ struct AccountsList: View {
             let afterOrdinal = accounts[newOffset].ordinal
             account.ordinal = Ordinal(after: beforeOrdinal, before: afterOrdinal)
         }
-        do {
-            try viewContext.save()
-        } catch {
-            logger.error("⛔️ \(error.localizedDescription)")
-        }
+        viewModel.saveChanges()
     }
     
     var settingsButton: some View {
         Button {
-//            action?()
-//            isPresented = true
         } label: {
             Image.settings
         }
@@ -232,60 +201,24 @@ struct AccountsList: View {
         .padding([.top, .bottom, .leading], 10)
         .accessibility(label: Text("Settings"))
     }
+}
+
+#if DEBUG
+
+struct AccountsList_Host: View {
+    @StateObject var viewModel = DesignTimeAccountsViewModel()
     
-    var leadingItems: some View {
-        Text("leading")
-//        HStack(spacing: 20) {
-////            UserGuideButton<AppChapter>()
-//            ScanButton {
-////                presentedSheet = .scan(nil)
-//            }
-//        }
+    var body: some View {
+        AccountsList(viewModel: viewModel)
     }
 }
 
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AccountsList().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-//    }
-//}
-
-extension View {
-    func hidden(_ shouldHide: Bool) -> some View {
-        opacity(shouldHide ? 0 : 1)
-    }
-}
-
-struct AppToolbar: ToolbarContent {
-    let isTop: Bool
-    
-    init(isTop: Bool = false) {
-        self.isTop = isTop
-    }
-    
-    var body: some ToolbarContent {
-        ToolbarItemGroup(placement: .bottomBar) {
-            HStack(spacing: 10) {
-                UserGuideButton<AppChapter>()
-                ScanButton {
-                }
-                .hidden(!isTop)
-            }
-            
-            Spacer()
-            
-            Image.bcLogo
-                .accessibility(hidden: true)
-            
-            Spacer()
-            
-            Button {
-
-            } label: {
-                Image.settings
-            }
-            .accessibility(label: Text("Settings"))
-            .hidden(!isTop)
+struct AccountsList_Preview: PreviewProvider {
+    static var previews: some View {
+        Group {
+            AccountsList_Host()
         }
+        .preferredColorScheme(.dark)
     }
 }
+#endif

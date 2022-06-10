@@ -38,6 +38,8 @@
 		79C4DC602851E7C200CB3638 /* AccountProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4DC5F2851E7C200CB3638 /* AccountProtocol.swift */; };
 		79C4DC622851E7E500CB3638 /* DesignTimeSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4DC612851E7E500CB3638 /* DesignTimeSlot.swift */; };
 		79C4DC642851E80B00CB3638 /* SlotProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4DC632851E80B00CB3638 /* SlotProtocol.swift */; };
+		79C4DC672853251400CB3638 /* AppToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4DC662853251400CB3638 /* AppToolbar.swift */; };
+		79C4DC692853253200CB3638 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4DC682853253200CB3638 /* ViewExtensions.swift */; };
 		79CBB264284AF56300EBE0DE /* NoAccountSelected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CBB263284AF56300EBE0DE /* NoAccountSelected.swift */; };
 		79CBB266284B431900EBE0DE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79CBB265284B431800EBE0DE /* LaunchScreen.storyboard */; };
 		79EC776B2835BC65009E4466 /* CoordinatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EC776A2835BC65009E4466 /* CoordinatorApp.swift */; };
@@ -110,6 +112,8 @@
 		79C4DC5F2851E7C200CB3638 /* AccountProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountProtocol.swift; sourceTree = "<group>"; };
 		79C4DC612851E7E500CB3638 /* DesignTimeSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignTimeSlot.swift; sourceTree = "<group>"; };
 		79C4DC632851E80B00CB3638 /* SlotProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotProtocol.swift; sourceTree = "<group>"; };
+		79C4DC662853251400CB3638 /* AppToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppToolbar.swift; sourceTree = "<group>"; };
+		79C4DC682853253200CB3638 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		79CBB263284AF56300EBE0DE /* NoAccountSelected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoAccountSelected.swift; sourceTree = "<group>"; };
 		79CBB265284B431800EBE0DE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		79EC77672835BC65009E4466 /* Coordinator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coordinator.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -237,6 +241,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		79C4DC65285324FD00CB3638 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				79C4DC662853251400CB3638 /* AppToolbar.swift */,
+				79C4DC682853253200CB3638 /* ViewExtensions.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		79EC775E2835BC65009E4466 = {
 			isa = PBXGroup;
 			children = (
@@ -271,6 +284,7 @@
 				799B54BE283DC7D20043EB90 /* SyncButton.swift */,
 				799B54C0283DECA00043EB90 /* ErrorMessage.swift */,
 				7905B0262849AC23008BC79D /* Memoized.swift */,
+				79C4DC65285324FD00CB3638 /* Views */,
 				79349B8D28506A800058CF5D /* Slot */,
 				7937A696284DB87F00DE8E11 /* Old */,
 				7937A684284C110D00DE8E11 /* Accounts */,
@@ -465,6 +479,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79C4DC672853251400CB3638 /* AppToolbar.swift in Sources */,
 				7937A692284DB54D00DE8E11 /* PolicyPicker.swift in Sources */,
 				7905B0272849AC23008BC79D /* Memoized.swift in Sources */,
 				7937A68C284D1D0000DE8E11 /* AccountSetupModel.swift in Sources */,
@@ -486,6 +501,7 @@
 				79CBB264284AF56300EBE0DE /* NoAccountSelected.swift in Sources */,
 				7937A686284C114B00DE8E11 /* AccountsStorage.swift in Sources */,
 				799B54BF283DC7D20043EB90 /* SyncButton.swift in Sources */,
+				79C4DC692853253200CB3638 /* ViewExtensions.swift in Sources */,
 				7905B0202849A123008BC79D /* Policy.swift in Sources */,
 				7905B0222849A50B008BC79D /* Account.swift in Sources */,
 				79C4DC642851E80B00CB3638 /* SlotProtocol.swift in Sources */,

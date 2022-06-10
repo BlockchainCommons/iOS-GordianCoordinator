@@ -2,6 +2,7 @@ import SwiftUI
 import BCApp
 import os
 import WolfBase
+import WolfOrdinal
 
 fileprivate let logger = Logger(subsystem: Application.bundleIdentifier, category: "AccountDetail")
 
@@ -73,7 +74,7 @@ struct AccountDetail_Host: View {
 struct Example_Preview: PreviewProvider {
     static var previews: some View {
         Group {
-            AccountDetail_Host(account: DesignTimeAccount(name: "Foo bar", notes: "", policy: .threshold(quorum: 2, slots: 3)))
+            AccountDetail_Host(account: DesignTimeAccount(accountID: UUID(), name: "Foo bar", notes: "", policy: .threshold(quorum: 2, slots: 3), ordinal: Ordinal()))
         }
         .padding()
         .preferredColorScheme(.dark)

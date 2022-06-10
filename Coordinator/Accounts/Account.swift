@@ -86,7 +86,10 @@ class Account: NSManagedObject, AccountProtocol, ObjectIdentifiable {
     @nonobjc
     var policy: Policy {
         get {
-            try! Policy(encoded: policy_!)
+            guard let policy_ = policy_ else {
+                return .threshold(quorum: 2, slots: 3)
+            }
+            return (try? Policy(encoded: policy_)) ?? .threshold(quorum: 2, slots: 3)
         }
         
         set {
@@ -97,7 +100,10 @@ class Account: NSManagedObject, AccountProtocol, ObjectIdentifiable {
     @nonobjc
     var status: AccountStatus {
         get {
-            return try! AccountStatus(encoded: status_!)
+            guard let status_ = status_ else {
+                return .incomplete(slotsRemaining: 3)
+            }
+            return (try? AccountStatus(encoded: status_)) ?? .incomplete(slotsRemaining: 3)
         }
         
         set {
