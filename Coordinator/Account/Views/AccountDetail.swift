@@ -64,7 +64,7 @@ struct AccountDetail<Account: AccountProtocol>: View {
 #if DEBUG
 
 struct AccountDetail_Host: View {
-    @StateObject var account: DesignTimeAccount
+    @StateObject var account = DesignTimeAccount(model: nil, accountID: UUID(), name: "Test account", notes: "", policy: .threshold(quorum: 2, slots: 3), ordinal: [0])
 
     var body: some View {
         AccountDetail(account: account, onValid: { }, generateName: { LifeHashNameGenerator.generate(from: account.accountID) })
@@ -74,10 +74,11 @@ struct AccountDetail_Host: View {
 struct Example_Preview: PreviewProvider {
     static var previews: some View {
         Group {
-            AccountDetail_Host(account: DesignTimeAccount(accountID: UUID(), name: "Foo bar", notes: "", policy: .threshold(quorum: 2, slots: 3), ordinal: Ordinal()))
+            AccountDetail_Host()
         }
         .padding()
         .preferredColorScheme(.dark)
     }
 }
+
 #endif

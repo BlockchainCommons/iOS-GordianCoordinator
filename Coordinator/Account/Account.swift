@@ -143,22 +143,6 @@ class Account: NSManagedObject, AccountProtocol, ObjectIdentifiable {
     }
 }
 
-extension Account: Comparable {
-    static func ==(lhs: Account, rhs: Account) -> Bool {
-        lhs.accountID == rhs.accountID
-    }
-    
-    static func <(lhs: Account, rhs: Account) -> Bool {
-        guard lhs != rhs else {
-            return false
-        }
-        if lhs.ordinal == rhs.ordinal {
-            return lhs.accountID.uuidString < rhs.accountID.uuidString
-        }
-        return lhs.ordinal < rhs.ordinal
-    }
-}
-
 extension ModelObjectType {
     static let account = ModelObjectType(name: "Account", type: "Account", icon: Image.account.icon().eraseToAnyView())
 }

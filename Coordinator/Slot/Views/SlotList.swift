@@ -42,14 +42,29 @@ struct SlotList<Slot: SlotProtocol>: View {
 
 #if DEBUG
 
+struct SlotList_Host: View {
+    @StateObject var account: DesignTimeAccount
+    let slots: [DesignTimeSlot]
+    
+    init() {
+        let account = DesignTimeAccount()
+        self._account = StateObject(wrappedValue: account)
+        slots = [
+            .init(account: account, displayIndex: 1, name: "Slot 1", status: .incomplete),
+            .init(account: account, displayIndex: 2, name: "", status: .complete(publicKey: "key")),
+            .init(account: account, displayIndex: 3, name: "", status: .incomplete)
+        ]
+    }
+    
+    var body: some View {
+        SlotList(slots: slots)
+    }
+}
+
 struct SlotList_Preview: PreviewProvider {
     static var previews: some View {
         Group {
-            SlotList(slots: [
-                DesignTimeSlot(displayIndex: 1, name: "Name", status: .incomplete),
-                DesignTimeSlot(displayIndex: 2, name: "", status: .incomplete),
-                DesignTimeSlot(displayIndex: 3, name: "Name", status: .complete(publicKey: ""))
-            ])
+            SlotList_Host()
         }
         .frame(width: 400)
         .padding()
@@ -57,4 +72,5 @@ struct SlotList_Preview: PreviewProvider {
         .preferredColorScheme(.dark)
     }
 }
+
 #endif
