@@ -29,10 +29,9 @@ class AccountsViewModel: AccountsViewModelProtocol {
         .store(in: &cancellable)
     }
     
-    func newAccount(accountID: UUID, name: String, notes: String, policy: Policy, ordinal: Ordinal) -> Account {
+    func newAccount(accountID: UUID, name: String, policy: Policy, ordinal: Ordinal) -> Account {
         let account = Account(context: context, accountID: accountID, policy: policy, ordinal: ordinal)
         account.name = name
-        account.notes = notes
         return account
     }
     
@@ -41,6 +40,12 @@ class AccountsViewModel: AccountsViewModelProtocol {
     }
     
     func saveChanges() {
+        guard context.hasChanges else {
+            return
+        }
+
+        print("🔥 Saving changes")
+
         do {
             try context.save()
         } catch {

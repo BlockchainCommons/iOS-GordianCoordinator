@@ -8,12 +8,12 @@ class DesignTimeAccountsViewModel: AccountsViewModelProtocol {
     
     init() {
         for i in 0..<3 {
-            _ = newAccount(accountID: UUID(), name: Lorem.bytewords(4), notes: "", policy: .threshold(quorum: 2, slots: 3), ordinal: [i])
+            _ = newAccount(accountID: UUID(), name: Lorem.bytewords(4), policy: .threshold(quorum: 2, slots: 3), ordinal: [i])
         }
     }
     
-    func newAccount(accountID: UUID, name: String, notes: String, policy: Policy, ordinal: Ordinal) -> DesignTimeAccount {
-        let account = DesignTimeAccount(model: self, accountID: accountID, name: name, notes: notes, policy: policy, ordinal: ordinal)
+    func newAccount(accountID: UUID, name: String, policy: Policy, ordinal: Ordinal) -> DesignTimeAccount {
+        let account = DesignTimeAccount(model: self, accountID: accountID, name: name, policy: policy, ordinal: ordinal)
         accounts = accounts.appending(account).sorted()
         return account
     }

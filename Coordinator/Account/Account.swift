@@ -46,13 +46,9 @@ class Account: NSManagedObject, AccountProtocol, ObjectIdentifiable {
         get {
             name_ ?? ""
         }
+        
         set {
-            let trimmed = newValue.trim()
-            if trimmed.isEmpty {
-                name_ = ""
-            } else {
-                name_ = trimmed
-            }
+            name_ = newValue.isEmpty ? nil : newValue
         }
     }
     
@@ -63,12 +59,7 @@ class Account: NSManagedObject, AccountProtocol, ObjectIdentifiable {
         }
         
         set {
-            let trimmed = newValue.trim()
-            if trimmed.isEmpty {
-                notes_ = nil
-            } else {
-                notes_ = trimmed
-            }
+            notes_ = newValue.isEmpty ? nil : newValue
         }
     }
     

@@ -4,7 +4,4 @@
    <FileRef
       location = "group:Coordinator.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:../BCSwiftFoundation">
-   </FileRef>
 </Workspace>

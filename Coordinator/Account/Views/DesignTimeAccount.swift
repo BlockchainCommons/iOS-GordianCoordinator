@@ -10,7 +10,7 @@ class DesignTimeAccount: ObservableObject, AccountProtocol {
     weak var model: DesignTimeAccountsViewModel?
     let accountID: UUID
     let policy: Policy
-    private(set) var slots: [DesignTimeSlot]
+    var slots: [DesignTimeSlot]
 
     var id: UUID { accountID }
 
@@ -26,7 +26,7 @@ class DesignTimeAccount: ObservableObject, AccountProtocol {
         }
     }
 
-    init(model: DesignTimeAccountsViewModel?, accountID: UUID, name: String, notes: String, policy: Policy, ordinal: Ordinal) {
+    init(model: DesignTimeAccountsViewModel?, accountID: UUID, name: String, notes: String = "", policy: Policy, ordinal: Ordinal) {
         self.model = model
         self.accountID = accountID
         self.name = name
@@ -36,12 +36,12 @@ class DesignTimeAccount: ObservableObject, AccountProtocol {
         self.slots = []
         
         for index in 0..<policy.slots {
-            slots.append(DesignTimeSlot(account: self, displayIndex: index, name: "", status: .incomplete))
+            slots.append(DesignTimeSlot(account: self, displayIndex: index, status: .incomplete))
         }
     }
     
     convenience init() {
-        self.init(model: nil, accountID: UUID(), name: Lorem.bytewords(4), notes: "", policy: .threshold(quorum: 2, slots: 3), ordinal: [0])
+        self.init(model: nil, accountID: UUID(), name: Lorem.bytewords(4), policy: .threshold(quorum: 2, slots: 3), ordinal: [0])
     }
     
     var status: AccountStatus {

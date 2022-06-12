@@ -65,9 +65,9 @@ extension SlotStatus {
     var image: some View {
         switch self {
         case .complete:
-            Image(systemName: "checkmark.square.fill")
+            Image.completeSlot
         case .incomplete:
-            Image(systemName: "questionmark.square.dashed")
+            Image.incompleteSlot
         }
     }
     

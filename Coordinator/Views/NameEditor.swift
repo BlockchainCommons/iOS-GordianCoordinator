@@ -4,20 +4,27 @@ import Combine
 
 struct NameEditor: View {
     @Binding var name: String
-    @Binding var isValid: Bool
-    @FocusState var focusedField: UUID?
-    let onValid: () -> Void
-    let generateName: () -> String
+    var isValid: Binding<Bool>?
+    var focusedField: FocusState<UUID?>?
+    let onValid: (() -> Void)?
+    let generateName: (() -> String)?
     @State private var isEditing: Bool = false
-    @StateObject private var validator = Validator()
+    @StateObject private var validator: Validator
     @State var myID = UUID()
     
-    init(_ name: Binding<String>, isValid: Binding<Bool>, focusedField: FocusState<UUID?>, onValid: @escaping () -> Void, generateName: @escaping () -> String) {
+    init(_ name: Binding<String>, isValid: Binding<Bool>? = nil, focusedField: FocusState<UUID?>? = nil, onValid: (() -> Void)? = nil, generateName: (() -> String)? = nil) {
         self._name = name
-        self._focusedField = focusedField
+        self.focusedField = focusedField
         self.onValid = onValid
         self.generateName = generateName
-        self._isValid = isValid
+        let shouldValidate: Bool
+        if let isValid = isValid {
+            self.isValid = isValid
+            shouldValidate = true
+        } else {
+            shouldValidate = false
+        }
+        self._validator = StateObject(wrappedValue: Validator(shouldValidate: shouldValidate))
     }
     
     var body: some View {
@@ -46,7 +53,9 @@ struct NameEditor: View {
                     self.isEditing = isEditing
                 }
             }
-            .focused($focusedField, equals: myID)
+            .if(focusedField != nil) {
+                $0.focused(focusedField!.projectedValue, equals: myID)
+            }
             .accessibility(label: Text("Name Field"))
             if !isEditing {
                 menu
@@ -58,38 +67,59 @@ struct NameEditor: View {
             validator.subject.send(newValue)
         }
         .onReceive(validator.publisher) {
-            isValid = $0.isValid
-            if isValid {
+            if let isValid = isValid {
+                isValid.wrappedValue = $0.isValid
+            }
+            if let onValid = onValid, $0.isValid {
                 onValid()
             }
         }
         .validation(validator.publisher)
     }
     
+    @ViewBuilder
     var menu: some View {
-        Menu {
-            RandomizeMenuItem() {
-                name = generateName()
+        if let generateName = generateName {
+            Menu {
+                RandomizeMenuItem() {
+                    name = generateName()
+                }
+                ClearMenuItem() {
+                    name = ""
+                }
+            } label: {
+                Image.menu
+                    .foregroundColor(.secondary)
+                    .font(.title3)
             }
-            ClearMenuItem() {
+            .accessibility(label: Text("Name Menu"))
+        } else {
+            Button {
                 name = ""
+            } label: {
+                Image.clearField
             }
-        } label: {
-            Image.menu
-                .foregroundColor(.secondary)
-                .font(.title3)
+            .foregroundColor(.secondary)
+            .font(.title3)
+            .accessibility(label: Text("Clear Name"))
+            .opacity(name.isEmpty ? 0 : 1)
         }
-        .accessibility(label: Text("Name Menu"))
     }
 
     class Validator: ObservableObject {
         let subject = PassthroughSubject<String, Never>()
         let publisher: ValidationPublisher
         
-        init() {
-            publisher = subject
-                .debounceField()
-                .validateNotEmpty("Name may not be empty.")
+        init(shouldValidate: Bool) {
+            if shouldValidate {
+                publisher = subject
+                    .debounceField()
+                    .validateNotEmpty("Name may not be empty.")
+            } else {
+                publisher = subject
+                    .debounceField()
+                    .validate()
+            }
         }
     }
 }
@@ -103,25 +133,45 @@ class NameEditorSubject: ObservableObject {
 }
 
 struct NameEditorHost: View {
+    let validate: Bool
+    let generatesName: Bool
     @StateObject var subject = NameEditorSubject()
-    @FocusState var focusedField: UUID?
     @State var isValid: Bool = true
 
     var body: some View {
-        NameEditor($subject.name, isValid: $isValid, focusedField: _focusedField) {
-            // onValid
-        } generateName: {
-            Lorem.bytewords(4)
-        }
+        NameEditor($subject.name, isValid: validate ? $isValid : nil, generateName: generatesName ? generateName : nil)
+    }
+    
+    func generateName() -> String {
+        Lorem.bytewords(4)
     }
 }
 
 struct NameEditor_Preview: PreviewProvider {
     static var previews: some View {
-        NameEditorHost()
-            .padding()
-            .previewLayout(.sizeThatFits)
-            .preferredColorScheme(.dark)
+        Group {
+            VStack {
+                Text("Validates:")
+                    .foregroundColor(.secondary)
+                    .font(.caption)
+                NameEditorHost(validate: true, generatesName: true)
+            }
+            VStack {
+                Text("Doesn't validate:")
+                    .foregroundColor(.secondary)
+                    .font(.caption)
+                NameEditorHost(validate: false, generatesName: true)
+            }
+            VStack {
+                Text("Doesn't validate or generate name:")
+                    .foregroundColor(.secondary)
+                    .font(.caption)
+                NameEditorHost(validate: false, generatesName: false)
+            }
+        }
+        .padding()
+        .previewLayout(.sizeThatFits)
+        .preferredColorScheme(.dark)
     }
 }
 

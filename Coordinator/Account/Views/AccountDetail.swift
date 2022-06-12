@@ -3,6 +3,7 @@ import BCApp
 import os
 import WolfBase
 import WolfOrdinal
+import WolfSwiftUI
 
 fileprivate let logger = Logger(subsystem: Application.bundleIdentifier, category: "AccountDetail")
 
@@ -13,10 +14,9 @@ struct AccountDetail<Account: AccountProtocol>: View {
 
     @FocusState var focusedField: UUID?
     @State var isNameValid: Bool = true
-    @State var isNotesValid: Bool = true
     
     var isValid: Bool {
-        isNameValid && isNotesValid
+        isNameValid
     }
 
     var body: some View {
@@ -32,6 +32,10 @@ struct AccountDetail<Account: AccountProtocol>: View {
         .frame(maxWidth: 600)
         .padding()
         .toolbar {
+            KeyboardToolbar {
+                focusedField = nil
+            }
+
             AppToolbar()
         }
     }
@@ -41,30 +45,23 @@ struct AccountDetail<Account: AccountProtocol>: View {
             .frame(height: 128)
     }
 
-    @ViewBuilder
     var name: some View {
-        NameEditor($account.name, isValid: $isNameValid, focusedField: _focusedField) {
-            onValid()
-        } generateName: {
-            generateName()
-        }
+        NameEditor($account.name, isValid: $isNameValid, focusedField: _focusedField, onValid: onValid, generateName: generateName)
     }
 
     var notes: some View {
-        NotesEditor($account.notes, isValid: $isNotesValid, focusedField: _focusedField) {
-            onValid()
-        }
+        NotesEditor($account.notes, focusedField: _focusedField, onValid: onValid)
     }
 
     var slots: some View {
-        SlotList(slots: account.slots)
+        SlotList(account: account, onValid: onValid)
     }
 }
 
 #if DEBUG
 
 struct AccountDetail_Host: View {
-    @StateObject var account = DesignTimeAccount(model: nil, accountID: UUID(), name: "Test account", notes: "", policy: .threshold(quorum: 2, slots: 3), ordinal: [0])
+    @StateObject var account = DesignTimeAccount(model: nil, accountID: UUID(), name: "Test account", policy: .threshold(quorum: 2, slots: 3), ordinal: [0])
 
     var body: some View {
         AccountDetail(account: account, onValid: { }, generateName: { LifeHashNameGenerator.generate(from: account.accountID) })

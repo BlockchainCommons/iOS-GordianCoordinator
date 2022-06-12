@@ -4,16 +4,16 @@ import Combine
 
 struct NotesEditor: View {
     @Binding var notes: String
-    @Binding var isValid: Bool
+    var isValid: Binding<Bool>?
     @FocusState var focusedField: UUID?
-    let onValid: () -> Void
+    let onValid: (() -> Void)?
     @State var myID = UUID()
     @StateObject private var validator = Validator()
 
-    init(_ notes: Binding<String>, isValid: Binding<Bool>, focusedField: FocusState<UUID?>, onValid: @escaping () -> Void) {
+    init(_ notes: Binding<String>, isValid: Binding<Bool>? = nil, focusedField: FocusState<UUID?>, onValid: (() -> Void)? = nil) {
         self._notes = notes
         self._focusedField = focusedField
-        self._isValid = isValid
+        self.isValid = isValid
         self.onValid = onValid
     }
 
@@ -47,8 +47,10 @@ struct NotesEditor: View {
                 validator.subject.send(newValue)
             }
             .onReceive(validator.publisher) {
-                isValid = $0.isValid
-                if isValid {
+                if let isValid = isValid {
+                    isValid.wrappedValue = $0.isValid
+                }
+                if let onValid = onValid, $0.isValid {
                     onValid()
                 }
             }
@@ -76,10 +78,9 @@ class NoteEditorSubject: ObservableObject {
 struct NoteEditorHost: View {
     @StateObject var subject = NoteEditorSubject()
     @FocusState var focusedField: UUID?
-    @State var isValid: Bool = true
 
     var body: some View {
-        NotesEditor($subject.note, isValid: $isValid, focusedField: _focusedField) {
+        NotesEditor($subject.note, focusedField: _focusedField) {
             // onValid
         }
     }
@@ -87,10 +88,12 @@ struct NoteEditorHost: View {
 
 struct NoteEditor_Preview: PreviewProvider {
     static var previews: some View {
-        NoteEditorHost()
-            .padding()
-            .previewLayout(.sizeThatFits)
-            .preferredColorScheme(.dark)
+        Group {
+            NoteEditorHost()
+        }
+        .padding()
+        .previewLayout(.fixed(width: 400, height: 300))
+        .preferredColorScheme(.dark)
     }
 }
 

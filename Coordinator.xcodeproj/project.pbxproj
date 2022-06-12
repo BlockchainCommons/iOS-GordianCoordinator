@@ -35,6 +35,8 @@
 		799B54C1283DECA00043EB90 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B54C0283DECA00043EB90 /* ErrorMessage.swift */; };
 		799BA663283F0A1A00285135 /* WalletSweeper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799BA662283F0A1A00285135 /* WalletSweeper.swift */; };
 		799BA6662844A2DA00285135 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799BA6652844A2DA00285135 /* CloudKit.framework */; };
+		79BB4AB32855A7B200FB45A4 /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BB4AB22855A7B200FB45A4 /* ImageExtensions.swift */; };
+		79BB4AB52855B26500FB45A4 /* KeyEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BB4AB42855B26500FB45A4 /* KeyEditor.swift */; };
 		79C4DC5E2851E78F00CB3638 /* DesignTimeAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4DC5D2851E78F00CB3638 /* DesignTimeAccount.swift */; };
 		79C4DC602851E7C200CB3638 /* AccountProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4DC5F2851E7C200CB3638 /* AccountProtocol.swift */; };
 		79C4DC622851E7E500CB3638 /* DesignTimeSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4DC612851E7E500CB3638 /* DesignTimeSlot.swift */; };
@@ -111,6 +113,8 @@
 		799BA662283F0A1A00285135 /* WalletSweeper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletSweeper.swift; sourceTree = "<group>"; };
 		799BA6652844A2DA00285135 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		799BA6672844A3AD00285135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		79BB4AB22855A7B200FB45A4 /* ImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtensions.swift; sourceTree = "<group>"; };
+		79BB4AB42855B26500FB45A4 /* KeyEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyEditor.swift; sourceTree = "<group>"; };
 		79C4DC5D2851E78F00CB3638 /* DesignTimeAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignTimeAccount.swift; sourceTree = "<group>"; };
 		79C4DC5F2851E7C200CB3638 /* AccountProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountProtocol.swift; sourceTree = "<group>"; };
 		79C4DC612851E7E500CB3638 /* DesignTimeSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignTimeSlot.swift; sourceTree = "<group>"; };
@@ -240,6 +244,7 @@
 				79C4DC682853253200CB3638 /* ViewExtensions.swift */,
 				7937A68F284D7FBD00DE8E11 /* NameEditor.swift */,
 				7937A697284DC8BB00DE8E11 /* NotesEditor.swift */,
+				79BB4AB22855A7B200FB45A4 /* ImageExtensions.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -262,6 +267,7 @@
 				79349B9428508E220058CF5D /* SlotList.swift */,
 				79349BB42851A7660058CF5D /* SlotListRow.swift */,
 				79349BB228518E670058CF5D /* SlotDetail.swift */,
+				79BB4AB42855B26500FB45A4 /* KeyEditor.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -526,6 +532,7 @@
 				79349BB328518E680058CF5D /* SlotDetail.swift in Sources */,
 				799BA663283F0A1A00285135 /* WalletSweeper.swift in Sources */,
 				79349B9528508E220058CF5D /* SlotList.swift in Sources */,
+				79BB4AB32855A7B200FB45A4 /* ImageExtensions.swift in Sources */,
 				79EC77772835BC67009E4466 /* CoordinatorModel.xcdatamodeld in Sources */,
 				79C4DC622851E7E500CB3638 /* DesignTimeSlot.swift in Sources */,
 				799B54C1283DECA00043EB90 /* ErrorMessage.swift in Sources */,
@@ -542,6 +549,7 @@
 				79C4DC692853253200CB3638 /* ViewExtensions.swift in Sources */,
 				79C4DC6C2853C7EA00CB3638 /* AccountsViewModelProtocol.swift in Sources */,
 				7905B0202849A123008BC79D /* Policy.swift in Sources */,
+				79BB4AB52855B26500FB45A4 /* KeyEditor.swift in Sources */,
 				7905B0222849A50B008BC79D /* Account.swift in Sources */,
 				79C4DC642851E80B00CB3638 /* SlotProtocol.swift in Sources */,
 				79C4DC5E2851E78F00CB3638 /* DesignTimeAccount.swift in Sources */,

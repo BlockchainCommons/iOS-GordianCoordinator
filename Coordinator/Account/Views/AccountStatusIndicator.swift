@@ -8,7 +8,7 @@ struct AccountStatusIndicator: View {
         case .incomplete(slotsRemaining: let slotsRemaining):
             ZStack {
                 Group {
-                    Image(systemName: "square.dashed")
+                    Image.incompleteSlotNumbered
                         .font(.body)
                     Text("\(slotsRemaining)")
                         .font(.caption)
@@ -16,7 +16,7 @@ struct AccountStatusIndicator: View {
             }
             .foregroundColor(.yellowLightSafe)
         case .complete:
-            Image(systemName: "checkmark.square.fill")
+            Image.completeSlot
                 .font(.body)
                 .foregroundColor(.green)
         }

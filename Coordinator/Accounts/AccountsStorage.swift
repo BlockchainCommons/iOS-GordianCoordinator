@@ -8,35 +8,62 @@ fileprivate let logger = Logger(subsystem: Application.bundleIdentifier, categor
 
 class AccountsStorage: NSObject {
     var accounts = CurrentValueSubject<[Account], Never>([])
-    private var frc: NSFetchedResultsController<Account>
+    var slots = CurrentValueSubject<[Slot], Never>([])
+    
+    private let accountsController: NSFetchedResultsController<Account>
+    private let slotsController: NSFetchedResultsController<Slot>
     
     init(context: NSManagedObjectContext) {
-        let fetchRequest = Account.fetchRequest()
-        fetchRequest.sortDescriptors = []
-        self.frc = NSFetchedResultsController<Account>(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        let accountsFetchRequest = Account.fetchRequest()
+        accountsFetchRequest.sortDescriptors = []
+        accountsController = NSFetchedResultsController<Account>(fetchRequest: accountsFetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+
+        let slotsFetchRequest = Slot.fetchRequest()
+        slotsFetchRequest.sortDescriptors = []
+        slotsController = NSFetchedResultsController<Slot>(fetchRequest: slotsFetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        
         super.init()
-        frc.delegate = self
+
+        accountsController.delegate = self
+        slotsController.delegate = self
+
         do {
             logger.info("🔥 performFetch")
-            try frc.performFetch()
-            update(frc)
+            try accountsController.performFetch()
+            updateAccounts()
+            try slotsController.performFetch()
+            updateSlots()
         } catch {
             logger.error("⛔️ \(error.localizedDescription)")
         }
     }
     
-    func update<T>(_ controller: NSFetchedResultsController<T>) {
-        guard let accounts = controller.fetchedObjects as? [Account] else {
+    func updateAccounts() {
+        guard let accounts = accountsController.fetchedObjects else {
             return
         }
         self.accounts.value = accounts
+    }
+    
+    func updateSlots() {
+        guard let slots = slotsController.fetchedObjects else {
+            return
+        }
+        self.slots.value = slots
     }
 }
 
 extension AccountsStorage: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         logger.info("🔥 controllerDidChangeContent")
-        update(controller)
+        switch controller {
+        case accountsController:
+            updateAccounts()
+        case slotsController:
+            updateSlots()
+        default:
+            fatalError()
+        }
     }
 }
 

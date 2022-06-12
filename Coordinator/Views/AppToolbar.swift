@@ -1,5 +1,6 @@
 import SwiftUI
 import BCApp
+import WolfSwiftUI
 
 struct AppToolbar: ToolbarContent {
     let isTop: Bool
@@ -31,6 +32,21 @@ struct AppToolbar: ToolbarContent {
             }
             .accessibility(label: Text("Settings"))
             .hidden(!isTop)
+        }
+    }
+}
+
+struct KeyboardToolbar: ToolbarContent {
+    let action: () -> Void
+    
+    var body: some ToolbarContent {
+        ToolbarItemGroup(placement: .keyboard) {
+            HStack {
+                Spacer()
+                DoneButton {
+                    action()
+                }
+            }
         }
     }
 }

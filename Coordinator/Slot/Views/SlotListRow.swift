@@ -1,34 +1,31 @@
 import SwiftUI
 
-struct SlotListRow: View {
-    let displayIndex: Int
-    let name: String
-    let status: SlotStatus
+struct SlotListRow<Slot: SlotProtocol>: View {
+    @ObservedObject var slot: Slot
     
     var body: some View {
         HStack(spacing: 10) {
-            Text("\(displayIndex)")
+            Text("\(slot.displayIndex)")
                 .monospacedDigit()
             Text(Image.publicKey)
-                .foregroundColor(status.color)
-            status.icon
+                .foregroundColor(slot.status.color)
+            slot.status.icon
             VStack(alignment: .leading) {
-                if name.isEmpty {
-                    Text(status.description)
+                if slot.name.isEmpty {
+                    Text(slot.status.description)
                         .font(.headline)
-                        .foregroundColor(status.color)
+                        .foregroundColor(slot.status.color)
                 } else {
-                    Text(name)
+                    Text(slot.name)
+                        .lineLimit(1)
                         .font(.headline)
-                    Text(status.description)
+                    Text(slot.status.description)
                         .font(.caption)
-                        .foregroundColor(status.color)
+                        .foregroundColor(slot.status.color)
                 }
             }
             Spacer()
-            Image(systemName: "chevron.right")
-                .foregroundColor(.secondary)
-                .font(.caption)
+            Image.disclosureIndicator
         }
         .font(.largeTitle)
         .foregroundColor(.primary)
@@ -38,11 +35,24 @@ struct SlotListRow: View {
 
 #if DEBUG
 
+struct SlotListRow_Host: View {
+    @ObservedObject var slot: DesignTimeSlot
+    
+    init(displayIndex: Int, name: String, status: SlotStatus) {
+        let account = DesignTimeAccount()
+        slot = DesignTimeSlot(account: account, displayIndex: displayIndex, name: name, notes: "", status: status)
+    }
+
+    var body: some View {
+        SlotListRow(slot: slot)
+    }
+}
+
 struct SlotListRow_Preview: PreviewProvider {
     static var previews: some View {
         Group {
-            SlotListRow(displayIndex: 1, name: "", status: .incomplete)
-            SlotListRow(displayIndex: 2, name: "Name", status: .complete(publicKey: "Key"))
+            SlotListRow_Host(displayIndex: 1, name: "", status: .incomplete)
+            SlotListRow_Host(displayIndex: 2, name: "Name", status: .complete(publicKey: "Key"))
         }
         .frame(width: 400)
         .previewLayout(.sizeThatFits)

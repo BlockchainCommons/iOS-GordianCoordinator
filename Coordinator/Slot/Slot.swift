@@ -34,12 +34,7 @@ class Slot: NSManagedObject, SlotProtocol {
             name_ ?? ""
         }
         set {
-            let trimmed = newValue.trim()
-            if trimmed.isEmpty {
-                name_ = nil
-            } else {
-                name_ = trimmed
-            }
+            name_ = newValue.isEmpty ? nil : newValue
         }
     }
     
@@ -49,12 +44,7 @@ class Slot: NSManagedObject, SlotProtocol {
         }
         
         set {
-            let trimmed = newValue.trim()
-            if trimmed.isEmpty {
-                notes_ = nil
-            } else {
-                notes_ = trimmed
-            }
+            notes_ = newValue.isEmpty ? nil : newValue
         }
     }
 

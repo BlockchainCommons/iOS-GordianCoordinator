@@ -1,10 +1,16 @@
 import SwiftUI
 
-struct SlotList<Slot: SlotProtocol>: View {
-    let slots: [Slot]
+struct SlotList<Account, Slot>: View where Account: AccountProtocol, Slot == Account.Slot
+{
+    @ObservedObject var account: Account
+    var slots: [Slot] {
+        account.slots
+    }
+    let onValid: () -> Void
     
-    init(slots: [Slot]) {
-        self.slots = slots
+    init(account: Account, onValid: @escaping () -> Void) {
+        self.account = account
+        self.onValid = onValid
     }
     
     var body: some View {
@@ -16,9 +22,9 @@ struct SlotList<Slot: SlotProtocol>: View {
             VStack(spacing: 0) {
                 ForEach(slots) { slot in
                     NavigationLink {
-                        SlotDetail(slot: slot)
+                        SlotDetail(slot: slot, getClipboard: { nil }, onValid: onValid)
                     } label: {
-                        SlotListRow(displayIndex: slot.displayIndex, name: slot.name, status: slot.status)
+                        SlotListRow(slot: slot)
                     }
                     if slot.id != slots.last?.id {
                         Divider()
@@ -35,7 +41,7 @@ struct SlotList<Slot: SlotProtocol>: View {
             Text("Slots")
                 .bold()
         } icon: {
-            Image(systemName: "rectangle.and.pencil.and.ellipsis")
+            Image.slot
         }
     }
 }
@@ -44,20 +50,22 @@ struct SlotList<Slot: SlotProtocol>: View {
 
 struct SlotList_Host: View {
     @StateObject var account: DesignTimeAccount
-    let slots: [DesignTimeSlot]
     
     init() {
         let account = DesignTimeAccount()
         self._account = StateObject(wrappedValue: account)
-        slots = [
-            .init(account: account, displayIndex: 1, name: "Slot 1", status: .incomplete),
-            .init(account: account, displayIndex: 2, name: "", status: .complete(publicKey: "key")),
-            .init(account: account, displayIndex: 3, name: "", status: .incomplete)
+        account.slots = [
+            .init(account: account, displayIndex: 1, name: "Foo", status: .incomplete),
+            .init(account: account, displayIndex: 2, name: "Bar", status: .complete(publicKey: "key")),
+            .init(account: account, displayIndex: 3, name: "", status: .incomplete),
+            .init(account: account, displayIndex: 4, name: "", status: .complete(publicKey: "key"))
         ]
     }
     
     var body: some View {
-        SlotList(slots: slots)
+        SlotList(account: account) {
+            // onValid
+        }
     }
 }
 

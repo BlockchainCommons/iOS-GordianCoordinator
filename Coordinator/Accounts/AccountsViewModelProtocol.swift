@@ -6,7 +6,7 @@ protocol AccountsViewModelProtocol: ObservableObject {
     
     var accounts: [Account] { get set }
 
-    func newAccount(accountID: UUID, name: String, notes: String, policy: Policy, ordinal: Ordinal) -> Account
+    func newAccount(accountID: UUID, name: String, policy: Policy, ordinal: Ordinal) -> Account
     func deleteAccount(account: Account)
     func saveChanges()
 }

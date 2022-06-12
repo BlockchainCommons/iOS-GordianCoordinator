@@ -10,11 +10,10 @@ struct AccountSetup: View {
     @StateObject var model = AccountSetupModel()
     @FocusState var focusedField: UUID?
     @State var isNameValid: Bool = true
-    @State var isNotesValid: Bool = true
     @State var shouldSave: Bool = false
     
     var isValid: Bool {
-        isNameValid && isNotesValid
+        isNameValid
     }
 
     var body: some View {
@@ -95,17 +94,13 @@ struct AccountSetup: View {
     
     @ViewBuilder
     var name: some View {
-        NameEditor($model.name, isValid: $isNameValid, focusedField: _focusedField) {
-            // onValid
-        } generateName: {
+        NameEditor($model.name, isValid: $isNameValid, generateName: {
             LifeHashNameGenerator.generate(from: model.accountID)
-        }
+        })
     }
     
     var notes: some View {
-        NotesEditor($model.notes, isValid: $isNotesValid, focusedField: _focusedField) {
-            // onValid
-        }
+        NotesEditor($model.notes, focusedField: _focusedField)
     }
 }
 
