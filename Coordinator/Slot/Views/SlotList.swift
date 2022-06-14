@@ -1,8 +1,13 @@
 import SwiftUI
 
-struct SlotList<Account, Slot>: View where Account: AccountProtocol, Slot == Account.Slot
+struct SlotList<Account, Slot>: View
+where
+    Account: AccountProtocol,
+    Slot == Account.Slot
 {
     @ObservedObject var account: Account
+    @EnvironmentObject var clipboard: Clipboard
+    
     var slots: [Slot] {
         account.slots
     }
@@ -22,7 +27,7 @@ struct SlotList<Account, Slot>: View where Account: AccountProtocol, Slot == Acc
             VStack(spacing: 0) {
                 ForEach(slots) { slot in
                     NavigationLink {
-                        SlotDetail(slot: slot, getClipboard: { nil }, onValid: onValid)
+                        SlotDetail(slot: slot, onValid: onValid)
                     } label: {
                         SlotListRow(slot: slot)
                     }
@@ -37,12 +42,7 @@ struct SlotList<Account, Slot>: View where Account: AccountProtocol, Slot == Acc
     }
     
     var label: some View {
-        Label {
-            Text("Slots")
-                .bold()
-        } icon: {
-            Image.slot
-        }
+        SectionLabel("Slots", icon: .slot)
     }
 }
 
@@ -74,10 +74,9 @@ struct SlotList_Preview: PreviewProvider {
         Group {
             SlotList_Host()
         }
+        .environmentObject(Clipboard(isDesignTime: true))
         .frame(width: 400)
         .padding()
-        .previewLayout(.sizeThatFits)
-        .preferredColorScheme(.dark)
     }
 }
 

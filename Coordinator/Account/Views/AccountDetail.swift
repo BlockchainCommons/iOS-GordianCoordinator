@@ -75,6 +75,7 @@ struct Example_Preview: PreviewProvider {
         }
         .padding()
         .preferredColorScheme(.dark)
+        .environmentObject(Clipboard(isDesignTime: true))
     }
 }
 

@@ -13,12 +13,7 @@ struct PolicyPicker: View {
     }
     
     var label: some View {
-        Label {
-            Text("Policy")
-                .bold()
-        } icon: {
-            Image.policy
-        }
+        SectionLabel("Policy", icon: Image.policy)
     }
     
     var picker: some View {

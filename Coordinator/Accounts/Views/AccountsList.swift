@@ -37,7 +37,7 @@ where AccountsViewModel: AccountsViewModelProtocol, Account == AccountsViewModel
                     }
                     ToolbarItem {
                         Button(action: presentAccountSetup) {
-                            Label("Add Account", systemImage: "plus")
+                            Label("Add Account", icon: .add)
                         }
                     }
                 }
@@ -219,6 +219,7 @@ struct AccountsList_Preview: PreviewProvider {
         Group {
             AccountsList_Host()
         }
+        .environmentObject(Clipboard(isDesignTime: true))
         .preferredColorScheme(.dark)
     }
 }

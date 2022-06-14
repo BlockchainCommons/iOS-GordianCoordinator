@@ -28,12 +28,7 @@ struct NotesEditor: View {
     }
     
     var label: some View {
-        Label {
-            Text("Notes")
-                .bold()
-        } icon: {
-            Image.note
-        }
+        SectionLabel("Notes", icon: .note)
     }
     
     var field: some View {

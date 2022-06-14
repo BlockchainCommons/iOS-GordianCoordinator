@@ -37,6 +37,9 @@
 		799BA6662844A2DA00285135 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799BA6652844A2DA00285135 /* CloudKit.framework */; };
 		79BB4AB32855A7B200FB45A4 /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BB4AB22855A7B200FB45A4 /* ImageExtensions.swift */; };
 		79BB4AB52855B26500FB45A4 /* KeyEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BB4AB42855B26500FB45A4 /* KeyEditor.swift */; };
+		79BB4AB728568F8C00FB45A4 /* SectionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BB4AB628568F8B00FB45A4 /* SectionLabel.swift */; };
+		79BB4AB92856939900FB45A4 /* LabelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BB4AB82856939900FB45A4 /* LabelExtensions.swift */; };
+		79BB4ABB2856A66900FB45A4 /* Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BB4ABA2856A66900FB45A4 /* Clipboard.swift */; };
 		79C4DC5E2851E78F00CB3638 /* DesignTimeAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4DC5D2851E78F00CB3638 /* DesignTimeAccount.swift */; };
 		79C4DC602851E7C200CB3638 /* AccountProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4DC5F2851E7C200CB3638 /* AccountProtocol.swift */; };
 		79C4DC622851E7E500CB3638 /* DesignTimeSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4DC612851E7E500CB3638 /* DesignTimeSlot.swift */; };
@@ -62,7 +65,6 @@
 		79EC77A728361C7D009E4466 /* WolfActivityRing in Frameworks */ = {isa = PBXBuildFile; productRef = 79EC77A628361C7D009E4466 /* WolfActivityRing */; };
 		79EC77AA28361DAB009E4466 /* WolfLorem in Frameworks */ = {isa = PBXBuildFile; productRef = 79EC77A928361DAB009E4466 /* WolfLorem */; };
 		79EC77AD28361E28009E4466 /* WolfSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 79EC77AC28361E28009E4466 /* WolfSwiftUI */; };
-		79EC77B028361F33009E4466 /* Tor in Frameworks */ = {isa = PBXBuildFile; productRef = 79EC77AF28361F33009E4466 /* Tor */; };
 		79EC77B328361F62009E4466 /* Hyperconnectivity in Frameworks */ = {isa = PBXBuildFile; productRef = 79EC77B228361F62009E4466 /* Hyperconnectivity */; };
 		79EC77B62836205F009E4466 /* Esplora in Frameworks */ = {isa = PBXBuildFile; productRef = 79EC77B52836205F009E4466 /* Esplora */; };
 		79EC7CA02851E00200A7C463 /* AccountStatusIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EC7C9F2851E00200A7C463 /* AccountStatusIndicator.swift */; };
@@ -115,6 +117,9 @@
 		799BA6672844A3AD00285135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		79BB4AB22855A7B200FB45A4 /* ImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtensions.swift; sourceTree = "<group>"; };
 		79BB4AB42855B26500FB45A4 /* KeyEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyEditor.swift; sourceTree = "<group>"; };
+		79BB4AB628568F8B00FB45A4 /* SectionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionLabel.swift; sourceTree = "<group>"; };
+		79BB4AB82856939900FB45A4 /* LabelExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelExtensions.swift; sourceTree = "<group>"; };
+		79BB4ABA2856A66900FB45A4 /* Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clipboard.swift; sourceTree = "<group>"; };
 		79C4DC5D2851E78F00CB3638 /* DesignTimeAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignTimeAccount.swift; sourceTree = "<group>"; };
 		79C4DC5F2851E7C200CB3638 /* AccountProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountProtocol.swift; sourceTree = "<group>"; };
 		79C4DC612851E7E500CB3638 /* DesignTimeSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignTimeSlot.swift; sourceTree = "<group>"; };
@@ -151,7 +156,6 @@
 				79EC77A428361BE7009E4466 /* WolfAPI in Frameworks */,
 				79EC77A728361C7D009E4466 /* WolfActivityRing in Frameworks */,
 				79EC77B62836205F009E4466 /* Esplora in Frameworks */,
-				79EC77B028361F33009E4466 /* Tor in Frameworks */,
 				79EC77AD28361E28009E4466 /* WolfSwiftUI in Frameworks */,
 				79EC77A128360B38009E4466 /* BCFoundation in Frameworks */,
 				7905B0252849AAB5008BC79D /* WolfOrdinal in Frameworks */,
@@ -195,7 +199,6 @@
 				79C4DC5F2851E7C200CB3638 /* AccountProtocol.swift */,
 				7905B0212849A50B008BC79D /* Account.swift */,
 				79349B9228506E0B0058CF5D /* AccountStatus.swift */,
-				7937A68B284D1D0000DE8E11 /* AccountSetupModel.swift */,
 				79C4DC702854131E00CB3638 /* Views */,
 			);
 			path = Account;
@@ -218,6 +221,23 @@
 				799BA662283F0A1A00285135 /* WalletSweeper.swift */,
 			);
 			path = Old;
+			sourceTree = "<group>";
+		};
+		7951B1292859358500E5C3C0 /* AccountSetup */ = {
+			isa = PBXGroup;
+			children = (
+				7937A68B284D1D0000DE8E11 /* AccountSetupModel.swift */,
+				7951B12A285935B100E5C3C0 /* Views */,
+			);
+			path = AccountSetup;
+			sourceTree = "<group>";
+		};
+		7951B12A285935B100E5C3C0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7937A68D284D1D8D00DE8E11 /* AccountSetup.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		79651E5828484C6000991464 /* UserGuide */ = {
@@ -245,6 +265,8 @@
 				7937A68F284D7FBD00DE8E11 /* NameEditor.swift */,
 				7937A697284DC8BB00DE8E11 /* NotesEditor.swift */,
 				79BB4AB22855A7B200FB45A4 /* ImageExtensions.swift */,
+				79BB4AB628568F8B00FB45A4 /* SectionLabel.swift */,
+				79BB4AB82856939900FB45A4 /* LabelExtensions.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -277,7 +299,6 @@
 			children = (
 				79C4DC5D2851E78F00CB3638 /* DesignTimeAccount.swift */,
 				7937A689284D145000DE8E11 /* AccountDetail.swift */,
-				7937A68D284D1D8D00DE8E11 /* AccountSetup.swift */,
 				79EC7C9F2851E00200A7C463 /* AccountStatusIndicator.swift */,
 			);
 			path = Views;
@@ -327,6 +348,8 @@
 				799B54BE283DC7D20043EB90 /* SyncButton.swift */,
 				799B54C0283DECA00043EB90 /* ErrorMessage.swift */,
 				7905B0262849AC23008BC79D /* Memoized.swift */,
+				79BB4ABA2856A66900FB45A4 /* Clipboard.swift */,
+				7951B1292859358500E5C3C0 /* AccountSetup */,
 				79C4DC6A2853C75100CB3638 /* Accounts */,
 				7937A684284C110D00DE8E11 /* Account */,
 				79C4DC65285324FD00CB3638 /* Views */,
@@ -388,7 +411,6 @@
 				79EC77A628361C7D009E4466 /* WolfActivityRing */,
 				79EC77A928361DAB009E4466 /* WolfLorem */,
 				79EC77AC28361E28009E4466 /* WolfSwiftUI */,
-				79EC77AF28361F33009E4466 /* Tor */,
 				79EC77B228361F62009E4466 /* Hyperconnectivity */,
 				79EC77B52836205F009E4466 /* Esplora */,
 				79241071283C268D00611B9F /* BCApp */,
@@ -473,7 +495,6 @@
 				79EC77A528361C7D009E4466 /* XCRemoteSwiftPackageReference "WolfActivityRing" */,
 				79EC77A828361DAB009E4466 /* XCRemoteSwiftPackageReference "WolfLorem" */,
 				79EC77AB28361E28009E4466 /* XCRemoteSwiftPackageReference "WolfSwiftUI" */,
-				79EC77AE28361F32009E4466 /* XCRemoteSwiftPackageReference "BCSwiftTor" */,
 				79EC77B128361F62009E4466 /* XCRemoteSwiftPackageReference "Hyperconnectivity" */,
 				79EC77B42836205F009E4466 /* XCRemoteSwiftPackageReference "BCSwiftEsplora" */,
 				79241070283C268D00611B9F /* XCRemoteSwiftPackageReference "BCSwiftApp" */,
@@ -534,8 +555,10 @@
 				79349B9528508E220058CF5D /* SlotList.swift in Sources */,
 				79BB4AB32855A7B200FB45A4 /* ImageExtensions.swift in Sources */,
 				79EC77772835BC67009E4466 /* CoordinatorModel.xcdatamodeld in Sources */,
+				79BB4AB728568F8C00FB45A4 /* SectionLabel.swift in Sources */,
 				79C4DC622851E7E500CB3638 /* DesignTimeSlot.swift in Sources */,
 				799B54C1283DECA00043EB90 /* ErrorMessage.swift in Sources */,
+				79BB4ABB2856A66900FB45A4 /* Clipboard.swift in Sources */,
 				79349B8F28506AB30058CF5D /* Slot.swift in Sources */,
 				79651E5C2848903700991464 /* AppLogo.swift in Sources */,
 				79349B9128506DF70058CF5D /* SlotStatus.swift in Sources */,
@@ -548,6 +571,7 @@
 				799B54BF283DC7D20043EB90 /* SyncButton.swift in Sources */,
 				79C4DC692853253200CB3638 /* ViewExtensions.swift in Sources */,
 				79C4DC6C2853C7EA00CB3638 /* AccountsViewModelProtocol.swift in Sources */,
+				79BB4AB92856939900FB45A4 /* LabelExtensions.swift in Sources */,
 				7905B0202849A123008BC79D /* Policy.swift in Sources */,
 				79BB4AB52855B26500FB45A4 /* KeyEditor.swift in Sources */,
 				7905B0222849A50B008BC79D /* Account.swift in Sources */,
@@ -981,14 +1005,6 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		79EC77AE28361F32009E4466 /* XCRemoteSwiftPackageReference "BCSwiftTor" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/BlockchainCommons/BCSwiftTor.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
 		79EC77B128361F62009E4466 /* XCRemoteSwiftPackageReference "Hyperconnectivity" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/BlockchainCommons/Hyperconnectivity.git";
@@ -1047,11 +1063,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 79EC77AB28361E28009E4466 /* XCRemoteSwiftPackageReference "WolfSwiftUI" */;
 			productName = WolfSwiftUI;
-		};
-		79EC77AF28361F33009E4466 /* Tor */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 79EC77AE28361F32009E4466 /* XCRemoteSwiftPackageReference "BCSwiftTor" */;
-			productName = Tor;
 		};
 		79EC77B228361F62009E4466 /* Hyperconnectivity */ = {
 			isa = XCSwiftPackageProductDependency;

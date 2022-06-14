@@ -13,13 +13,18 @@ struct SlotListRow<Slot: SlotProtocol>: View {
             VStack(alignment: .leading) {
                 if slot.name.isEmpty {
                     Text(slot.status.description)
+                        .minimumScaleFactor(0.5)
+                        .lineLimit(1)
                         .font(.headline)
                         .foregroundColor(slot.status.color)
                 } else {
                     Text(slot.name)
+                        .minimumScaleFactor(0.5)
                         .lineLimit(1)
                         .font(.headline)
                     Text(slot.status.description)
+                        .minimumScaleFactor(0.5)
+                        .lineLimit(1)
                         .font(.caption)
                         .foregroundColor(slot.status.color)
                 }
@@ -50,13 +55,11 @@ struct SlotListRow_Host: View {
 
 struct SlotListRow_Preview: PreviewProvider {
     static var previews: some View {
-        Group {
-            SlotListRow_Host(displayIndex: 1, name: "", status: .incomplete)
-            SlotListRow_Host(displayIndex: 2, name: "Name", status: .complete(publicKey: "Key"))
-        }
-        .frame(width: 400)
-        .previewLayout(.sizeThatFits)
-        .preferredColorScheme(.dark)
+        SlotListRow_Host(displayIndex: 1, name: "", status: .incomplete)
+            .previewLayout(.sizeThatFits)
+        
+        SlotListRow_Host(displayIndex: 2, name: "Name", status: .complete(publicKey: "Key"))
+            .previewLayout(.sizeThatFits)
     }
 }
 

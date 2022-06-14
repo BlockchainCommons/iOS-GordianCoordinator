@@ -7,7 +7,7 @@ import SwiftUI
 import LifeHash
 
 @objc(Account)
-class Account: NSManagedObject, AccountProtocol, ObjectIdentifiable {
+class Account: NSManagedObject, AccountProtocol {
     let modelObjectType = ModelObjectType.account
 
     // Don't remove this constructor even though it doesn't do anything: Core Data will crash.

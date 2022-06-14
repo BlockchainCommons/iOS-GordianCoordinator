@@ -17,6 +17,7 @@ struct CoordinatorApp: App {
             } else {
                 MainView()
                     .symbolRenderingMode(.hierarchical)
+                    .environmentObject(Clipboard())
             }
         }
     }

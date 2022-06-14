@@ -5,7 +5,7 @@ struct SlotDetail<Slot: SlotProtocol>: View
 {
     @ObservedObject var slot: Slot
     @FocusState var focusedField: UUID?
-    let getClipboard: () -> String?
+    @EnvironmentObject var clipboard: Clipboard
     let onValid: () -> Void
 
     var body: some View {
@@ -36,7 +36,7 @@ struct SlotDetail<Slot: SlotProtocol>: View
     }
     
     var key: some View {
-        KeyEditor(slot: slot, getClipboard: getClipboard)
+        KeyEditor(slot: slot)
     }
 
     @ViewBuilder
@@ -66,7 +66,7 @@ struct SlotDetail_Host: View {
     }
     
     var body: some View {
-        SlotDetail(slot: slot, getClipboard: { nil }, onValid: { })
+        SlotDetail(slot: slot, onValid: { })
     }
 }
 
@@ -75,7 +75,7 @@ struct SlotDetail_Preview: PreviewProvider {
         NavigationView {
             SlotDetail_Host()
         }
-        .preferredColorScheme(.dark)
+        .environmentObject(Clipboard(isDesignTime: true))
     }
 }
 

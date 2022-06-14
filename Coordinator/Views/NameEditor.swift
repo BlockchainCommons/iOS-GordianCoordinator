@@ -38,12 +38,7 @@ struct NameEditor: View {
     }
     
     var label: some View {
-        Label {
-            Text("Name")
-                .bold()
-        } icon: {
-            Image.name
-        }
+        SectionLabel("Name", icon: .name)
     }
     
     var field: some View {
