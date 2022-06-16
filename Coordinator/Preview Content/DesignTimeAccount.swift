@@ -5,9 +5,9 @@ import WolfOrdinal
 import Combine
 import WolfLorem
 
-class DesignTimeAccount: ObservableObject, AccountProtocol {
+class DesignTimeAccount: AccountProtocol {
     let modelObjectType = ModelObjectType.account
-    weak var model: DesignTimeAccountsViewModel?
+    weak var model: DesignTimeAppViewModel?
     let accountID: UUID
     let policy: Policy
     var slots: [DesignTimeSlot]
@@ -18,6 +18,7 @@ class DesignTimeAccount: ObservableObject, AccountProtocol {
         accountID.fingerprintData
     }
 
+    @Published var status: AccountStatus
     @Published var name: String
     @Published var notes: String
     @Published var ordinal: Ordinal {
@@ -26,7 +27,7 @@ class DesignTimeAccount: ObservableObject, AccountProtocol {
         }
     }
 
-    init(model: DesignTimeAccountsViewModel?, accountID: UUID, name: String, notes: String = "", policy: Policy, ordinal: Ordinal) {
+    init(model: DesignTimeAppViewModel?, accountID: UUID, name: String, notes: String = "", policy: Policy, ordinal: Ordinal) {
         self.model = model
         self.accountID = accountID
         self.name = name
@@ -34,26 +35,16 @@ class DesignTimeAccount: ObservableObject, AccountProtocol {
         self.policy = policy
         self.ordinal = ordinal
         self.slots = []
-        
-        for index in 0..<policy.slots {
+        let slotsCount = policy.slots
+        self.status = .incomplete(slotsRemaining: slotsCount)
+
+        for index in 0..<slotsCount {
             slots.append(DesignTimeSlot(account: self, displayIndex: index, status: .incomplete))
         }
     }
     
     convenience init() {
         self.init(model: nil, accountID: UUID(), name: Lorem.bytewords(4), policy: .threshold(quorum: 2, slots: 3), ordinal: [0])
-    }
-    
-    var status: AccountStatus {
-        let completeSlots = slots.filter {
-            $0.isComplete
-        }.count
-        
-        if completeSlots == slots.count {
-            return .complete
-        } else {
-            return .incomplete(slotsRemaining: slots.count - completeSlots)
-        }
     }
 
     var instanceDetail: String? {

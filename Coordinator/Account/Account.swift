@@ -21,10 +21,10 @@ class Account: NSManagedObject, AccountProtocol {
         self.policy = policy
         self.ordinal = ordinal
         self.name = LifeHashNameGenerator.generate(from: accountID)
-        let slots = policy.slots
-        self.status = .incomplete(slotsRemaining: slots)
+        let slotsCount = policy.slots
+        self.status = .incomplete(slotsRemaining: slotsCount)
         
-        for index in 0..<slots {
+        for index in 0..<slotsCount {
             let slot = Slot(context: context, index: index)
             addSlot(slot)
         }

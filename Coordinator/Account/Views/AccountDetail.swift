@@ -9,7 +9,7 @@ fileprivate let logger = Logger(subsystem: Application.bundleIdentifier, categor
 
 struct AccountDetail<Account: AccountProtocol>: View {
     @ObservedObject var account: Account
-    let onValid: () -> Void
+    @EnvironmentObject var persistence: Persistence
     let generateName: () -> String
 
     @FocusState var focusedField: UUID?
@@ -40,6 +40,10 @@ struct AccountDetail<Account: AccountProtocol>: View {
         }
     }
     
+    func onValid() {
+        
+    }
+    
     var identity: some View {
         ObjectIdentityBlock(model: .constant(account))
             .frame(height: 128)
@@ -54,29 +58,6 @@ struct AccountDetail<Account: AccountProtocol>: View {
     }
 
     var slots: some View {
-        SlotList(account: account, onValid: onValid)
+        SlotList(account: account)
     }
 }
-
-#if DEBUG
-
-struct AccountDetail_Host: View {
-    @StateObject var account = DesignTimeAccount(model: nil, accountID: UUID(), name: "Test account", policy: .threshold(quorum: 2, slots: 3), ordinal: [0])
-
-    var body: some View {
-        AccountDetail(account: account, onValid: { }, generateName: { LifeHashNameGenerator.generate(from: account.accountID) })
-    }
-}
-
-struct Example_Preview: PreviewProvider {
-    static var previews: some View {
-        Group {
-            AccountDetail_Host()
-        }
-        .padding()
-        .preferredColorScheme(.dark)
-        .environmentObject(Clipboard(isDesignTime: true))
-    }
-}
-
-#endif

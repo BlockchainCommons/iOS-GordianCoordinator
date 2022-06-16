@@ -103,17 +103,3 @@ struct AccountSetup: View {
         NotesEditor($model.notes, focusedField: _focusedField)
     }
 }
-
-#if DEBUG
-
-struct AccountSetup_Preview: PreviewProvider {
-    static var previews: some View {
-        AccountSetup(isPresented: .constant(true)) {
-            print("save: \($0)")
-        }
-        .padding()
-        .preferredColorScheme(.dark)
-    }
-}
-
-#endif

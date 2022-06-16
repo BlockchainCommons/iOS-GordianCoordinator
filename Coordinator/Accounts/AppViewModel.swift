@@ -7,20 +7,24 @@ import WolfOrdinal
 import BCApp
 import os
 
-fileprivate let logger = Logger(subsystem: Application.bundleIdentifier, category: "AccountsViewModel")
+fileprivate let logger = Logger(subsystem: Application.bundleIdentifier, category: "AppViewModel")
 
-class AccountsViewModel: AccountsViewModelProtocol {
-    let context: NSManagedObjectContext
+class AppViewModel: AppViewModelProtocol {
+    let persistence: Persistence
     @Published var accounts: [Account] = []
     
     private var cancellable: Set<AnyCancellable> = []
-    private var storage: AccountsStorage!
+    private var storage: AppStorage!
     
-    init(context: NSManagedObjectContext) {
+    private let context: NSManagedObjectContext
+    
+    init(persistence: Persistence) {
+        self.persistence = persistence
+        let context = persistence.context
         self.context = context
         cancellable.first?.cancel()
         cancellable.removeAll()
-        storage = AccountsStorage(context: context)
+        storage = AppStorage(context: context)
         storage.accounts.sink { accounts in
             withAnimation {
                 self.accounts = accounts.sorted()
@@ -35,7 +39,7 @@ class AccountsViewModel: AccountsViewModelProtocol {
         return account
     }
     
-    func deleteAccount(account: Account) {
+    func deleteAccount(_ account: Account) {
         context.delete(account)
     }
     

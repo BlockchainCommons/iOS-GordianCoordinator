@@ -12,7 +12,7 @@ struct CoordinatorApp: App {
                 Text("Stop after Xcode says 'no more requests to execute', then use CloudKit Console to ensure the schema was created correctly.")
                     .padding()
                     .onAppear {
-                        _ = PersistenceController.shared.container
+                        Persistence.setupContainer(initializeCloudKitSchema: true)
                     }
             } else {
                 MainView()

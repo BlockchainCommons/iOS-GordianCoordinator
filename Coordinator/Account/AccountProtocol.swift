@@ -12,8 +12,21 @@ protocol AccountProtocol: ObservableObject, Identifiable, ObjectIdentifiable, Co
     var name: String { get set }
     var notes: String { get set }
     var slots: [Slot] { get }
-    var status: AccountStatus { get }
+    var status: AccountStatus { get set }
     var policy: Policy { get }
+    
+    func updateStatus()
+}
+
+extension AccountProtocol {
+    func updateStatus() {
+        let completeSlots = slots.filter { $0.isComplete }.count
+        if completeSlots == slots.count {
+            self.status = .complete
+        } else {
+            self.status = .incomplete(slotsRemaining: slots.count - completeSlots)
+        }
+    }
 }
 
 extension AccountProtocol {

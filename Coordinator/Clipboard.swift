@@ -3,102 +3,124 @@ import UIKit
 import SwiftUI
 import Combine
 
-fileprivate protocol ClipboardProtocol: AnyObject {
-    var hasString: Bool { get }
-    var hasImage: Bool { get }
-    var string: String? { get set }
-    var image: UIImage? { get set }
-}
 
-fileprivate class SystemClipboard: ClipboardProtocol {
+//class Clipboard: ObservableObject {
+//    let isDesignTime: Bool
+//
+//    init(isDesignTime: Bool = false) {
+//        self.isDesignTime = isDesignTime
+//    }
+//
+//    var hasString: Bool {
+//        UIPasteboard.general.hasStrings
+//    }
+//
+//    var hasImage: Bool {
+//        UIPasteboard.general.hasImages
+//    }
+//
+//    var string: String? {
+//        get {
+//            UIPasteboard.general.string
+//        }
+//
+//        set {
+//            UIPasteboard.general.string = newValue
+//        }
+//    }
+//
+//    var image: UIImage? {
+//        get {
+//            UIPasteboard.general.image
+//        }
+//
+//        set {
+//            UIPasteboard.general.image = newValue
+//        }
+//    }
+//}
+
+
+class Clipboard: ObservableObject {
+#if DEBUG
+    @Published var value: Any?
+    let isDesignTime: Bool
+
+    init(isDesignTime: Bool = false) {
+        self.isDesignTime = isDesignTime
+    }
+#else
     init() {
     }
+#endif
 
     var hasString: Bool {
-        return UIPasteboard.general.hasStrings
+#if DEBUG
+        if isDesignTime {
+            return value is String
+        } else {
+            return UIPasteboard.general.hasStrings
+        }
+#else
+        UIPasteboard.general.hasStrings
+#endif
     }
-    
+
+    var hasImage: Bool {
+#if DEBUG
+        if isDesignTime {
+            return value is UIImage
+        } else {
+            return UIPasteboard.general.hasImages
+        }
+#else
+        UIPasteboard.general.hasImages
+#endif
+    }
+
     var string: String? {
         get {
-            return UIPasteboard.general.string
+#if DEBUG
+            if isDesignTime {
+                return value as? String
+            } else {
+                return UIPasteboard.general.string
+            }
+#else
+            UIPasteboard.general.string
+#endif
         }
-        
+
         set {
+#if DEBUG
+            if isDesignTime {
+                value = newValue
+            }
+#endif
             UIPasteboard.general.string = newValue
         }
     }
-    
-    var hasImage: Bool {
-        return UIPasteboard.general.hasImages
-    }
-    
+
     var image: UIImage? {
         get {
-            return UIPasteboard.general.image
+#if DEBUG
+            if isDesignTime {
+                return value as? UIImage
+            } else {
+                return UIPasteboard.general.image
+            }
+#else
+            UIPasteboard.general.image
+#endif
         }
-        
+
         set {
+#if DEBUG
+            if isDesignTime {
+                value = newValue
+            }
+#endif
             UIPasteboard.general.image = newValue
         }
     }
 }
-
-class Clipboard: ObservableObject, ClipboardProtocol {
-    private let _clipboard: ClipboardProtocol
-    
-    init(isDesignTime: Bool = false) {
-        if isDesignTime {
-            _clipboard = DesignTimeClipboard()
-        } else {
-            _clipboard = SystemClipboard()
-        }
-    }
-
-    var hasString: Bool {
-        _clipboard.hasString
-    }
-    
-    var hasImage: Bool {
-        _clipboard.hasImage
-    }
-    
-    var image: UIImage? {
-        get { _clipboard.image }
-        set { _clipboard.image = newValue }
-    }
-    
-    var string: String? {
-        get { _clipboard.string }
-        set { _clipboard.string = newValue }
-    }
-}
-
-#if DEBUG
-
-fileprivate class DesignTimeClipboard: ClipboardProtocol {
-    private var value: Any?
-
-    init() {
-        
-    }
-
-    var hasString: Bool {
-        value is String
-    }
-    
-    var string: String? {
-        get { value as? String }
-        set { value = newValue }
-    }
-    
-    var hasImage: Bool {
-        value is UIImage
-    }
-    
-    var image: UIImage? {
-        get { value as? UIImage }
-        set { value = newValue }
-    }
-}
-
-#endif

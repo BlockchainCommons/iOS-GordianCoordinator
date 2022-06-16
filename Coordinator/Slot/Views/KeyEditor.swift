@@ -8,8 +8,13 @@ import WolfBase
 struct KeyEditor<Slot: SlotProtocol>: View
 {
     @ObservedObject var slot: Slot
+    @EnvironmentObject var persistence: Persistence
     @StateObject private var validator = Validator()
-    @State var key: String?
+    @State var key: String? {
+        didSet {
+            validator.subject.send(key)
+        }
+    }
     @State var isAlertPresented: Bool = false
     @EnvironmentObject var clipboard: Clipboard
 
@@ -20,8 +25,11 @@ struct KeyEditor<Slot: SlotProtocol>: View
     }
     
     func setStatus(_ status: SlotStatus) {
-        slot.status = status
-//        slot.account.updateStatus()
+        withAnimation {
+            slot.status = status
+            slot.account.updateStatus()
+            persistence.saveChanges()
+        }
     }
     
     var body: some View {
@@ -29,16 +37,10 @@ struct KeyEditor<Slot: SlotProtocol>: View
             labelRow
             keyRow
         }
-        .onChange(of: key) { newValue in
-            validator.subject.send(newValue)
-        }
         .onReceive(validator.publisher) {
             if $0.isValid {
                 setStatus(.complete(publicKey: key!))
             }
-        }
-        .onAppear {
-            self.key = slot.key
         }
     }
     
@@ -82,8 +84,9 @@ struct KeyEditor<Slot: SlotProtocol>: View
     
     var keyHolder: some View {
         Text(slot.key!)
+            .font(.caption)
             .monospaced()
-            .lineLimit(1)
+            .lineLimit(3)
             .formSectionStyle(isVisible: true)
     }
     
@@ -195,64 +198,3 @@ extension Publisher where Output == String? {
         .eraseToAnyPublisher()
     }
 }
-
-#if DEBUG
-
-struct KeyEditor_Host: View {
-    @StateObject var slot: DesignTimeSlot
-    @EnvironmentObject var clipboard: Clipboard
-    
-    var body: some View {
-        VStack {
-            KeyEditor(slot: slot)
-            if !slot.isComplete {
-                HStack {
-                    Text("Clipboard:")
-                    Button {
-                        clipboard.string = randomKey()
-                    } label: {
-                        Text("Valid")
-                    }
-
-                    Button {
-                        clipboard.string = "invalid key"
-                    } label: {
-                        Text("Invalid")
-                    }
-
-                    Button {
-                        clipboard.string = nil
-                    } label: {
-                        Text("Clear")
-                    }
-
-                    Spacer()
-                }
-                .buttonStyle(.borderless)
-                .font(.caption)
-                .padding()
-            }
-        }
-    }
-}
-
-struct KeyEditor_Preview: PreviewProvider {
-    static var previews: some View {
-        Group {
-            KeyEditor_Host(slot: DesignTimeSlot(account: DesignTimeAccount(), displayIndex: 1, name: "Name", notes: "Notes", status: .incomplete))
-            KeyEditor_Host(slot: DesignTimeSlot(account: DesignTimeAccount(), displayIndex: 1, name: "Name", notes: "Notes", status: .complete(publicKey: randomKey())))
-        }
-        .previewLayout(.sizeThatFits)
-        .environmentObject(Clipboard(isDesignTime: true))
-        .padding()
-    }
-}
-
-func randomKey() -> String {
-    let seed = Seed()
-    let hdKey = try! HDKey(seed: seed)
-    let publicKey = hdKey.public
-    return publicKey.base58
-}
-
-#endif

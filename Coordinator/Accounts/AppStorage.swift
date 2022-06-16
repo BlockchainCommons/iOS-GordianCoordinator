@@ -4,9 +4,9 @@ import CoreData
 import os
 import BCApp
 
-fileprivate let logger = Logger(subsystem: Application.bundleIdentifier, category: "AccountsStorage")
+fileprivate let logger = Logger(subsystem: Application.bundleIdentifier, category: "AppStorage")
 
-class AccountsStorage: NSObject {
+class AppStorage: NSObject {
     var accounts = CurrentValueSubject<[Account], Never>([])
     var slots = CurrentValueSubject<[Slot], Never>([])
     
@@ -53,7 +53,7 @@ class AccountsStorage: NSObject {
     }
 }
 
-extension AccountsStorage: NSFetchedResultsControllerDelegate {
+extension AppStorage: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         logger.info("🔥 controllerDidChangeContent")
         switch controller {

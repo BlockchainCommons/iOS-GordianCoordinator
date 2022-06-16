@@ -6,7 +6,7 @@ struct SlotDetail<Slot: SlotProtocol>: View
     @ObservedObject var slot: Slot
     @FocusState var focusedField: UUID?
     @EnvironmentObject var clipboard: Clipboard
-    let onValid: () -> Void
+    @EnvironmentObject var persistence: Persistence
 
     var body: some View {
         ScrollView {
@@ -42,41 +42,13 @@ struct SlotDetail<Slot: SlotProtocol>: View
     @ViewBuilder
     var name: some View {
         NameEditor($slot.name, focusedField: _focusedField) {
-            onValid()
+            persistence.saveChanges()
         }
     }
 
     var notes: some View {
         NotesEditor($slot.notes, focusedField: _focusedField) {
-            onValid()
+            persistence.saveChanges()
         }
     }
 }
-
-#if DEBUG
-
-struct SlotDetail_Host: View {
-    @StateObject var account: DesignTimeAccount
-    let slot: DesignTimeSlot
-    
-    init() {
-        let account = DesignTimeAccount()
-        self._account = StateObject(wrappedValue: account)
-        slot = DesignTimeSlot(account: account, displayIndex: 1, status: .incomplete)
-    }
-    
-    var body: some View {
-        SlotDetail(slot: slot, onValid: { })
-    }
-}
-
-struct SlotDetail_Preview: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            SlotDetail_Host()
-        }
-        .environmentObject(Clipboard(isDesignTime: true))
-    }
-}
-
-#endif

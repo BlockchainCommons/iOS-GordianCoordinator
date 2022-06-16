@@ -8,16 +8,16 @@ import os
 
 fileprivate let logger = Logger(subsystem: Application.bundleIdentifier, category: "AccountsList")
 
-struct AccountsList<AccountsViewModel, Account>: View
-where AccountsViewModel: AccountsViewModelProtocol, Account == AccountsViewModel.Account
+struct AccountsList<AppViewModel, Account>: View
+where AppViewModel: AppViewModelProtocol, Account == AppViewModel.Account
 {
-    @ObservedObject var viewModel: AccountsViewModel
+    @ObservedObject var viewModel: AppViewModel
     
     @State private var isDetailValid: Bool = true
     @State private var accountForDeletion: Account?
     @State private var isAccountSetupPresented: Bool = false
     
-    init(viewModel: AccountsViewModel) {
+    init(viewModel: AppViewModel) {
         self.viewModel = viewModel
     }
     
@@ -84,7 +84,7 @@ where AccountsViewModel: AccountsViewModelProtocol, Account == AccountsViewModel
                    presenting: accountForDeletion
             ) { account in
                 Button(role: .destructive) {
-                    deleteItem(account: account)
+                    deleteAccount(account)
                     accountForDeletion = nil
                 } label: {
                     Text("Delete")
@@ -113,7 +113,7 @@ where AccountsViewModel: AccountsViewModelProtocol, Account == AccountsViewModel
         
         var body: some View {
             NavigationLink {
-                AccountDetail(account: account, onValid: { saveChanges() }, generateName: { Self.generateName(for: account) })
+                AccountDetail(account: account, generateName: { Self.generateName(for: account) })
             } label: {
                 VStack {
 #if targetEnvironment(macCatalyst)
@@ -158,14 +158,14 @@ where AccountsViewModel: AccountsViewModelProtocol, Account == AccountsViewModel
         }
     }
     
-    private func deleteItem(account: Account) {
+    private func deleteAccount(_ account: Account) {
         guard let index = viewModel.accounts.firstIndex(of: account) else {
             return
         }
-        deleteItems(offsets: [index])
+        deleteAccounts(at: [index])
     }
     
-    private func deleteItems(offsets: IndexSet) {
+    private func deleteAccounts(at offsets: IndexSet) {
         withAnimation {
             let accounts = viewModel.accounts
             offsets.map { accounts[$0] }.forEach(viewModel.deleteAccount)
@@ -203,24 +203,3 @@ where AccountsViewModel: AccountsViewModelProtocol, Account == AccountsViewModel
         .accessibility(label: Text("Settings"))
     }
 }
-
-#if DEBUG
-
-struct AccountsList_Host: View {
-    @StateObject var viewModel = DesignTimeAccountsViewModel()
-    
-    var body: some View {
-        AccountsList(viewModel: viewModel)
-    }
-}
-
-struct AccountsList_Preview: PreviewProvider {
-    static var previews: some View {
-        Group {
-            AccountsList_Host()
-        }
-        .environmentObject(Clipboard(isDesignTime: true))
-        .preferredColorScheme(.dark)
-    }
-}
-#endif

@@ -3,7 +3,7 @@ import WolfOrdinal
 import WolfLorem
 import WolfBase
 
-class DesignTimeAccountsViewModel: AccountsViewModelProtocol {
+class DesignTimeAppViewModel: AppViewModelProtocol {
     @Published var accounts: [DesignTimeAccount] = []
     
     init() {
@@ -18,7 +18,7 @@ class DesignTimeAccountsViewModel: AccountsViewModelProtocol {
         return account
     }
     
-    func deleteAccount(account: DesignTimeAccount) {
+    func deleteAccount(_ account: DesignTimeAccount) {
         var accounts = self.accounts
         accounts.removeAll {
             $0.accountID == account.accountID
