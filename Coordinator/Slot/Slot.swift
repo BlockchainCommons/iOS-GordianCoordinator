@@ -34,7 +34,10 @@ class Slot: NSManagedObject, SlotProtocol {
             name_ ?? ""
         }
         set {
-            name_ = newValue.isEmpty ? nil : newValue
+            let value = newValue.isEmpty ? nil : newValue
+            if name_ != value {
+                name_ = value
+            }
         }
     }
     
@@ -44,7 +47,10 @@ class Slot: NSManagedObject, SlotProtocol {
         }
         
         set {
-            notes_ = newValue.isEmpty ? nil : newValue
+            let value = newValue.isEmpty ? nil : newValue
+            if notes_ != value {
+                notes_ = value
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 import Foundation
 import WolfOrdinal
 
+@MainActor
 protocol AppViewModelProtocol: ObservableObject {
     associatedtype Account: AccountProtocol
     

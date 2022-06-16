@@ -14,6 +14,8 @@ struct AccountDetail<Account: AccountProtocol>: View {
 
     @FocusState var focusedField: UUID?
     @State var isNameValid: Bool = true
+    @State var name: String = ""
+    @State var notes: String = ""
     
     var isValid: Bool {
         isNameValid
@@ -24,8 +26,8 @@ struct AccountDetail<Account: AccountProtocol>: View {
             VStack(spacing: 20) {
                 identity
                 slots
-                name
-                notes
+                nameEditor
+                notesEditor
             }
         }
         .navigationTitle("Account")
@@ -38,10 +40,16 @@ struct AccountDetail<Account: AccountProtocol>: View {
 
             AppToolbar()
         }
+        .onAppear {
+            self.name = account.name
+            self.notes = account.notes
+        }
     }
     
     func onValid() {
-        
+        account.name = name
+        account.notes = notes
+        persistence.saveChanges()
     }
     
     var identity: some View {
@@ -49,12 +57,12 @@ struct AccountDetail<Account: AccountProtocol>: View {
             .frame(height: 128)
     }
 
-    var name: some View {
-        NameEditor($account.name, isValid: $isNameValid, focusedField: _focusedField, onValid: onValid, generateName: generateName)
+    var nameEditor: some View {
+        NameEditor($name, isValid: $isNameValid, focusedField: _focusedField, onValid: onValid, generateName: generateName)
     }
 
-    var notes: some View {
-        NotesEditor($account.notes, focusedField: _focusedField, onValid: onValid)
+    var notesEditor: some View {
+        NotesEditor($notes, focusedField: _focusedField, onValid: onValid)
     }
 
     var slots: some View {

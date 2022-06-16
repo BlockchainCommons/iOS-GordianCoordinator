@@ -7,14 +7,16 @@ struct SlotDetail<Slot: SlotProtocol>: View
     @FocusState var focusedField: UUID?
     @EnvironmentObject var clipboard: Clipboard
     @EnvironmentObject var persistence: Persistence
-
+    @State var name: String = ""
+    @State var notes: String = ""
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 accountIdentity
                 key
-                name
-                notes
+                nameEditor
+                notesEditor
             }
         }
         .frame(maxWidth: 600)
@@ -28,8 +30,18 @@ struct SlotDetail<Slot: SlotProtocol>: View
 
             AppToolbar()
         }
+        .onAppear {
+            self.name = slot.name
+            self.notes = slot.notes
+        }
     }
     
+    func onValid() {
+        slot.name = name
+        slot.notes = notes
+        persistence.saveChanges()
+    }
+
     var accountIdentity: some View {
         ObjectIdentityBlock(model: .constant(slot.account))
             .frame(height: 80)
@@ -40,15 +52,11 @@ struct SlotDetail<Slot: SlotProtocol>: View
     }
 
     @ViewBuilder
-    var name: some View {
-        NameEditor($slot.name, focusedField: _focusedField) {
-            persistence.saveChanges()
-        }
+    var nameEditor: some View {
+        NameEditor($name, focusedField: _focusedField, onValid: onValid)
     }
 
-    var notes: some View {
-        NotesEditor($slot.notes, focusedField: _focusedField) {
-            persistence.saveChanges()
-        }
+    var notesEditor: some View {
+        NotesEditor($notes, focusedField: _focusedField, onValid: onValid)
     }
 }

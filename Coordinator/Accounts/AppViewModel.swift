@@ -44,16 +44,6 @@ class AppViewModel: AppViewModelProtocol {
     }
     
     func saveChanges() {
-        guard context.hasChanges else {
-            return
-        }
-
-        print("🔥 Saving changes")
-
-        do {
-            try context.save()
-        } catch {
-            logger.error("⛔️ \(error.localizedDescription)")
-        }
+        persistence.saveChanges()
     }
 }

@@ -1,4 +1,5 @@
 import SwiftUI
+import WolfSwiftUI
 
 struct SlotList<Account, Slot>: View
 where
@@ -24,7 +25,7 @@ where
             VStack(spacing: 0) {
                 ForEach(slots) { slot in
                     NavigationLink {
-                        SlotDetail(slot: slot)
+                        LazyView(SlotDetail(slot: slot))
                     } label: {
                         SlotListRow(slot: slot)
                     }

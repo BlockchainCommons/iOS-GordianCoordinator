@@ -6,6 +6,7 @@ import BCApp
 
 fileprivate let logger = Logger(subsystem: Application.bundleIdentifier, category: "AppStorage")
 
+@MainActor
 class AppStorage: NSObject {
     var accounts = CurrentValueSubject<[Account], Never>([])
     var slots = CurrentValueSubject<[Slot], Never>([])
@@ -38,14 +39,14 @@ class AppStorage: NSObject {
         }
     }
     
-    func updateAccounts() {
+    private func updateAccounts() {
         guard let accounts = accountsController.fetchedObjects else {
             return
         }
         self.accounts.value = accounts
     }
     
-    func updateSlots() {
+    private func updateSlots() {
         guard let slots = slotsController.fetchedObjects else {
             return
         }

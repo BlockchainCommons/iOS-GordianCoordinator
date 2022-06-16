@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 protocol SlotProtocol: ObservableObject, Identifiable {
     associatedtype ID
     associatedtype Account: AccountProtocol

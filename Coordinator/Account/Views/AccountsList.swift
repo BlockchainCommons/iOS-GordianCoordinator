@@ -5,6 +5,7 @@ import WolfBase
 import WolfOrdinal
 import LifeHash
 import os
+import WolfSwiftUI
 
 fileprivate let logger = Logger(subsystem: Application.bundleIdentifier, category: "AccountsList")
 
@@ -69,11 +70,12 @@ where AppViewModel: AppViewModelProtocol, Account == AppViewModel.Account
                 ForEach(accounts) { account in
                     Item(account: account, isDetailValid: $isDetailValid, saveChanges: viewModel.saveChanges)
                         .swipeActions {
-                            Button(role: .destructive) {
+                            Button {
                                 accountForDeletion = account
                             } label: {
                                 Label("Delete", systemImage: "trash")
                             }
+                            .tint(Color.red)
                         }
                 }
                 .onMove(perform: moveItem)
@@ -102,9 +104,9 @@ where AppViewModel: AppViewModelProtocol, Account == AppViewModel.Account
         @ObservedObject var account: Account
         @Binding var isDetailValid: Bool
         @StateObject var lifeHashState: LifeHashState
-        let saveChanges: () -> Void
+        let saveChanges: @MainActor () -> Void
         
-        init(account: Account, isDetailValid: Binding<Bool>, saveChanges: @escaping () -> Void) {
+        init(account: Account, isDetailValid: Binding<Bool>, saveChanges: @MainActor @escaping () -> Void) {
             self.account = account
             self._isDetailValid = isDetailValid
             self.saveChanges = saveChanges
@@ -113,7 +115,9 @@ where AppViewModel: AppViewModelProtocol, Account == AppViewModel.Account
         
         var body: some View {
             NavigationLink {
-                AccountDetail(account: account, generateName: { Self.generateName(for: account) })
+                LazyView(
+                    AccountDetail(account: account, generateName: { Self.generateName(for: account) })
+                )
             } label: {
                 VStack {
 #if targetEnvironment(macCatalyst)
@@ -168,7 +172,7 @@ where AppViewModel: AppViewModelProtocol, Account == AppViewModel.Account
     private func deleteAccounts(at offsets: IndexSet) {
         withAnimation {
             let accounts = viewModel.accounts
-            offsets.map { accounts[$0] }.forEach(viewModel.deleteAccount)
+            offsets.map { accounts[$0] }.forEach { viewModel.deleteAccount($0) }
             viewModel.saveChanges()
         }
     }

@@ -48,7 +48,10 @@ class Account: NSManagedObject, AccountProtocol {
         }
         
         set {
-            name_ = newValue.isEmpty ? nil : newValue
+            let value = newValue.isEmpty ? nil : newValue
+            if name_ != value {
+                name_ = value
+            }
         }
     }
     
@@ -59,7 +62,10 @@ class Account: NSManagedObject, AccountProtocol {
         }
         
         set {
-            notes_ = newValue.isEmpty ? nil : newValue
+            let value = newValue.isEmpty ? nil : newValue
+            if notes_ != value {
+                notes_ = value
+            }
         }
     }
     

@@ -69,21 +69,38 @@ class Persistence: ObservableObject {
     }
     
     func saveChanges() {
+        print("🔥 saveChanges")
+        
         func save() {
             let context = container.viewContext
             
             guard context.hasChanges else {
+                print("💧 No changes")
                 return
             }
+            
+//            let inserted = context.insertedObjects
+//            if !inserted.isEmpty {
+//                print("inserted: \(inserted)")
+//            }
+//
+//            let updated = context.updatedObjects
+//            if !updated.isEmpty {
+//                print("updated: \(updated)")
+//            }
+//
+//            let deleted = context.deletedObjects
+//            if !deleted.isEmpty {
+//                print("deleted: \(deleted)")
+//            }
 
             do {
                 try context.save()
+                print("👍🏼 saved")
             } catch {
                 logger.error("⛔️ \(error.localizedDescription)")
             }
         }
-
-        print("🔥 Saving changes")
 
 #if DEBUG
         if !isDesignTime {

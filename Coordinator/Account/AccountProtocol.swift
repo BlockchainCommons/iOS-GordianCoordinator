@@ -2,6 +2,7 @@ import Foundation
 import BCApp
 import WolfOrdinal
 
+@MainActor
 protocol AccountProtocol: ObservableObject, Identifiable, ObjectIdentifiable, Comparable {
     associatedtype ID
     associatedtype Slot: SlotProtocol

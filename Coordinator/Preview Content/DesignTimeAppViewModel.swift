@@ -27,6 +27,7 @@ class DesignTimeAppViewModel: AppViewModelProtocol {
     }
     
     func saveChanges() {
+        print("🔥 Saving changes")
     }
     
     func orderChanged() {
