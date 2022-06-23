@@ -25,6 +25,7 @@ struct AccountDetail<Account: AccountProtocol>: View {
         ScrollView {
             VStack(spacing: 20) {
                 identity
+                address
                 slots
                 nameEditor
                 notesEditor
@@ -56,6 +57,14 @@ struct AccountDetail<Account: AccountProtocol>: View {
         ObjectIdentityBlock(model: .constant(account))
             .frame(height: 128)
     }
+    
+    var address: some View {
+        AccountAddress(account: account)
+    }
+
+    var slots: some View {
+        SlotList(account: account)
+    }
 
     var nameEditor: some View {
         NameEditor($name, isValid: $isNameValid, focusedField: _focusedField, onValid: onValid, generateName: generateName)
@@ -63,9 +72,5 @@ struct AccountDetail<Account: AccountProtocol>: View {
 
     var notesEditor: some View {
         NotesEditor($notes, focusedField: _focusedField, onValid: onValid)
-    }
-
-    var slots: some View {
-        SlotList(account: account)
     }
 }

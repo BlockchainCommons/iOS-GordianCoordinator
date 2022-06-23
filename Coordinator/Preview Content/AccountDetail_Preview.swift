@@ -2,7 +2,7 @@ import SwiftUI
 import BCApp
 
 struct AccountDetail_Host: View {
-    @StateObject var account = DesignTimeAccount(model: nil, accountID: UUID(), name: "Test account", policy: .threshold(quorum: 2, slots: 3), ordinal: [0])
+    @StateObject var account = DesignTimeAccount(model: nil, accountID: UUID(), name: "Test account", policy: .threshold(quorum: 2, slots: 3), ordinal: [0], isComplete: false)
 
     var body: some View {
         AccountDetail(account: account, generateName: { LifeHashNameGenerator.generate(from: account.accountID) })

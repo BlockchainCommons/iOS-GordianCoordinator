@@ -4,7 +4,7 @@ import SwiftUI
 
 enum SlotStatus {
     case incomplete
-    case complete(publicKey: String)
+    case complete(String)
 }
 
 extension SlotStatus: Codable {
@@ -18,9 +18,9 @@ extension SlotStatus: Codable {
         switch self {
         case .incomplete:
             try container.encode("incomplete", forKey: .type)
-        case .complete(publicKey: let publicKey):
+        case .complete(let value):
             try container.encode("complete", forKey: .type)
-            try container.encode(publicKey, forKey: .publicKey)
+            try container.encode(value, forKey: .publicKey)
         }
     }
     
@@ -32,7 +32,7 @@ extension SlotStatus: Codable {
             self = .incomplete
         case "complete":
             let publicKey = try container.decode(String.self, forKey: .publicKey)
-            self = .complete(publicKey: publicKey)
+            self = .complete(publicKey)
         default:
             throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Unknown SlotStatus: \(type)"))
         }

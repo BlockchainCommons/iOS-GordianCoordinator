@@ -12,7 +12,7 @@ struct KeyEditor<Slot: SlotProtocol>: View
     @StateObject private var validator = Validator()
     @State var key: String? {
         didSet {
-            validator.subject.send(key)
+            validator.subject.send((key, slot.acceptedDataTypes))
         }
     }
     @State var isAlertPresented: Bool = false
@@ -39,7 +39,7 @@ struct KeyEditor<Slot: SlotProtocol>: View
         }
         .onReceive(validator.publisher) {
             if $0.isValid {
-                setStatus(.complete(publicKey: key!))
+                setStatus(.complete(key!))
             }
         }
     }
@@ -54,7 +54,7 @@ struct KeyEditor<Slot: SlotProtocol>: View
     }
     
     var label: some View {
-        SectionLabel("Public Key", icon: .publicKey)
+        SectionLabel("Value", icon: .slot)
     }
     
     @ViewBuilder
@@ -73,7 +73,10 @@ struct KeyEditor<Slot: SlotProtocol>: View
     var keyRow: some View {
         switch status {
         case .incomplete:
-            importMenu
+            VStack(alignment: .leading){
+                importMenu
+                note
+            }
         case .complete:
             HStack {
                 keyHolder
@@ -82,10 +85,14 @@ struct KeyEditor<Slot: SlotProtocol>: View
         }
     }
     
+    var note: some View {
+        Text("Accepted types: " + slot.acceptedDataTypes.map({$0.description.capitalized}).sorted().formatted(.list(type: .or)))
+            .font(.caption)
+    }
+    
     var keyHolder: some View {
         Text(slot.key!)
-            .font(.caption)
-            .monospaced()
+            .font(Font.caption.monospaced())
             .lineLimit(3)
             .formSectionStyle(isVisible: true)
     }
@@ -105,7 +112,7 @@ struct KeyEditor<Slot: SlotProtocol>: View
             Button(role: .destructive) {
                 isAlertPresented = true
             } label: {
-                Label("Remove Key", icon: .clear)
+                Label("Remove", icon: .clear)
             }
         } label: {
             Button { } label: {
@@ -114,7 +121,7 @@ struct KeyEditor<Slot: SlotProtocol>: View
                     .foregroundColor(.secondary)
             }
         }
-        .alert("Remove Key", isPresented: $isAlertPresented) {
+        .alert("Remove Value", isPresented: $isAlertPresented) {
             Button(role: .destructive) {
                 setStatus(.incomplete)
             } label: {
@@ -147,6 +154,15 @@ struct KeyEditor<Slot: SlotProtocol>: View
                     Image.randomize
                 }
             }
+            Button {
+                key = randomDescriptor()
+            } label: {
+                Label {
+                    Text("Random Descriptor")
+                } icon: {
+                    Image.randomize
+                }
+            }
             #endif
         } label: {
             Button { } label: {
@@ -163,37 +179,38 @@ struct KeyEditor<Slot: SlotProtocol>: View
     }
     
     class Validator: ObservableObject {
-        let subject = PassthroughSubject<String?, Never>()
+        let subject = PassthroughSubject<(String?, Set<SlotDataType>), Never>()
         let publisher: ValidationPublisher
         
         init() {
             publisher = subject
                 .debounceField()
-                .validateKey()
+                .validateSlotValue()
         }
     }
 }
 
-fileprivate func isValidKey(_ key: String?) -> Bool {
-    guard
-        let key = key,
-        let _ = try? HDKey(base58: key)
-    else {
-        return false
-    }
-    return true
-}
-
-extension Publisher where Output == String? {
-    public func isValidKey() -> Publishers.Map<Self, Bool> {
-        map {
-            Coordinator.isValidKey($0)
+fileprivate extension Publisher where Output == (String?, Set<SlotDataType>) {
+    func isValidValue() -> Publishers.Map<Self, Bool> {
+        map { (value, acceptedTypes) in
+            if
+                acceptedTypes.contains(.key),
+                Coordinator.isValidKey(value)
+            {
+                return true
+            }
+            if acceptedTypes.contains(.descriptor),
+               Coordinator.isValidDescriptor(value)
+            {
+                return true
+            }
+            return false
         }
     }
     
-    public func validateKey(_ key: String? = nil) -> ValidationPublisher where Failure == Never {
-        isValidKey().map {
-            $0 ? .valid : .invalid("Not a valid key.")
+    func validateSlotValue() -> ValidationPublisher where Failure == Never {
+        isValidValue().map {
+            $0 ? .valid : .invalid("Not a valid value.")
         }
         .eraseToAnyPublisher()
     }

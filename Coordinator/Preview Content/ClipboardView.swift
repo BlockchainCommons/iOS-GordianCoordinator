@@ -5,6 +5,7 @@ struct ClipboardView: View {
     
     var body: some View {
         Text(summary)
+            .font(.caption)
     }
     
     var summary: String {

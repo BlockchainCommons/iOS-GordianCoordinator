@@ -28,6 +28,14 @@ extension AccountProtocol {
             self.status = .incomplete(slotsRemaining: slots.count - completeSlots)
         }
     }
+    
+    var isComplete: Bool {
+        if case .complete = self.status {
+            return true
+        } else {
+            return false
+        }
+    }
 }
 
 extension AccountProtocol {

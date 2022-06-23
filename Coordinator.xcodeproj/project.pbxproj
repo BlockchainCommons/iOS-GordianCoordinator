@@ -11,6 +11,7 @@
 		7905B0222849A50B008BC79D /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7905B0212849A50B008BC79D /* Account.swift */; };
 		7905B0252849AAB5008BC79D /* WolfOrdinal in Frameworks */ = {isa = PBXBuildFile; productRef = 7905B0242849AAB5008BC79D /* WolfOrdinal */; };
 		7905B0272849AC23008BC79D /* Memoized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7905B0262849AC23008BC79D /* Memoized.swift */; };
+		791A7FD4285BDC2700615DBD /* AccountAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791A7FD3285BDC2700615DBD /* AccountAddress.swift */; };
 		79241072283C268D00611B9F /* BCApp in Frameworks */ = {isa = PBXBuildFile; productRef = 79241071283C268D00611B9F /* BCApp */; };
 		79349B8F28506AB30058CF5D /* Slot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79349B8E28506AB30058CF5D /* Slot.swift */; };
 		79349B9128506DF70058CF5D /* SlotStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79349B9028506DF70058CF5D /* SlotStatus.swift */; };
@@ -43,10 +44,12 @@
 		79651E5A28484C6F00991464 /* AppChapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79651E5928484C6F00991464 /* AppChapter.swift */; };
 		79651E5C2848903700991464 /* AppLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79651E5B2848903700991464 /* AppLogo.swift */; };
 		79651E5E28489DA600991464 /* Markdown in Resources */ = {isa = PBXBuildFile; fileRef = 79651E5D28489DA600991464 /* Markdown */; };
+		7975D267285BDE9500972FD6 /* AccountAddress_Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7975D266285BDE9500972FD6 /* AccountAddress_Preview.swift */; };
 		799B54BF283DC7D20043EB90 /* SyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B54BE283DC7D20043EB90 /* SyncButton.swift */; };
 		799B54C1283DECA00043EB90 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B54C0283DECA00043EB90 /* ErrorMessage.swift */; };
 		799BA663283F0A1A00285135 /* WalletSweeper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799BA662283F0A1A00285135 /* WalletSweeper.swift */; };
 		799BA6662844A2DA00285135 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799BA6652844A2DA00285135 /* CloudKit.framework */; };
+		79B8DC9128641CE500212974 /* SlotUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B8DC9028641CE500212974 /* SlotUtils.swift */; };
 		79BB4AB32855A7B200FB45A4 /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BB4AB22855A7B200FB45A4 /* ImageExtensions.swift */; };
 		79BB4AB52855B26500FB45A4 /* KeyEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BB4AB42855B26500FB45A4 /* KeyEditor.swift */; };
 		79BB4AB728568F8C00FB45A4 /* SectionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BB4AB628568F8B00FB45A4 /* SectionLabel.swift */; };
@@ -80,6 +83,7 @@
 		79EC77B328361F62009E4466 /* Hyperconnectivity in Frameworks */ = {isa = PBXBuildFile; productRef = 79EC77B228361F62009E4466 /* Hyperconnectivity */; };
 		79EC77B62836205F009E4466 /* Esplora in Frameworks */ = {isa = PBXBuildFile; productRef = 79EC77B52836205F009E4466 /* Esplora */; };
 		79EC7CA02851E00200A7C463 /* AccountStatusIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EC7C9F2851E00200A7C463 /* AccountStatusIndicator.swift */; };
+		79FAEFCC286431440025991E /* SlotDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FAEFCB286431440025991E /* SlotDataType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +107,7 @@
 		7905B01F2849A123008BC79D /* Policy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Policy.swift; sourceTree = "<group>"; };
 		7905B0212849A50B008BC79D /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		7905B0262849AC23008BC79D /* Memoized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memoized.swift; sourceTree = "<group>"; };
+		791A7FD3285BDC2700615DBD /* AccountAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAddress.swift; sourceTree = "<group>"; };
 		79349B8E28506AB30058CF5D /* Slot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slot.swift; sourceTree = "<group>"; };
 		79349B9028506DF70058CF5D /* SlotStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotStatus.swift; sourceTree = "<group>"; };
 		79349B9228506E0B0058CF5D /* AccountStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStatus.swift; sourceTree = "<group>"; };
@@ -134,11 +139,13 @@
 		79651E5928484C6F00991464 /* AppChapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppChapter.swift; sourceTree = "<group>"; };
 		79651E5B2848903700991464 /* AppLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogo.swift; sourceTree = "<group>"; };
 		79651E5D28489DA600991464 /* Markdown */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Markdown; sourceTree = "<group>"; };
+		7975D266285BDE9500972FD6 /* AccountAddress_Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAddress_Preview.swift; sourceTree = "<group>"; };
 		799B54BE283DC7D20043EB90 /* SyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncButton.swift; sourceTree = "<group>"; };
 		799B54C0283DECA00043EB90 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		799BA662283F0A1A00285135 /* WalletSweeper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletSweeper.swift; sourceTree = "<group>"; };
 		799BA6652844A2DA00285135 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		799BA6672844A3AD00285135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		79B8DC9028641CE500212974 /* SlotUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotUtils.swift; sourceTree = "<group>"; };
 		79BB4AB22855A7B200FB45A4 /* ImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtensions.swift; sourceTree = "<group>"; };
 		79BB4AB42855B26500FB45A4 /* KeyEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyEditor.swift; sourceTree = "<group>"; };
 		79BB4AB628568F8B00FB45A4 /* SectionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionLabel.swift; sourceTree = "<group>"; };
@@ -168,6 +175,7 @@
 		79EC77992835BCF0009E4466 /* Coordinator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coordinator.entitlements; sourceTree = "<group>"; };
 		79EC779A2835BD92009E4466 /* ContentViewOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewOld.swift; sourceTree = "<group>"; };
 		79EC7C9F2851E00200A7C463 /* AccountStatusIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStatusIndicator.swift; sourceTree = "<group>"; };
+		79FAEFCB286431440025991E /* SlotDataType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotDataType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,7 +219,9 @@
 			children = (
 				79C4DC632851E80B00CB3638 /* SlotProtocol.swift */,
 				79349B8E28506AB30058CF5D /* Slot.swift */,
+				79FAEFCB286431440025991E /* SlotDataType.swift */,
 				79349B9028506DF70058CF5D /* SlotStatus.swift */,
+				79B8DC9028641CE500212974 /* SlotUtils.swift */,
 				79C4DC6F2854130200CB3638 /* Views */,
 			);
 			path = Slot;
@@ -241,6 +251,7 @@
 		7937A696284DB87F00DE8E11 /* Old */ = {
 			isa = PBXGroup;
 			children = (
+				7905B0262849AC23008BC79D /* Memoized.swift */,
 				79EC779A2835BD92009E4466 /* ContentViewOld.swift */,
 				799BA662283F0A1A00285135 /* WalletSweeper.swift */,
 			);
@@ -314,6 +325,7 @@
 				79EC776C2835BC65009E4466 /* AccountsList.swift */,
 				7937A689284D145000DE8E11 /* AccountDetail.swift */,
 				79EC7C9F2851E00200A7C463 /* AccountStatusIndicator.swift */,
+				791A7FD3285BDC2700615DBD /* AccountAddress.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -352,7 +364,6 @@
 				79EC77732835BC67009E4466 /* Persistence.swift */,
 				799B54BE283DC7D20043EB90 /* SyncButton.swift */,
 				799B54C0283DECA00043EB90 /* ErrorMessage.swift */,
-				7905B0262849AC23008BC79D /* Memoized.swift */,
 				79BB4ABA2856A66900FB45A4 /* Clipboard.swift */,
 				7951B1292859358500E5C3C0 /* AccountSetup */,
 				79C4DC6A2853C75100CB3638 /* Accounts */,
@@ -387,6 +398,7 @@
 				7951B1382859AA6800E5C3C0 /* SlotDetail_Preview.swift */,
 				7951B1402859AB4200E5C3C0 /* AccountDetail_Preview.swift */,
 				7951B1422859AB7B00E5C3C0 /* AccountsList_Preview.swift */,
+				7975D266285BDE9500972FD6 /* AccountAddress_Preview.swift */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -597,6 +609,7 @@
 				7951B1372859AA2A00E5C3C0 /* SlotList_Preview.swift in Sources */,
 				79349B9328506E0B0058CF5D /* AccountStatus.swift in Sources */,
 				7951B13D2859AAD500E5C3C0 /* NoteEditor_Preview.swift in Sources */,
+				79B8DC9128641CE500212974 /* SlotUtils.swift in Sources */,
 				7937A686284C114B00DE8E11 /* AppStorage.swift in Sources */,
 				799B54BF283DC7D20043EB90 /* SyncButton.swift in Sources */,
 				79C4DC692853253200CB3638 /* ViewExtensions.swift in Sources */,
@@ -614,11 +627,14 @@
 				7937A68A284D145000DE8E11 /* AccountDetail.swift in Sources */,
 				7937A688284C136000DE8E11 /* AppViewModel.swift in Sources */,
 				7937A698284DC8BB00DE8E11 /* NotesEditor.swift in Sources */,
+				791A7FD4285BDC2700615DBD /* AccountAddress.swift in Sources */,
+				7975D267285BDE9500972FD6 /* AccountAddress_Preview.swift in Sources */,
 				7951B1352859A74200E5C3C0 /* SlotListRow_Preview.swift in Sources */,
 				7937A68E284D1D8D00DE8E11 /* AccountSetup.swift in Sources */,
 				7951B12D2859749000E5C3C0 /* ClipboardView.swift in Sources */,
 				79EC776B2835BC65009E4466 /* CoordinatorApp.swift in Sources */,
 				79EC7CA02851E00200A7C463 /* AccountStatusIndicator.swift in Sources */,
+				79FAEFCC286431440025991E /* SlotDataType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

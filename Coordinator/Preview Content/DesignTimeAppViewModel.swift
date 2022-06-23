@@ -7,9 +7,9 @@ class DesignTimeAppViewModel: AppViewModelProtocol {
     @Published var accounts: [DesignTimeAccount] = []
     
     init() {
-        for i in 0..<3 {
-            _ = newAccount(accountID: UUID(), name: Lorem.bytewords(4), policy: .threshold(quorum: 2, slots: 3), ordinal: [i])
-        }
+        _ = newAccount(accountID: UUID(), name: Lorem.bytewords(4), policy: .single, ordinal: [0])
+        _ = newAccount(accountID: UUID(), name: Lorem.bytewords(4), policy: .threshold(quorum: 2, slots: 3), ordinal: [1])
+        _ = newAccount(accountID: UUID(), name: Lorem.bytewords(4), policy: .threshold(quorum: 3, slots: 5), ordinal: [2])
     }
     
     func newAccount(accountID: UUID, name: String, policy: Policy, ordinal: Ordinal) -> DesignTimeAccount {

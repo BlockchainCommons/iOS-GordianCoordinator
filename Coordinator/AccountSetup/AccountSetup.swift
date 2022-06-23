@@ -60,10 +60,10 @@ struct AccountSetup: View {
         let preset = Binding<PolicyPreset?>(
             get: {
                 switch model.policy {
+                case .single:
+                    return .single
                 case .threshold(let quorum, let slots):
                     switch (quorum, slots) {
-                    case (1, 1):
-                        return .threshold1of1
                     case (2, 3):
                         return .threshold2of3
                     case (3, 5):
@@ -76,8 +76,8 @@ struct AccountSetup: View {
                 }
             }, set: { newValue in
                 switch newValue {
-                case .threshold1of1:
-                    model.policy = .threshold(quorum: 1, slots: 1)
+                case .single:
+                    model.policy = .single
                 case .threshold2of3:
                     model.policy = .threshold(quorum: 2, slots: 3)
                 case .threshold3of5:

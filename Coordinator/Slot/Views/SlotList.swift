@@ -27,7 +27,7 @@ where
                     NavigationLink {
                         LazyView(SlotDetail(slot: slot))
                     } label: {
-                        SlotListRow(slot: slot)
+                        SlotListRow(slot: slot, hideIndex: slots.count == 1)
                     }
                     if slot.id != slots.last?.id {
                         Divider()

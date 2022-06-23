@@ -3,7 +3,7 @@ import BCApp
 import SwiftUI
 
 enum PolicyPreset: Int, CaseIterable {
-    case threshold1of1
+    case single
     case threshold2of3
     case threshold3of5
     case threshold4of9
@@ -18,8 +18,8 @@ extension PolicyPreset: Identifiable {
 extension PolicyPreset {
     var policy: Policy {
         switch self {
-        case .threshold1of1:
-            return .threshold(quorum: 1, slots: 1)
+        case .single:
+            return .single
         case .threshold2of3:
             return .threshold(quorum: 2, slots: 3)
         case .threshold3of5:

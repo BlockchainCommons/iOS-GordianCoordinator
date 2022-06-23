@@ -27,7 +27,7 @@ class DesignTimeAccount: AccountProtocol {
         }
     }
 
-    init(model: DesignTimeAppViewModel?, accountID: UUID, name: String, notes: String = "", policy: Policy, ordinal: Ordinal) {
+    init(model: DesignTimeAppViewModel?, accountID: UUID, name: String, notes: String = "", policy: Policy, ordinal: Ordinal, isComplete: Bool = false) {
         self.model = model
         self.accountID = accountID
         self.name = name
@@ -39,12 +39,24 @@ class DesignTimeAccount: AccountProtocol {
         self.status = .incomplete(slotsRemaining: slotsCount)
 
         for index in 0..<slotsCount {
-            slots.append(DesignTimeSlot(account: self, displayIndex: index, status: .incomplete))
+            let status: SlotStatus
+            if isComplete {
+                status = .complete(randomKey())
+            } else {
+                status = .incomplete
+            }
+            slots.append(DesignTimeSlot(account: self, displayIndex: index + 1, status: status))
         }
+        
+        updateStatus()
     }
     
-    convenience init() {
-        self.init(model: nil, accountID: UUID(), name: Lorem.bytewords(4), policy: .threshold(quorum: 2, slots: 3), ordinal: [0])
+    convenience init(policy: Policy) {
+        self.init(model: nil, accountID: UUID(), name: Lorem.bytewords(4), policy: policy, ordinal: [0])
+    }
+    
+    convenience init(isComplete: Bool = false) {
+        self.init(model: nil, accountID: UUID(), name: Lorem.bytewords(4), policy: .threshold(quorum: 2, slots: 3), ordinal: [0], isComplete: isComplete)
     }
 
     var instanceDetail: String? {
