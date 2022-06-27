@@ -25,7 +25,7 @@ struct AccountDetail<Account: AccountProtocol>: View {
         ScrollView {
             VStack(spacing: 20) {
                 identity
-                address
+//                address
                 slots
                 nameEditor
                 notesEditor
@@ -58,9 +58,9 @@ struct AccountDetail<Account: AccountProtocol>: View {
             .frame(height: 128)
     }
     
-    var address: some View {
-        AccountAddress(account: account)
-    }
+//    var address: some View {
+//        AccountAddress(account: account)
+//    }
 
     var slots: some View {
         SlotList(account: account)

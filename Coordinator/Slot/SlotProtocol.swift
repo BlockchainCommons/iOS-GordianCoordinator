@@ -13,7 +13,6 @@ protocol SlotProtocol: ObservableObject, Identifiable {
     var notes: String { get set }
     var status: SlotStatus { get set }
     var isComplete: Bool { get }
-    var acceptedDataTypes: Set<SlotDataType> { get }
 }
 
 extension SlotProtocol {
@@ -26,14 +25,5 @@ extension SlotProtocol {
             return key
         }
         return nil
-    }
-
-    var acceptedDataTypes: Set<SlotDataType> {
-        switch account.policy {
-        case .single:
-            return [.key, .descriptor]
-        case .threshold:
-            return [.key]
-        }
     }
 }

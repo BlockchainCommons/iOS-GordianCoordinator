@@ -83,7 +83,6 @@
 		79EC77B328361F62009E4466 /* Hyperconnectivity in Frameworks */ = {isa = PBXBuildFile; productRef = 79EC77B228361F62009E4466 /* Hyperconnectivity */; };
 		79EC77B62836205F009E4466 /* Esplora in Frameworks */ = {isa = PBXBuildFile; productRef = 79EC77B52836205F009E4466 /* Esplora */; };
 		79EC7CA02851E00200A7C463 /* AccountStatusIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EC7C9F2851E00200A7C463 /* AccountStatusIndicator.swift */; };
-		79FAEFCC286431440025991E /* SlotDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FAEFCB286431440025991E /* SlotDataType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,7 +174,6 @@
 		79EC77992835BCF0009E4466 /* Coordinator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coordinator.entitlements; sourceTree = "<group>"; };
 		79EC779A2835BD92009E4466 /* ContentViewOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewOld.swift; sourceTree = "<group>"; };
 		79EC7C9F2851E00200A7C463 /* AccountStatusIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStatusIndicator.swift; sourceTree = "<group>"; };
-		79FAEFCB286431440025991E /* SlotDataType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotDataType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,7 +217,6 @@
 			children = (
 				79C4DC632851E80B00CB3638 /* SlotProtocol.swift */,
 				79349B8E28506AB30058CF5D /* Slot.swift */,
-				79FAEFCB286431440025991E /* SlotDataType.swift */,
 				79349B9028506DF70058CF5D /* SlotStatus.swift */,
 				79B8DC9028641CE500212974 /* SlotUtils.swift */,
 				79C4DC6F2854130200CB3638 /* Views */,
@@ -634,7 +631,6 @@
 				7951B12D2859749000E5C3C0 /* ClipboardView.swift in Sources */,
 				79EC776B2835BC65009E4466 /* CoordinatorApp.swift in Sources */,
 				79EC7CA02851E00200A7C463 /* AccountStatusIndicator.swift in Sources */,
-				79FAEFCC286431440025991E /* SlotDataType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

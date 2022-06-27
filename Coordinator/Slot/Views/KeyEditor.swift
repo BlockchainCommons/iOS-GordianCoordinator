@@ -12,7 +12,7 @@ struct KeyEditor<Slot: SlotProtocol>: View
     @StateObject private var validator = Validator()
     @State var key: String? {
         didSet {
-            validator.subject.send((key, slot.acceptedDataTypes))
+            validator.subject.send(key)
         }
     }
     @State var isAlertPresented: Bool = false
@@ -75,7 +75,6 @@ struct KeyEditor<Slot: SlotProtocol>: View
         case .incomplete:
             VStack(alignment: .leading){
                 importMenu
-                note
             }
         case .complete:
             HStack {
@@ -83,11 +82,6 @@ struct KeyEditor<Slot: SlotProtocol>: View
                 optionsMenu
             }
         }
-    }
-    
-    var note: some View {
-        Text("Accepted types: " + slot.acceptedDataTypes.map({$0.description.capitalized}).sorted().formatted(.list(type: .or)))
-            .font(.caption)
     }
     
     var keyHolder: some View {
@@ -179,7 +173,7 @@ struct KeyEditor<Slot: SlotProtocol>: View
     }
     
     class Validator: ObservableObject {
-        let subject = PassthroughSubject<(String?, Set<SlotDataType>), Never>()
+        let subject = PassthroughSubject<String?, Never>()
         let publisher: ValidationPublisher
         
         init() {
@@ -190,21 +184,10 @@ struct KeyEditor<Slot: SlotProtocol>: View
     }
 }
 
-fileprivate extension Publisher where Output == (String?, Set<SlotDataType>) {
+fileprivate extension Publisher where Output == String? {
     func isValidValue() -> Publishers.Map<Self, Bool> {
-        map { (value, acceptedTypes) in
-            if
-                acceptedTypes.contains(.key),
-                Coordinator.isValidKey(value)
-            {
-                return true
-            }
-            if acceptedTypes.contains(.descriptor),
-               Coordinator.isValidDescriptor(value)
-            {
-                return true
-            }
-            return false
+        map { value in
+            Coordinator.isValidKey(value) || Coordinator.isValidDescriptor(value)
         }
     }
     
