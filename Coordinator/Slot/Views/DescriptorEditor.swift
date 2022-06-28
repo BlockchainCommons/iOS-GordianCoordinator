@@ -5,41 +5,43 @@ import WolfLorem
 import BCFoundation
 import WolfBase
 
-struct KeyEditor<Slot: SlotProtocol>: View
+struct DescriptorEditor<Slot: SlotProtocol>: View
 {
     @ObservedObject var slot: Slot
     @EnvironmentObject var persistence: Persistence
     @StateObject private var validator = Validator()
-    @State var key: String? {
+    @State var descriptorSource: String? {
         didSet {
-            validator.subject.send(key)
+            validator.subject.send(descriptorSource)
         }
     }
     @State var isAlertPresented: Bool = false
     @EnvironmentObject var clipboard: Clipboard
 
-    var status: SlotStatus {
-        get {
-            slot.status
-        }
+    var descriptor: String? {
+        slot.descriptor
     }
     
-    func setStatus(_ status: SlotStatus) {
+    func setDescriptor(_ descriptor: String?) {
         withAnimation {
-            slot.status = status
+            slot.descriptor = descriptor
             slot.account.updateStatus()
             persistence.saveChanges()
         }
     }
     
+    var isComplete: Bool {
+        descriptor != nil
+    }
+
     var body: some View {
         VStack(alignment: .leading) {
             labelRow
-            keyRow
+            descriptorRow
         }
         .onReceive(validator.publisher) {
             if $0.isValid {
-                setStatus(.complete(key!))
+                setDescriptor(descriptorSource)
             }
         }
     }
@@ -54,47 +56,45 @@ struct KeyEditor<Slot: SlotProtocol>: View
     }
     
     var label: some View {
-        SectionLabel("Value", icon: .slot)
+        SectionLabel("Descriptor", icon: .slot)
     }
     
     @ViewBuilder
     var statusIndicator: some View {
-        switch status {
-        case .incomplete:
-            Image.incompleteSlot
-                .foregroundColor(.yellowLightSafe)
-        case .complete:
+        if isComplete {
             Image.completeSlot
                 .foregroundColor(.green)
+        } else {
+            Image.incompleteSlot
+                .foregroundColor(.yellowLightSafe)
         }
     }
     
     @ViewBuilder
-    var keyRow: some View {
-        switch status {
-        case .incomplete:
+    var descriptorRow: some View {
+        if isComplete {
+            HStack {
+                descriptorHolder
+                optionsMenu
+            }
+        } else {
             VStack(alignment: .leading){
                 importMenu
-            }
-        case .complete:
-            HStack {
-                keyHolder
-                optionsMenu
             }
         }
     }
     
-    var keyHolder: some View {
-        Text(slot.key!)
+    var descriptorHolder: some View {
+        Text(descriptorSource ?? "")
             .font(Font.caption.monospaced())
-            .lineLimit(3)
+            .lineLimit(5)
             .formSectionStyle(isVisible: true)
     }
     
     var optionsMenu: some View {
         Menu {
             Button {
-                clipboard.string = slot.key
+                clipboard.string = slot.descriptor
             } label: {
                 Label {
                     Text("Copy to Clipboard")
@@ -117,7 +117,7 @@ struct KeyEditor<Slot: SlotProtocol>: View
         }
         .alert("Remove Value", isPresented: $isAlertPresented) {
             Button(role: .destructive) {
-                setStatus(.incomplete)
+                setDescriptor(nil)
             } label: {
                 Text("Remove")
             }
@@ -130,7 +130,7 @@ struct KeyEditor<Slot: SlotProtocol>: View
     var importMenu: some View {
         Menu {
             Button {
-                key = clipboard.string
+                descriptorSource = clipboard.string
             } label: {
                 Label {
                     Text("Paste from Clipboard")
@@ -140,16 +140,7 @@ struct KeyEditor<Slot: SlotProtocol>: View
             }
             #if DEBUG
             Button {
-                key = randomKey()
-            } label: {
-                Label {
-                    Text("Random Key")
-                } icon: {
-                    Image.randomize
-                }
-            }
-            Button {
-                key = randomDescriptor()
+                descriptorSource = randomDescriptor()
             } label: {
                 Label {
                     Text("Random Descriptor")
@@ -187,14 +178,77 @@ struct KeyEditor<Slot: SlotProtocol>: View
 fileprivate extension Publisher where Output == String? {
     func isValidValue() -> Publishers.Map<Self, Bool> {
         map { value in
-            Coordinator.isValidKey(value) || Coordinator.isValidDescriptor(value)
+            Coordinator.isValidDescriptor(value)
         }
     }
     
     func validateSlotValue() -> ValidationPublisher where Failure == Never {
         isValidValue().map {
-            $0 ? .valid : .invalid("Not a valid value.")
+            $0 ? .valid : .invalid("Not a valid descriptor.")
         }
         .eraseToAnyPublisher()
     }
 }
+
+#if DEBUG
+
+struct DescriptorEditor_Host: View {
+    @StateObject var slot: DesignTimeSlot
+    @EnvironmentObject var clipboard: Clipboard
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            DescriptorEditor(slot: slot)
+            Spacer()
+            ClipboardView()
+            HStack {
+                Text("Clipboard:")
+                Button {
+                    clipboard.string = randomKey()
+                } label: {
+                    Text("Key")
+                }
+
+                Button {
+                    clipboard.string = randomDescriptor()
+                } label: {
+                    Text("Descriptor")
+                }
+
+                Button {
+                    clipboard.string = "invalid"
+                } label: {
+                    Text("Invalid")
+                }
+                
+                Button {
+                    clipboard.string = nil
+                } label: {
+                    Text("Clear")
+                }
+                
+                Spacer()
+            }
+            .buttonStyle(.borderless)
+            .font(.caption)
+        }
+        .padding()
+        .frame(maxHeight: 800)
+    }
+}
+
+struct DescriptorEditor_Preview: PreviewProvider {
+    static var previews: some View {
+        Group {
+            DescriptorEditor_Host(slot: DesignTimeSlot(account: DesignTimeAccount(policy: .single), displayIndex: 1, name: "Name", notes: "Notes", descriptor: nil))
+                .previewDisplayName("Single")
+            DescriptorEditor_Host(slot: DesignTimeSlot(account: DesignTimeAccount(policy: .threshold(quorum: 2, slots: 3)), displayIndex: 1, name: "Name", notes: "Notes", descriptor: randomDescriptor()))
+                .previewDisplayName("2 of 3")
+        }
+        .previewLayout(.sizeThatFits)
+        .environmentObject(Clipboard(isDesignTime: true))
+        .environmentObject(Persistence(isDesignTime: true))
+    }
+}
+
+#endif

@@ -6,14 +6,9 @@ func randomKey() -> String {
 }
 
 func randomDescriptor() -> String {
-    let hdKey = try! HDKey(seed: Seed())
-    return [
-        "wpkh(\(hdKey.ecPublicKey.hex))",
-        "wpkh(\(hdKey.ecPublicKey.uncompressed.hex))",
-        "wpkh(\(hdKey.ecPrivateKey!.wif))",
-        "wpkh(\(hdKey.base58PrivateKey!))",
-        "wpkh(\(hdKey.base58PublicKey!))"
-    ].randomElement()!
+    let masterKey = try! HDKey(seed: Seed())
+    let bundle = OutputDescriptorBundle(masterKey: masterKey, network: .mainnet, account: 0)!
+    return bundle.descriptors.randomElement()!.source
 }
 
 func isValidKey(_ key: String?) -> Bool {

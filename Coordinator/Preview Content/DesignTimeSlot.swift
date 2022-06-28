@@ -8,14 +8,14 @@ class DesignTimeSlot: ObservableObject, SlotProtocol {
 
     @Published var name: String
     @Published var notes: String
-    @Published var status: SlotStatus
+    @Published var descriptor: String?
     
-    init(account: DesignTimeAccount, displayIndex: Int, name: String = "", notes: String = "", status: SlotStatus) {
+    init(account: DesignTimeAccount, displayIndex: Int, name: String = "", notes: String = "", descriptor: String?) {
         self.slotID = UUID()
         self.account = account
         self.displayIndex = displayIndex
         self.name = name
         self.notes = notes
-        self.status = status
+        self.descriptor = descriptor
     }
 }

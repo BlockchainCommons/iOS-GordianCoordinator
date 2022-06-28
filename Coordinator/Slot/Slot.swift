@@ -12,7 +12,6 @@ class Slot: NSManagedObject, SlotProtocol {
         super.init(entity: Slot.entity(), insertInto: context)
         self.slotID = UUID()
         self.index = index
-        self.status = .incomplete
     }
     
     var index: Int {
@@ -74,13 +73,13 @@ class Slot: NSManagedObject, SlotProtocol {
         }
     }
     
-    var status: SlotStatus {
+    var descriptor: String? {
         get {
-            try! SlotStatus(encoded: status_!)
+            descriptor_
         }
         
         set {
-            status_ = newValue.encoded
+            descriptor_ = newValue
         }
     }
 }

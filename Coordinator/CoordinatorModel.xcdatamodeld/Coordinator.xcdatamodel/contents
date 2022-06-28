@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21223.12" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="Account" representedClassName="Account" syncable="YES" codeGenerationType="category">
         <attribute name="accountID_" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name_" optional="YES" attributeType="String"/>
@@ -10,11 +10,11 @@
         <relationship name="slots_" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Slot" inverseName="account_" inverseEntity="Slot"/>
     </entity>
     <entity name="Slot" representedClassName="Slot" syncable="YES" codeGenerationType="category">
+        <attribute name="descriptor_" optional="YES" attributeType="String"/>
         <attribute name="index_" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name_" optional="YES" attributeType="String"/>
         <attribute name="notes_" optional="YES" attributeType="String"/>
         <attribute name="slotID_" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="status_" optional="YES" attributeType="String"/>
         <relationship name="account_" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="slots_" inverseEntity="Account"/>
     </entity>
     <elements>

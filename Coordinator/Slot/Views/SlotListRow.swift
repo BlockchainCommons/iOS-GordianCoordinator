@@ -47,3 +47,36 @@ struct SlotListRow<Slot: SlotProtocol>: View {
         }
     }
 }
+
+#if DEBUG
+
+struct SlotListRow_Host: View {
+    @ObservedObject var slot: DesignTimeSlot
+    let hideIndex: Bool
+    
+    init(displayIndex: Int, name: String, descriptor: String?, hideIndex: Bool = false) {
+        self.hideIndex = hideIndex
+        let account = DesignTimeAccount()
+        slot = DesignTimeSlot(account: account, displayIndex: displayIndex, name: name, notes: "", descriptor: descriptor)
+    }
+
+    var body: some View {
+        SlotListRow(slot: slot, hideIndex: hideIndex)
+    }
+}
+
+struct SlotListRow_Preview: PreviewProvider {
+    static var previews: some View {
+        Group {
+            SlotListRow_Host(displayIndex: 1, name: "", descriptor: nil, hideIndex: true)
+                .previewDisplayName("Hidden index")
+            SlotListRow_Host(displayIndex: 1, name: "", descriptor: nil)
+                .previewDisplayName("Incomplete")
+            SlotListRow_Host(displayIndex: 2, name: "Name", descriptor: randomDescriptor())
+                .previewDisplayName("Complete")
+        }
+        .previewLayout(.sizeThatFits)
+    }
+}
+
+#endif

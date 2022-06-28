@@ -4,55 +4,55 @@ import SwiftUI
 
 enum SlotStatus {
     case incomplete
-    case complete(String)
+    case complete
 }
 
-extension SlotStatus: Codable {
-    private enum CodingKeys: CodingKey {
-        case type
-        case publicKey
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        switch self {
-        case .incomplete:
-            try container.encode("incomplete", forKey: .type)
-        case .complete(let value):
-            try container.encode("complete", forKey: .type)
-            try container.encode(value, forKey: .publicKey)
-        }
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let type = try container.decode(String.self, forKey: .type)
-        switch type {
-        case "incomplete":
-            self = .incomplete
-        case "complete":
-            let publicKey = try container.decode(String.self, forKey: .publicKey)
-            self = .complete(publicKey)
-        default:
-            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Unknown SlotStatus: \(type)"))
-        }
-    }
-    
-    var encoded: String {
-        try! JSONEncoder().encode(self).utf8!
-    }
-    
-    init(encoded: String) throws {
-        self = try JSONDecoder().decode(SlotStatus.self, from: encoded.utf8Data)
-    }
-    
-    var isComplete: Bool {
-        if case .complete = self {
-            return true
-        }
-        return false
-    }
-}
+//extension SlotStatus: Codable {
+//    private enum CodingKeys: CodingKey {
+//        case type
+//        case publicKey
+//    }
+//    
+//    func encode(to encoder: Encoder) throws {
+//        var container = encoder.container(keyedBy: CodingKeys.self)
+//        switch self {
+//        case .incomplete:
+//            try container.encode("incomplete", forKey: .type)
+//        case .complete(let value):
+//            try container.encode("complete", forKey: .type)
+//            try container.encode(value, forKey: .publicKey)
+//        }
+//    }
+//    
+//    init(from decoder: Decoder) throws {
+//        let container = try decoder.container(keyedBy: CodingKeys.self)
+//        let type = try container.decode(String.self, forKey: .type)
+//        switch type {
+//        case "incomplete":
+//            self = .incomplete
+//        case "complete":
+//            let publicKey = try container.decode(String.self, forKey: .publicKey)
+//            self = .complete(publicKey)
+//        default:
+//            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Unknown SlotStatus: \(type)"))
+//        }
+//    }
+//    
+//    var encoded: String {
+//        try! JSONEncoder().encode(self).utf8!
+//    }
+//    
+//    init(encoded: String) throws {
+//        self = try JSONDecoder().decode(SlotStatus.self, from: encoded.utf8Data)
+//    }
+//    
+//    var isComplete: Bool {
+//        if case .complete = self {
+//            return true
+//        }
+//        return false
+//    }
+//}
 
 extension SlotStatus {
     @ViewBuilder

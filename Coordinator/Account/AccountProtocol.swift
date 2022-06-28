@@ -21,7 +21,7 @@ protocol AccountProtocol: ObservableObject, Identifiable, ObjectIdentifiable, Co
 
 extension AccountProtocol {
     func updateStatus() {
-        let completeSlots = slots.filter { $0.isComplete }.count
+        let completeSlots = slots.filter { $0.status == .complete }.count
         if completeSlots == slots.count {
             self.status = .complete
         } else {

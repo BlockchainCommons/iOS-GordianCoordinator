@@ -11,19 +11,12 @@ protocol SlotProtocol: ObservableObject, Identifiable {
     var displayIndex: Int { get }
     var name: String { get set }
     var notes: String { get set }
-    var status: SlotStatus { get set }
-    var isComplete: Bool { get }
+    var descriptor: String? { get set }
+    var status: SlotStatus { get }
 }
 
 extension SlotProtocol {
-    var isComplete: Bool {
-        status.isComplete
-    }
-    
-    var key: String? {
-        if case let .complete(key) = status {
-            return key
-        }
-        return nil
+    var status: SlotStatus {
+        descriptor == nil ? .incomplete : .complete
     }
 }

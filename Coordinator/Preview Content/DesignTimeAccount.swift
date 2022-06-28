@@ -39,13 +39,13 @@ class DesignTimeAccount: AccountProtocol {
         self.status = .incomplete(slotsRemaining: slotsCount)
 
         for index in 0..<slotsCount {
-            let status: SlotStatus
+            let descriptor: String?
             if isComplete {
-                status = .complete(randomKey())
+                descriptor = randomDescriptor()
             } else {
-                status = .incomplete
+                descriptor = nil
             }
-            slots.append(DesignTimeSlot(account: self, displayIndex: index + 1, status: status))
+            slots.append(DesignTimeSlot(account: self, displayIndex: index + 1, descriptor: descriptor))
         }
         
         updateStatus()
