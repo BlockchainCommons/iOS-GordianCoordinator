@@ -18,11 +18,11 @@ struct DescriptorEditor<Slot: SlotProtocol>: View
     @State var isAlertPresented: Bool = false
     @EnvironmentObject var clipboard: Clipboard
 
-    var descriptor: String? {
+    var descriptor: OutputDescriptor? {
         slot.descriptor
     }
     
-    func setDescriptor(_ descriptor: String?) {
+    func setDescriptor(_ descriptor: OutputDescriptor?) {
         withAnimation {
             slot.descriptor = descriptor
             slot.account.updateStatus()
@@ -40,11 +40,11 @@ struct DescriptorEditor<Slot: SlotProtocol>: View
             descriptorRow
         }
         .onAppear {
-            descriptorSource = slot.descriptor
+            descriptorSource = slot.descriptor?.sourceWithChecksum
         }
         .onReceive(validator.publisher) {
             if $0.isValid {
-                setDescriptor(descriptorSource)
+                setDescriptor(try! OutputDescriptor(descriptorSource!))
             }
         }
     }
@@ -97,7 +97,7 @@ struct DescriptorEditor<Slot: SlotProtocol>: View
     var optionsMenu: some View {
         Menu {
             Button {
-                clipboard.string = slot.descriptor
+                clipboard.string = slot.descriptor!.sourceWithChecksum
             } label: {
                 Label {
                     Text("Copy to Clipboard")
@@ -143,7 +143,7 @@ struct DescriptorEditor<Slot: SlotProtocol>: View
             }
             #if DEBUG
             Button {
-                descriptorSource = randomDescriptor()
+                descriptorSource = randomDescriptor().sourceWithChecksum
             } label: {
                 Label {
                     Text("Random Descriptor")
@@ -214,7 +214,7 @@ struct DescriptorEditor_Host: View {
                 }
 
                 Button {
-                    clipboard.string = randomDescriptor()
+                    clipboard.string = randomDescriptor().sourceWithChecksum
                 } label: {
                     Text("Descriptor")
                 }

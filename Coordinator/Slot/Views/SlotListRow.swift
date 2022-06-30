@@ -1,4 +1,5 @@
 import SwiftUI
+import BCFoundation
 
 struct SlotListRow<Slot: SlotProtocol>: View {
     @ObservedObject var slot: Slot
@@ -54,7 +55,7 @@ struct SlotListRow_Host: View {
     @ObservedObject var slot: DesignTimeSlot
     let hideIndex: Bool
     
-    init(displayIndex: Int, name: String, descriptor: String?, hideIndex: Bool = false) {
+    init(displayIndex: Int, name: String, descriptor: OutputDescriptor?, hideIndex: Bool = false) {
         self.hideIndex = hideIndex
         let account = DesignTimeAccount()
         slot = DesignTimeSlot(account: account, displayIndex: displayIndex, name: name, notes: "", descriptor: descriptor)

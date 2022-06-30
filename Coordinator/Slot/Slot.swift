@@ -1,87 +1,50 @@
 import SwiftUI
 import CoreData
+import BCFoundation
 
 @objc(Slot)
 class Slot: NSManagedObject, SlotProtocol {
-    // Don't remove this constructor even though it doesn't do anything: Core Data will crash.
+    // Don't remove this constructor even if it doesn't do anything: Core Data will crash.
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
+        
+        _descriptor.instance = self
     }
 
-    init(context: NSManagedObjectContext?, index: Int) {
-        super.init(entity: Slot.entity(), insertInto: context)
+    convenience init(context: NSManagedObjectContext?, index: Int) {
+        self.init(entity: Slot.entity(), insertInto: context)
+        
         self.slotID = UUID()
-        self.index = index
+        self.name = ""
+        self.notes = ""
+        self.index = Int16(index)
     }
     
-    var index: Int {
-        get {
-            Int(index_)
-        }
-        
-        set {
-            index_ = Int16(newValue)
-        }
-    }
-    
-    var displayIndex: Int {
-        index + 1
-    }
-    
-    var name: String {
-        get {
-            name_ ?? ""
-        }
-        set {
-            let value = newValue.isEmpty ? nil : newValue
-            if name_ != value {
-                name_ = value
-            }
-        }
-    }
-    
-    var notes: String {
-        get {
-            notes_ ?? ""
-        }
-        
-        set {
-            let value = newValue.isEmpty ? nil : newValue
-            if notes_ != value {
-                notes_ = value
-            }
-        }
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Slot> {
+        return NSFetchRequest<Slot>(entityName: "Slot")
     }
 
-    var slotID: UUID {
-        get {
-            slotID_ ?? UUID()
-        }
-        
-        set {
-            slotID_ = newValue
-        }
+    @NSManaged public var slotID: UUID
+    @NSManaged public var name: String
+    @NSManaged public var notes: String
+    @NSManaged public var index: Int16
+    @NSManaged public var account: Account
+
+    @NSManaged public var descriptor_: String?
+
+    var displayIndex: Int {
+        Int(index + 1)
     }
     
-    var account: Account {
-        get {
-            account_!
+    @Transformer(rawKeyPath: \Slot.descriptor_, toValue: { source in
+        guard let source else {
+            return nil
         }
-        
-        set {
-            account_ = newValue
-        }
-    }
-    
-    var descriptor: String? {
-        get {
-            descriptor_
-        }
-        
-        set {
-            descriptor_ = newValue
-        }
-    }
+        return try! OutputDescriptor.fromJSON(source)
+    }, toRaw: {
+        $0?.jsonString
+    })
+    var descriptor: OutputDescriptor?
 }
 
 extension Slot: Comparable {

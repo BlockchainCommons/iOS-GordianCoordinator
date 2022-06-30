@@ -6,11 +6,11 @@ where Encloser: AnyObject, Raw: Equatable, Value: Equatable
 {
     private let box: Box
     private let rawKeyPath: ReferenceWritableKeyPath<Encloser, Raw>
-    private let defaultValue: Value
+    private let defaultValue: Value?
     private let toValue: (Raw) -> Value
     private let toRaw: (Value) -> Raw
 
-    public init(rawKeyPath: ReferenceWritableKeyPath<Encloser, Raw>, defaultValue: Value, toValue: @escaping (Raw) -> Value, toRaw: @escaping (Value) -> Raw) {
+    public init(rawKeyPath: ReferenceWritableKeyPath<Encloser, Raw>, defaultValue: Value? = nil, toValue: @escaping (Raw) -> Value, toRaw: @escaping (Value) -> Raw) {
         self.box = Box()
         self.rawKeyPath = rawKeyPath
         self.defaultValue = defaultValue
@@ -63,6 +63,9 @@ where Encloser: AnyObject, Raw: Equatable, Value: Equatable
     public var projectedValue: Binding<Value> {
         Binding {
             guard let instance else {
+                guard let defaultValue else {
+                    fatalError()
+                }
                 return defaultValue
             }
             return getValue(instance: instance)

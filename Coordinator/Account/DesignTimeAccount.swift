@@ -44,7 +44,7 @@ class DesignTimeAccount: AccountProtocol {
         self.status = .incomplete(slotsRemaining: slotsCount)
 
         for index in 0..<slotsCount {
-            let descriptor: String?
+            let descriptor: OutputDescriptor?
             if isComplete {
                 descriptor = randomDescriptor()
             } else {

@@ -12,7 +12,7 @@ import BCFoundation
 class Account: NSManagedObject, AccountProtocol {
     let modelObjectType = ModelObjectType.account
     
-    // Don't remove this constructor even though it doesn't do anything: Core Data will crash.
+    // Don't remove this constructor even if it doesn't do anything: Core Data will crash.
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
         

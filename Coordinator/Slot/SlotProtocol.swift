@@ -1,4 +1,5 @@
 import Foundation
+import BCFoundation
 
 @MainActor
 protocol SlotProtocol: ObservableObject, Identifiable {
@@ -11,7 +12,7 @@ protocol SlotProtocol: ObservableObject, Identifiable {
     var displayIndex: Int { get }
     var name: String { get set }
     var notes: String { get set }
-    var descriptor: String? { get set }
+    var descriptor: OutputDescriptor? { get set }
     var status: SlotStatus { get }
 }
 

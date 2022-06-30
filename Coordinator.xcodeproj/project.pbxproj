@@ -197,6 +197,7 @@
 		79349B8D28506A800058CF5D /* Slot */ = {
 			isa = PBXGroup;
 			children = (
+				79C4DC612851E7E500CB3638 /* DesignTimeSlot.swift */,
 				79C4DC632851E80B00CB3638 /* SlotProtocol.swift */,
 				79349B8E28506AB30058CF5D /* Slot.swift */,
 				79349B9028506DF70058CF5D /* SlotStatus.swift */,
@@ -268,7 +269,6 @@
 		79C4DC65285324FD00CB3638 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				79C4DC612851E7E500CB3638 /* DesignTimeSlot.swift */,
 				79C4DC662853251400CB3638 /* AppToolbar.swift */,
 				79C4DC682853253200CB3638 /* ViewExtensions.swift */,
 				7937A68F284D7FBD00DE8E11 /* NameEditor.swift */,

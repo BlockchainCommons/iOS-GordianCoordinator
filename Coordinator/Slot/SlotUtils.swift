@@ -5,10 +5,10 @@ func randomKey() -> String {
     try! HDKey(seed: Seed()).base58PublicKey!
 }
 
-func randomDescriptor() -> String {
+func randomDescriptor() -> OutputDescriptor {
     let masterKey = try! HDKey(seed: Seed())
     let bundle = OutputDescriptorBundle(masterKey: masterKey, network: .mainnet, account: 0)!
-    return bundle.descriptors.randomElement()!.source
+    return bundle.descriptors.randomElement()!
 }
 
 func isValidKey(_ key: String?) -> Bool {

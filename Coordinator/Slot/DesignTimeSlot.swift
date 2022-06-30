@@ -2,6 +2,7 @@
 
 import Foundation
 import Combine
+import BCFoundation
 
 class DesignTimeSlot: ObservableObject, SlotProtocol {
     let account: DesignTimeAccount
@@ -10,9 +11,9 @@ class DesignTimeSlot: ObservableObject, SlotProtocol {
 
     @Published var name: String
     @Published var notes: String
-    @Published var descriptor: String?
+    @Published var descriptor: OutputDescriptor?
     
-    init(account: DesignTimeAccount, displayIndex: Int, name: String = "", notes: String = "", descriptor: String?) {
+    init(account: DesignTimeAccount, displayIndex: Int, name: String = "", notes: String = "", descriptor: OutputDescriptor?) {
         self.slotID = UUID()
         self.account = account
         self.displayIndex = displayIndex
