@@ -1,3 +1,5 @@
+#if DEBUG
+
 import Foundation
 import Combine
 
@@ -19,3 +21,5 @@ class DesignTimeSlot: ObservableObject, SlotProtocol {
         self.descriptor = descriptor
     }
 }
+
+#endif

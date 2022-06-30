@@ -6,6 +6,7 @@ extension Image {
     static let incompleteSlotNumbered = Image(systemName: "square.dashed")
     static let incompleteSlot = Image(systemName: "questionmark.square.dashed")
     static let completeSlot = Image(systemName: "checkmark.square.fill")
+    static let network = Image(systemName: "network")
     
     static let disclosureIndicator = Image(systemName: "chevron.right")
         .flipsForRightToLeftLayoutDirection(true)

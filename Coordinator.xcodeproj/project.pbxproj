@@ -12,6 +12,8 @@
 		7905B0252849AAB5008BC79D /* WolfOrdinal in Frameworks */ = {isa = PBXBuildFile; productRef = 7905B0242849AAB5008BC79D /* WolfOrdinal */; };
 		7905B0272849AC23008BC79D /* Memoized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7905B0262849AC23008BC79D /* Memoized.swift */; };
 		791A7FD4285BDC2700615DBD /* AccountAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791A7FD3285BDC2700615DBD /* AccountAddress.swift */; };
+		792066EE286D11700014B679 /* Transformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792066ED286D11700014B679 /* Transformer.swift */; };
+		792066F0286D1BC60014B679 /* TransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792066EF286D1BC50014B679 /* TransformerTests.swift */; };
 		79241072283C268D00611B9F /* BCApp in Frameworks */ = {isa = PBXBuildFile; productRef = 79241071283C268D00611B9F /* BCApp */; };
 		79349B8F28506AB30058CF5D /* Slot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79349B8E28506AB30058CF5D /* Slot.swift */; };
 		79349B9128506DF70058CF5D /* SlotStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79349B9028506DF70058CF5D /* SlotStatus.swift */; };
@@ -37,6 +39,7 @@
 		799B54C1283DECA00043EB90 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B54C0283DECA00043EB90 /* ErrorMessage.swift */; };
 		799BA663283F0A1A00285135 /* WalletSweeper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799BA662283F0A1A00285135 /* WalletSweeper.swift */; };
 		799BA6662844A2DA00285135 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799BA6652844A2DA00285135 /* CloudKit.framework */; };
+		79B1644B286A83C10017E798 /* NetworkPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B1644A286A83C10017E798 /* NetworkPicker.swift */; };
 		79B8DC9128641CE500212974 /* SlotUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B8DC9028641CE500212974 /* SlotUtils.swift */; };
 		79BB4AB32855A7B200FB45A4 /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BB4AB22855A7B200FB45A4 /* ImageExtensions.swift */; };
 		79BB4AB52855B26500FB45A4 /* DescriptorEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BB4AB42855B26500FB45A4 /* DescriptorEditor.swift */; };
@@ -95,6 +98,8 @@
 		7905B0212849A50B008BC79D /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		7905B0262849AC23008BC79D /* Memoized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memoized.swift; sourceTree = "<group>"; };
 		791A7FD3285BDC2700615DBD /* AccountAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAddress.swift; sourceTree = "<group>"; };
+		792066ED286D11700014B679 /* Transformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transformer.swift; sourceTree = "<group>"; };
+		792066EF286D1BC50014B679 /* TransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformerTests.swift; sourceTree = "<group>"; };
 		79349B8E28506AB30058CF5D /* Slot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slot.swift; sourceTree = "<group>"; };
 		79349B9028506DF70058CF5D /* SlotStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotStatus.swift; sourceTree = "<group>"; };
 		79349B9228506E0B0058CF5D /* AccountStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStatus.swift; sourceTree = "<group>"; };
@@ -120,6 +125,7 @@
 		799BA662283F0A1A00285135 /* WalletSweeper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletSweeper.swift; sourceTree = "<group>"; };
 		799BA6652844A2DA00285135 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		799BA6672844A3AD00285135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		79B1644A286A83C10017E798 /* NetworkPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPicker.swift; sourceTree = "<group>"; };
 		79B8DC9028641CE500212974 /* SlotUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotUtils.swift; sourceTree = "<group>"; };
 		79BB4AB22855A7B200FB45A4 /* ImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtensions.swift; sourceTree = "<group>"; };
 		79BB4AB42855B26500FB45A4 /* DescriptorEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptorEditor.swift; sourceTree = "<group>"; };
@@ -203,6 +209,7 @@
 		7937A684284C110D00DE8E11 /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				79C4DC5D2851E78F00CB3638 /* DesignTimeAccount.swift */,
 				79C4DC5F2851E7C200CB3638 /* AccountProtocol.swift */,
 				7905B0212849A50B008BC79D /* Account.swift */,
 				79349B9228506E0B0058CF5D /* AccountStatus.swift */,
@@ -236,6 +243,7 @@
 			children = (
 				7937A68B284D1D0000DE8E11 /* AccountSetupModel.swift */,
 				7937A68D284D1D8D00DE8E11 /* AccountSetup.swift */,
+				79B1644A286A83C10017E798 /* NetworkPicker.swift */,
 			);
 			path = AccountSetup;
 			sourceTree = "<group>";
@@ -260,6 +268,7 @@
 		79C4DC65285324FD00CB3638 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				79C4DC612851E7E500CB3638 /* DesignTimeSlot.swift */,
 				79C4DC662853251400CB3638 /* AppToolbar.swift */,
 				79C4DC682853253200CB3638 /* ViewExtensions.swift */,
 				7937A68F284D7FBD00DE8E11 /* NameEditor.swift */,
@@ -275,6 +284,7 @@
 			isa = PBXGroup;
 			children = (
 				79C4DC6B2853C7EA00CB3638 /* AppViewModelProtocol.swift */,
+				79C4DC6D2853C81300CB3638 /* DesignTimeAppViewModel.swift */,
 				7937A685284C114B00DE8E11 /* AppStorage.swift */,
 				7937A687284C136000DE8E11 /* AppViewModel.swift */,
 			);
@@ -338,6 +348,7 @@
 				799B54BE283DC7D20043EB90 /* SyncButton.swift */,
 				799B54C0283DECA00043EB90 /* ErrorMessage.swift */,
 				79BB4ABA2856A66900FB45A4 /* Clipboard.swift */,
+				792066ED286D11700014B679 /* Transformer.swift */,
 				7951B1292859358500E5C3C0 /* AccountSetup */,
 				79C4DC6A2853C75100CB3638 /* Accounts */,
 				7937A684284C110D00DE8E11 /* Account */,
@@ -355,9 +366,6 @@
 		79EC77702835BC67009E4466 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				79C4DC6D2853C81300CB3638 /* DesignTimeAppViewModel.swift */,
-				79C4DC5D2851E78F00CB3638 /* DesignTimeAccount.swift */,
-				79C4DC612851E7E500CB3638 /* DesignTimeSlot.swift */,
 				79EC77712835BC67009E4466 /* Preview Assets.xcassets */,
 				7951B12C2859749000E5C3C0 /* ClipboardView.swift */,
 			);
@@ -368,6 +376,7 @@
 			isa = PBXGroup;
 			children = (
 				79EC77802835BC67009E4466 /* CoordinatorTests.swift */,
+				792066EF286D1BC50014B679 /* TransformerTests.swift */,
 			);
 			path = CoordinatorTests;
 			sourceTree = "<group>";
@@ -567,6 +576,7 @@
 				79C4DC6C2853C7EA00CB3638 /* AppViewModelProtocol.swift in Sources */,
 				79BB4AB92856939900FB45A4 /* LabelExtensions.swift in Sources */,
 				7905B0202849A123008BC79D /* Policy.swift in Sources */,
+				792066EE286D11700014B679 /* Transformer.swift in Sources */,
 				79BB4AB52855B26500FB45A4 /* DescriptorEditor.swift in Sources */,
 				7905B0222849A50B008BC79D /* Account.swift in Sources */,
 				79C4DC642851E80B00CB3638 /* SlotProtocol.swift in Sources */,
@@ -578,6 +588,7 @@
 				7937A68A284D145000DE8E11 /* AccountDetail.swift in Sources */,
 				7937A688284C136000DE8E11 /* AppViewModel.swift in Sources */,
 				7937A698284DC8BB00DE8E11 /* NotesEditor.swift in Sources */,
+				79B1644B286A83C10017E798 /* NetworkPicker.swift in Sources */,
 				791A7FD4285BDC2700615DBD /* AccountAddress.swift in Sources */,
 				7937A68E284D1D8D00DE8E11 /* AccountSetup.swift in Sources */,
 				7951B12D2859749000E5C3C0 /* ClipboardView.swift in Sources */,
@@ -591,6 +602,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				79EC77812835BC67009E4466 /* CoordinatorTests.swift in Sources */,
+				792066F0286D1BC60014B679 /* TransformerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

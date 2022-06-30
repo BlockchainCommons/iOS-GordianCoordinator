@@ -1,7 +1,7 @@
 import Foundation
 import WolfBase
 
-enum AccountStatus {
+enum AccountStatus: Equatable {
     case incomplete(slotsRemaining: Int)
     case complete
 }
@@ -35,13 +35,5 @@ extension AccountStatus: Codable {
         default:
             throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Unknown AccountStatus: \(type)"))
         }
-    }
-    
-    var encoded: String {
-        try! JSONEncoder().encode(self).utf8!
-    }
-    
-    init(encoded: String) throws {
-        self = try JSONDecoder().decode(AccountStatus.self, from: encoded.utf8Data)
     }
 }

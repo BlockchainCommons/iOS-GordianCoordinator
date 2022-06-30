@@ -155,7 +155,7 @@ where AppViewModel: AppViewModelProtocol, Account == AppViewModel.Account
             } else {
                 ordinal = accounts.first!.ordinal.before
             }
-            let account = viewModel.newAccount(accountID: setup.accountID, name: setup.name, policy: setup.policy, ordinal: ordinal)
+            let account = viewModel.newAccount(accountID: setup.accountID, network: setup.network, name: setup.name, policy: setup.policy, ordinal: ordinal)
             account.notes = setup.notes
             
             viewModel.saveChanges()

@@ -3,6 +3,7 @@ import BCApp
 import WolfSwiftUI
 import LifeHash
 import WolfBase
+import BCFoundation
 
 struct AccountSetup: View {
     @Binding var isPresented: Bool
@@ -21,6 +22,7 @@ struct AccountSetup: View {
             ScrollView {
                 VStack(spacing: 20) {
                     identity
+                    network
                     policy
                     name
                     notes
@@ -48,6 +50,11 @@ struct AccountSetup: View {
             .frame(maxWidth: 600)
             .padding()
         }
+    }
+    
+    var network: some View {
+//        EmptyView()
+        NetworkPicker(selectedNetwork: Binding($model.network))
     }
 
     var identity: some View {

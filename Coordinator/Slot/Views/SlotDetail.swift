@@ -69,8 +69,10 @@ struct SlotDetail_Host: View {
     
     init(policy: Policy) {
         let account = DesignTimeAccount(policy: policy)
+        account.slots.first?.descriptor = randomDescriptor()
+        account.updateStatus()
         self._account = StateObject(wrappedValue: account)
-        slot = DesignTimeSlot(account: account, displayIndex: 1, descriptor: nil)
+        slot = account.slots.first!
     }
     
     var body: some View {
@@ -91,6 +93,7 @@ struct SlotDetail_Preview: PreviewProvider {
         }
         .environmentObject(Clipboard(isDesignTime: true))
         .environmentObject(Persistence(isDesignTime: true))
+        .preferredColorScheme(.dark)
     }
 }
 

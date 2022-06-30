@@ -39,6 +39,9 @@ struct DescriptorEditor<Slot: SlotProtocol>: View
             labelRow
             descriptorRow
         }
+        .onAppear {
+            descriptorSource = slot.descriptor
+        }
         .onReceive(validator.publisher) {
             if $0.isValid {
                 setDescriptor(descriptorSource)
@@ -56,7 +59,7 @@ struct DescriptorEditor<Slot: SlotProtocol>: View
     }
     
     var label: some View {
-        SectionLabel("Descriptor", icon: .slot)
+        SectionLabel("Descriptor", icon: .outputDescriptor)
     }
     
     @ViewBuilder
@@ -169,6 +172,7 @@ struct DescriptorEditor<Slot: SlotProtocol>: View
         
         init() {
             publisher = subject
+                .dropFirst()
                 .debounceField()
                 .validateSlotValue()
         }

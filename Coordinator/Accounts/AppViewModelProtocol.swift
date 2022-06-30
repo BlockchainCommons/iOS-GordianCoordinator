@@ -1,5 +1,6 @@
 import Foundation
 import WolfOrdinal
+import BCFoundation
 
 @MainActor
 protocol AppViewModelProtocol: ObservableObject {
@@ -7,7 +8,7 @@ protocol AppViewModelProtocol: ObservableObject {
     
     var accounts: [Account] { get set }
 
-    func newAccount(accountID: UUID, name: String, policy: Policy, ordinal: Ordinal) -> Account
+    func newAccount(accountID: UUID, network: Network, name: String, policy: Policy, ordinal: Ordinal) -> Account
     func deleteAccount(_ account: Account)
     func saveChanges()
 }

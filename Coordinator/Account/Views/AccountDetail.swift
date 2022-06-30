@@ -25,7 +25,6 @@ struct AccountDetail<Account: AccountProtocol>: View {
         ScrollView {
             VStack(spacing: 20) {
                 identity
-//                address
                 slots
                 nameEditor
                 notesEditor
@@ -78,7 +77,12 @@ struct AccountDetail<Account: AccountProtocol>: View {
 #if DEBUG
 
 struct AccountDetail_Host: View {
-    @StateObject var account = DesignTimeAccount(model: nil, accountID: UUID(), name: "Test account", policy: .threshold(quorum: 2, slots: 3), ordinal: [0], isComplete: false)
+    @StateObject var account = {
+        let a = DesignTimeAccount(model: nil, accountID: UUID(), name: "Test account", policy: .threshold(quorum: 2, slots: 3), ordinal: [0], isComplete: false)
+        a.slots.first!.descriptor = randomDescriptor()
+        a.updateStatus()
+        return a
+    }()
 
     var body: some View {
         AccountDetail(account: account, generateName: { LifeHashNameGenerator.generate(from: account.accountID) })
@@ -88,7 +92,9 @@ struct AccountDetail_Host: View {
 struct AccountDetail_Preview: PreviewProvider {
     static var previews: some View {
         Group {
-            AccountDetail_Host()
+            NavigationView {
+                AccountDetail_Host()
+            }
         }
         .padding()
         .preferredColorScheme(.dark)

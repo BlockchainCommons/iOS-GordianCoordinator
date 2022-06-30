@@ -6,6 +6,7 @@ import WolfLorem
 import WolfOrdinal
 import BCApp
 import os
+import BCFoundation
 
 fileprivate let logger = Logger(subsystem: Application.bundleIdentifier, category: "AppViewModel")
 
@@ -33,8 +34,8 @@ class AppViewModel: AppViewModelProtocol {
         .store(in: &cancellable)
     }
     
-    func newAccount(accountID: UUID, name: String, policy: Policy, ordinal: Ordinal) -> Account {
-        let account = Account(context: context, accountID: accountID, policy: policy, ordinal: ordinal)
+    func newAccount(accountID: UUID, network: Network, name: String, policy: Policy, ordinal: Ordinal) -> Account {
+        let account = Account(context: context, accountID: accountID, network: network, policy: policy, ordinal: ordinal)
         account.name = name
         return account
     }

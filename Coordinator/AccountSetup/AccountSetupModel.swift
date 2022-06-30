@@ -2,12 +2,14 @@ import Foundation
 import BCApp
 import WolfBase
 import LifeHash
+import BCFoundation
 
 class AccountSetupModel: ObservableObject {
     let accountID: UUID
     @Published var policy: Policy = .threshold(quorum: 2, slots: 3)
     @Published var name: String
     @Published var notes: String = ""
+    @Published var network: Network = .testnet
     
     init() {
         let accountID = UUID()
@@ -35,5 +37,9 @@ extension AccountSetupModel: ObjectIdentifiable {
     
     var instanceDetail: String? {
         policy.description
+    }
+    
+    var subtypes: [ModelSubtype] {
+        [ModelSubtype(id: network.id, icon: network.icon)]
     }
 }

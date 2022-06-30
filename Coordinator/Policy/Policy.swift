@@ -1,7 +1,7 @@
 import Foundation
 import WolfBase
 
-enum Policy {
+enum Policy: Equatable {
     case single
     case threshold(quorum: Int, slots: Int)
 }
@@ -49,14 +49,6 @@ extension Policy: Codable {
         default:
             throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Unknown Policy type: \(type)"))
         }
-    }
-    
-    var encoded: String {
-        try! JSONEncoder().encode(self).utf8!
-    }
-    
-    init(encoded: String) throws {
-        self = try JSONDecoder().decode(Policy.self, from: encoded.utf8Data)
     }
 }
 

@@ -1,9 +1,12 @@
+#if DEBUG
+
 import SwiftUI
 import BCApp
 import WolfBase
 import WolfOrdinal
 import Combine
 import WolfLorem
+import BCFoundation
 
 class DesignTimeAccount: AccountProtocol {
     let modelObjectType = ModelObjectType.account
@@ -11,6 +14,7 @@ class DesignTimeAccount: AccountProtocol {
     let accountID: UUID
     let policy: Policy
     var slots: [DesignTimeSlot]
+    var network: Network
 
     var id: UUID { accountID }
 
@@ -27,10 +31,11 @@ class DesignTimeAccount: AccountProtocol {
         }
     }
 
-    init(model: DesignTimeAppViewModel?, accountID: UUID, name: String, notes: String = "", policy: Policy, ordinal: Ordinal, isComplete: Bool = false) {
+    init(model: DesignTimeAppViewModel?, accountID: UUID, network: Network = .testnet, name: String, notes: String = "", policy: Policy, ordinal: Ordinal, isComplete: Bool = false) {
         self.model = model
         self.accountID = accountID
         self.name = name
+        self.network = network
         self.notes = notes
         self.policy = policy
         self.ordinal = ordinal
@@ -62,13 +67,6 @@ class DesignTimeAccount: AccountProtocol {
     var instanceDetail: String? {
         policy†
     }
-    
-    var subtypes: [ModelSubtype] {
-        let subtype = ModelSubtype(
-            id: UUID().uuidString,
-            icon: AccountStatusIndicator(status: status)
-                .eraseToAnyView()
-        )
-        return [subtype]
-    }
 }
+
+#endif

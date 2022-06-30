@@ -5,22 +5,35 @@ import WolfBase
 import BCApp
 import SwiftUI
 import LifeHash
+import BCWally
+import BCFoundation
 
 @objc(Account)
 class Account: NSManagedObject, AccountProtocol {
     let modelObjectType = ModelObjectType.account
-
+    
     // Don't remove this constructor even though it doesn't do anything: Core Data will crash.
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
+        
+        _ordinal.instance = self
+        _policy.instance = self
+        _status.instance = self
     }
     
-    init(context: NSManagedObjectContext?, accountID: UUID, policy: Policy, ordinal: Ordinal) {
-        super.init(entity: Account.entity(), insertInto: context)
+    convenience init(context: NSManagedObjectContext?, accountID: UUID, network: Network, policy: Policy, ordinal: Ordinal, name: String? = nil, notes: String = "") {
+        self.init(entity: Account.entity(), insertInto: context)
+
         self.accountID = accountID
+        self.network = network
         self.policy = policy
         self.ordinal = ordinal
-        self.name = LifeHashNameGenerator.generate(from: accountID)
+        if let name {
+            self.name = name
+        } else {
+            self.name = LifeHashNameGenerator.generate(from: accountID)
+        }
+        self.notes = notes
         let slotsCount = policy.slots
         self.status = .incomplete(slotsRemaining: slotsCount)
         
@@ -29,92 +42,52 @@ class Account: NSManagedObject, AccountProtocol {
             addSlot(slot)
         }
     }
-    
-    @nonobjc
-    var accountID: UUID {
-        get {
-            accountID_ ?? UUID()
-        }
-        
-        set {
-            accountID_ = newValue
-        }
-    }
-    
-    @nonobjc
-    var name: String {
-        get {
-            name_ ?? ""
-        }
-        
-        set {
-            let value = newValue.isEmpty ? nil : newValue
-            if name_ != value {
-                name_ = value
-            }
-        }
-    }
-    
-    @nonobjc
-    var notes: String {
-        get {
-            notes_ ?? ""
-        }
-        
-        set {
-            let value = newValue.isEmpty ? nil : newValue
-            if notes_ != value {
-                notes_ = value
-            }
-        }
-    }
-    
-    @nonobjc
-    var ordinal: Ordinal {
-        get {
-            try! Ordinal(encoded: ordinal_!)
-        }
-        
-        set {
-            ordinal_ = newValue.encoded
-        }
+
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Account> {
+        return NSFetchRequest<Account>(entityName: "Account")
     }
 
-    @nonobjc
-    var policy: Policy {
-        get {
-            guard let policy_ = policy_ else {
-                return .threshold(quorum: 2, slots: 3)
-            }
-            return (try? Policy(encoded: policy_)) ?? .threshold(quorum: 2, slots: 3)
-        }
-        
-        set {
-            policy_ = newValue.encoded
-        }
-    }
+    @NSManaged public var accountID: UUID
+    @NSManaged public var name: String
+    @NSManaged public var notes: String
+
+    @NSManaged public var network_: String
+    @NSManaged public var ordinal_: String
+    @NSManaged public var policy_: String
+    @NSManaged public var status_: String
+    @NSManaged public var slots_: NSSet
     
-    @nonobjc
-    var status: AccountStatus {
-        get {
-            guard let status_ = status_ else {
-                return .incomplete(slotsRemaining: 3)
-            }
-            return (try? AccountStatus(encoded: status_)) ?? .incomplete(slotsRemaining: 3)
-        }
-        
-        set {
-            status_ = newValue.encoded
-        }
-    }
+    @Transformer(rawKeyPath: \Account.ordinal_, defaultValue: [0])
+    var ordinal: Ordinal
     
+    @Transformer(rawKeyPath: \Account.policy_, defaultValue: .single)
+    var policy: Policy
+    
+    @Transformer(rawKeyPath: \Account.status_, defaultValue: .incomplete(slotsRemaining: 0))
+    var status: AccountStatus
+    
+    @Transformer(rawKeyPath: \Account.network_, defaultValue: .testnet)
+    var network: Network
+}
+
+// MARK: accessors for slots
+extension Account {
+    @objc(addSlots_Object:)
+    @NSManaged public func addToSlots_(_ value: Slot)
+
+    @objc(removeSlots_Object:)
+    @NSManaged public func removeFromSlots_(_ value: Slot)
+
+    @objc(addSlots_:)
+    @NSManaged public func addToSlots_(_ values: NSSet)
+
+    @objc(removeSlots_:)
+    @NSManaged public func removeFromSlots_(_ values: NSSet)
+
     @nonobjc dynamic
     var slots: [Slot] {
         get {
-            guard
-                let s = slots_ as? Set<Slot> else {
-                return []
-            }
+            let s = slots_ as! Set<Slot>
             return s.sorted()
         }
     }
@@ -127,16 +100,6 @@ class Account: NSManagedObject, AccountProtocol {
     @nonobjc
     var instanceDetail: String? {
         policy†
-    }
-    
-    @nonobjc
-    var subtypes: [ModelSubtype] {
-        let subtype = ModelSubtype(
-            id: UUID().uuidString,
-            icon: AccountStatusIndicator(status: status)
-                .eraseToAnyView()
-        )
-        return [subtype]
     }
 }
 

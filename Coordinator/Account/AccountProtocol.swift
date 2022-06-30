@@ -1,6 +1,8 @@
 import Foundation
 import BCApp
 import WolfOrdinal
+import BCFoundation
+import BCWally
 
 @MainActor
 protocol AccountProtocol: ObservableObject, Identifiable, ObjectIdentifiable, Comparable {
@@ -15,6 +17,7 @@ protocol AccountProtocol: ObservableObject, Identifiable, ObjectIdentifiable, Co
     var slots: [Slot] { get }
     var status: AccountStatus { get set }
     var policy: Policy { get }
+    var network: Network { get }
     
     func updateStatus()
 }
@@ -51,5 +54,17 @@ extension AccountProtocol {
             return lhs.accountID.uuidString < rhs.accountID.uuidString
         }
         return lhs.ordinal < rhs.ordinal
+    }
+}
+
+extension AccountProtocol {
+    var subtypes: [ModelSubtype] {
+        let networkSubtype = ModelSubtype(id: network.id, icon: network.icon)
+        let accountStatusSubtype = ModelSubtype(
+            id: UUID().uuidString,
+            icon: AccountStatusIndicator(status: status)
+                .eraseToAnyView()
+        )
+        return [networkSubtype, accountStatusSubtype]
     }
 }

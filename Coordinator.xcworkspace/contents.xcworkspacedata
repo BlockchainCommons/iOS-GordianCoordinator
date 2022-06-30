@@ -7,4 +7,7 @@
    <FileRef
       location = "group:../BCSwiftFoundation">
    </FileRef>
+   <FileRef
+      location = "group:../BCSwiftEsplora">
+   </FileRef>
 </Workspace>
