@@ -24,7 +24,7 @@
         "repositoryURL": "https://github.com/BlockchainCommons/BCSwiftApp.git",
         "state": {
           "branch": "master",
-          "revision": "b2d286981ad732528399880c35b0bb2272fa00f2",
+          "revision": "99d44813e9324c36cc2be9768eb53bdbe8400193",
           "version": null
         }
       },
@@ -179,6 +179,15 @@
           "branch": null,
           "revision": "ed60da54305c244d0f77bc8d08495e04161e96a4",
           "version": "0.1.2"
+        }
+      },
+      {
+        "package": "SwiftUIFlowLayout",
+        "repositoryURL": "https://github.com/globulus/swiftui-flow-layout.git",
+        "state": {
+          "branch": null,
+          "revision": "96f9a3fdb83fd0b73525f6324b8a35ef0dc235fd",
+          "version": "1.0.4"
         }
       },
       {

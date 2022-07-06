@@ -6,7 +6,6 @@ import WolfLorem
 import WolfOrdinal
 import BCApp
 import os
-import BCFoundation
 
 fileprivate let logger = Logger(subsystem: Application.bundleIdentifier, category: "AppViewModel")
 

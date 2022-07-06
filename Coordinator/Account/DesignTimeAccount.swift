@@ -6,7 +6,6 @@ import WolfBase
 import WolfOrdinal
 import Combine
 import WolfLorem
-import BCFoundation
 
 class DesignTimeAccount: AccountProtocol {
     let modelObjectType = ModelObjectType.account

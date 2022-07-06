@@ -1,8 +1,6 @@
 import Foundation
 import BCApp
 import WolfOrdinal
-import BCFoundation
-import BCWally
 
 @MainActor
 protocol AccountProtocol: ObservableObject, Identifiable, ObjectIdentifiable, Comparable {
@@ -18,6 +16,7 @@ protocol AccountProtocol: ObservableObject, Identifiable, ObjectIdentifiable, Co
     var status: AccountStatus { get set }
     var policy: Policy { get }
     var network: Network { get }
+    var useInfo: UseInfo { get }
     
     func updateStatus()
 }
@@ -38,6 +37,10 @@ extension AccountProtocol {
         } else {
             return false
         }
+    }
+
+    var useInfo: UseInfo {
+        .init(asset: .btc, network: network)
     }
 }
 

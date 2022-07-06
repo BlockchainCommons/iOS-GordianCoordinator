@@ -1,6 +1,5 @@
 //import SwiftUI
 //import BitcoinDevKit
-//import BCFoundation
 //import BCApp
 //import WolfBase
 //

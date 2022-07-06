@@ -2,7 +2,6 @@ import Foundation
 import BCApp
 import WolfBase
 import LifeHash
-import BCFoundation
 
 class AccountSetupModel: ObservableObject {
     let accountID: UUID

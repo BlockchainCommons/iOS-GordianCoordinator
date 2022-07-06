@@ -26,7 +26,6 @@ struct ContentViewOld: View {
 
 //import SwiftUI
 //import BCApp
-//import BCFoundation
 //
 //struct ContentView: View {
 //    @StateObject var model: WalletSweeper = WalletSweeper()

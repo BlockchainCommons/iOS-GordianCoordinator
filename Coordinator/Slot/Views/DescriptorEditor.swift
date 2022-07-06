@@ -2,8 +2,8 @@ import SwiftUI
 import BCApp
 import Combine
 import WolfLorem
-import BCFoundation
 import WolfBase
+import BCApp
 
 struct DescriptorEditor<Slot: SlotProtocol>: View
 {
@@ -16,6 +16,7 @@ struct DescriptorEditor<Slot: SlotProtocol>: View
         }
     }
     @State var isAlertPresented: Bool = false
+    @State var isSheetPresented: Bool = false
     @EnvironmentObject var clipboard: Clipboard
 
     var descriptor: OutputDescriptor? {
@@ -81,9 +82,26 @@ struct DescriptorEditor<Slot: SlotProtocol>: View
                 optionsMenu
             }
         } else {
-            VStack(alignment: .leading){
+            HStack {
                 importMenu
+                Spacer()
+                exportRequestButton
             }
+        }
+    }
+    
+    var exportRequestButton: some View {
+        Button {
+            isSheetPresented = true
+        } label: {
+            Image.export
+        }
+        .sheet(isPresented: $isSheetPresented) {
+            URExport(isPresented: $isSheetPresented,
+                     isSensitive: false,
+                     ur: slot.outputDescriptorRequest.ur,
+                     name: "Output Descriptor Request"
+            )
         }
     }
     
@@ -148,7 +166,7 @@ struct DescriptorEditor<Slot: SlotProtocol>: View
                 Label {
                     Text("Random Descriptor")
                 } icon: {
-                    Image.randomize
+                    Image.developer
                 }
             }
             #endif

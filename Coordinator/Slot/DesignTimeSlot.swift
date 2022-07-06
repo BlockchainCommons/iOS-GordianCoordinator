@@ -8,6 +8,7 @@ class DesignTimeSlot: ObservableObject, SlotProtocol {
     let account: DesignTimeAccount
     let displayIndex: Int
     let slotID: UUID
+    let challenge: Data
 
     @Published var name: String
     @Published var notes: String
@@ -20,6 +21,7 @@ class DesignTimeSlot: ObservableObject, SlotProtocol {
         self.name = name
         self.notes = notes
         self.descriptor = descriptor
+        self.challenge = SecureRandomNumberGenerator.shared.data(count: 16)
     }
 }
 

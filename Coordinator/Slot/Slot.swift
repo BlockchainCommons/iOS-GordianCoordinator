@@ -15,9 +15,10 @@ class Slot: NSManagedObject, SlotProtocol {
         self.init(entity: Slot.entity(), insertInto: context)
         
         self.slotID = UUID()
-        self.name = ""
-        self.notes = ""
+        self.name_ = ""
+        self.notes_ = ""
         self.index = Int16(index)
+        self.challenge = SecureRandomNumberGenerator.shared.data(count: 16)
     }
     
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Slot> {
@@ -25,10 +26,11 @@ class Slot: NSManagedObject, SlotProtocol {
     }
 
     @NSManaged public var slotID: UUID
-    @NSManaged public var name: String
-    @NSManaged public var notes: String
+    @NSManaged public var name_: String
+    @NSManaged public var notes_: String
     @NSManaged public var index: Int16
     @NSManaged public var account: Account
+    @NSManaged public var challenge: Data
 
     @NSManaged public var descriptor_: String?
 
@@ -36,6 +38,12 @@ class Slot: NSManagedObject, SlotProtocol {
         Int(index + 1)
     }
     
+    @Transformer(deduplicate: \Slot.name_, defaultValue: "")
+    var name: String
+    
+    @Transformer(deduplicate: \Slot.notes_, defaultValue: "")
+    var notes: String
+
     @Transformer(rawKeyPath: \Slot.descriptor_, toValue: { source in
         guard let source else {
             return nil

@@ -1,6 +1,5 @@
 import SwiftUI
 import BCApp
-import BCWally
 
 struct NetworkPicker: View {
     @Binding var selectedNetwork: Network?

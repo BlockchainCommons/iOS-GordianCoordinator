@@ -5,8 +5,6 @@ import WolfBase
 import BCApp
 import SwiftUI
 import LifeHash
-import BCWally
-import BCFoundation
 
 @objc(Account)
 class Account: NSManagedObject, AccountProtocol {
@@ -16,6 +14,9 @@ class Account: NSManagedObject, AccountProtocol {
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
         
+        _name.instance = self
+        _notes.instance = self
+        _network.instance = self
         _ordinal.instance = self
         _policy.instance = self
         _status.instance = self
@@ -29,11 +30,11 @@ class Account: NSManagedObject, AccountProtocol {
         self.policy = policy
         self.ordinal = ordinal
         if let name {
-            self.name = name
+            self.name_ = name
         } else {
-            self.name = LifeHashNameGenerator.generate(from: accountID)
+            self.name_ = LifeHashNameGenerator.generate(from: accountID)
         }
-        self.notes = notes
+        self.notes_ = notes
         let slotsCount = policy.slots
         self.status = .incomplete(slotsRemaining: slotsCount)
         
@@ -48,25 +49,36 @@ class Account: NSManagedObject, AccountProtocol {
     }
 
     @NSManaged public var accountID: UUID
-    @NSManaged public var name: String
-    @NSManaged public var notes: String
-
+    
+    @NSManaged public var name_: String
+    @NSManaged public var notes_: String
     @NSManaged public var network_: String
     @NSManaged public var ordinal_: String
     @NSManaged public var policy_: String
     @NSManaged public var status_: String
+
     @NSManaged public var slots_: NSSet
     
-    @Transformer(rawKeyPath: \Account.ordinal_, defaultValue: [0])
+    @Transformer(deduplicate: \Account.name_, defaultValue: "")
+    var name: String
+    
+    @Transformer(deduplicate: \Account.notes_, defaultValue: "")
+    var notes: String
+
+    @Transformer(json: \Account.ordinal_, defaultValue: [0])
     var ordinal: Ordinal
     
-    @Transformer(rawKeyPath: \Account.policy_, defaultValue: .single)
+    @Transformer(json: \Account.policy_, defaultValue: .single)
     var policy: Policy
     
-    @Transformer(rawKeyPath: \Account.status_, defaultValue: .incomplete(slotsRemaining: 0))
+    @Transformer(json: \Account.status_, defaultValue: .incomplete(slotsRemaining: 0))
     var status: AccountStatus
     
-    @Transformer(rawKeyPath: \Account.network_, defaultValue: .testnet)
+    @Transformer(rawKeyPath: \Account.network_, defaultValue: .testnet, toValue: {
+        Network(id: $0)!
+    }, toRaw: {
+        $0.id
+    })
     var network: Network
 }
 

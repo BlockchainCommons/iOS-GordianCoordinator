@@ -100,11 +100,24 @@ where Encloser: AnyObject, Raw: Equatable, Value: Equatable
 public extension Transformer
 where Value: Codable, Raw == String
 {
-    init(rawKeyPath: ReferenceWritableKeyPath<Encloser, Raw>, defaultValue: Value) {
+    init(json rawKeyPath: ReferenceWritableKeyPath<Encloser, Raw>, defaultValue: Value) {
         self.init(rawKeyPath: rawKeyPath, defaultValue: defaultValue, toValue: {
             try! Value.fromJSON($0)
         }, toRaw: {
             $0.jsonString
         })
+    }
+}
+
+public extension Transformer
+where Value == Raw
+{
+    init(deduplicate rawKeyPath: ReferenceWritableKeyPath<Encloser, Raw>, defaultValue: Value) {
+        self.init(
+            rawKeyPath: rawKeyPath,
+            defaultValue: defaultValue,
+            toValue: { $0 },
+            toRaw: { $0 }
+        )
     }
 }

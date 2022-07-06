@@ -3,7 +3,6 @@ import BCApp
 import WolfSwiftUI
 import LifeHash
 import WolfBase
-import BCFoundation
 
 struct AccountSetup: View {
     @Binding var isPresented: Bool

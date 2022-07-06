@@ -1,6 +1,6 @@
 import Foundation
 import WolfOrdinal
-import BCFoundation
+import BCApp
 
 @MainActor
 protocol AppViewModelProtocol: ObservableObject {
