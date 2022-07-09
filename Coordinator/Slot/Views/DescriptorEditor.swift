@@ -84,18 +84,23 @@ struct DescriptorEditor<Slot: SlotProtocol>: View
         } else {
             HStack {
                 importMenu
-                Spacer()
-                exportRequestButton
+                displayRequestButton
             }
+            .validation(validator.publisher)
         }
     }
     
-    var exportRequestButton: some View {
+    var displayRequestButton: some View {
         Button {
             isSheetPresented = true
         } label: {
-            Image.export
+            Label {
+                Text("Request")
+            } icon: {
+                Image.displayQRCode
+            }
         }
+        .buttonStyle(.bordered)
         .sheet(isPresented: $isSheetPresented) {
             DisplayRequest(
                 isPresented: $isSheetPresented,
@@ -189,9 +194,8 @@ struct DescriptorEditor<Slot: SlotProtocol>: View
                 }
                 .font(Font.body.bold())
             }
-            .buttonStyle(.borderedProminent)
+            .buttonStyle(.bordered)
         }
-        .validation(validator.publisher)
     }
     
     class Validator: ObservableObject {
