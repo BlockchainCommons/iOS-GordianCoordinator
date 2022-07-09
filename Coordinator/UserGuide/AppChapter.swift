@@ -53,7 +53,7 @@ enum AppChapter: CaseIterable, Identifiable, ChapterProtocol {
     }
     
     var markdown: Markdown {
-        Markdown(Document(markdownChapter.body))
+        try! Markdown(Document(markdown: markdownChapter.body))
     }
 
     var id: String {

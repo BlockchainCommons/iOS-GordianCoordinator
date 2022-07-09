@@ -97,11 +97,21 @@ struct DescriptorEditor<Slot: SlotProtocol>: View
             Image.export
         }
         .sheet(isPresented: $isSheetPresented) {
-            URExport(isPresented: $isSheetPresented,
-                     isSensitive: false,
-                     ur: slot.outputDescriptorRequest.ur,
-                     name: "Output Descriptor Request"
-            )
+            DisplayRequest(
+                isPresented: $isSheetPresented,
+                isSensitive: false,
+                ur: slot.outputDescriptorRequest.ur,
+                title: "Descriptor Request",
+                caption: "You are requesting another party to provide an output descriptor for this slot."
+            ) {
+                HStack {
+                    Asset.btc.icon
+                    slot.account.network.icon
+                    Symbol.outputDescriptor
+                    Image.questionmark
+                }
+                .font(.title)
+            }
         }
     }
     
@@ -270,6 +280,7 @@ struct DescriptorEditor_Preview: PreviewProvider {
         .previewLayout(.sizeThatFits)
         .environmentObject(Clipboard(isDesignTime: true))
         .environmentObject(Persistence(isDesignTime: true))
+        .darkMode()
     }
 }
 
