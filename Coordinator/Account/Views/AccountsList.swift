@@ -113,28 +113,33 @@ where AppViewModel: AppViewModelProtocol, Account == AppViewModel.Account
             _lifeHashState = .init(wrappedValue: LifeHashState(input: account, version: .version2))
         }
         
+        @ViewBuilder
         var body: some View {
-            NavigationLink {
-                LazyView(
-                    AccountDetail(account: account, generateName: { Self.generateName(for: account) })
-                )
-            } label: {
-                VStack {
+            if account.isFault {
+                EmptyView()
+            } else {
+                NavigationLink {
+                    LazyView(
+                        AccountDetail(account: account, generateName: { Self.generateName(for: account) })
+                    )
+                } label: {
+                    VStack {
 #if targetEnvironment(macCatalyst)
-                    Spacer().frame(height: 10)
+                        Spacer().frame(height: 10)
 #endif
-                    ObjectIdentityBlock(model: .constant(account), allowLongPressCopy: false)
-                        .frame(height: 80)
-                        .padding()
-                    
+                        ObjectIdentityBlock(model: .constant(account), allowLongPressCopy: false)
+                            .frame(height: 80)
+                            .padding()
+                        
 #if targetEnvironment(macCatalyst)
-                    Spacer().frame(height: 10)
-                    Divider()
+                        Spacer().frame(height: 10)
+                        Divider()
 #endif
+                    }
                 }
+                .isDetailLink(true)
+                .accessibility(label: Text("Account: \(account.accountID)"))
             }
-            .isDetailLink(true)
-            .accessibility(label: Text("Account: \(account.accountID)"))
         }
         
         private static func generateName(for account: Account) -> String {

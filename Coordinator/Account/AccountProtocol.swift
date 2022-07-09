@@ -19,6 +19,9 @@ protocol AccountProtocol: ObservableObject, Identifiable, ObjectIdentifiable, Co
     var useInfo: UseInfo { get }
     
     func updateStatus()
+    
+    var isDeleted: Bool { get }
+    var isFault: Bool { get }
 }
 
 extension AccountProtocol {
@@ -41,6 +44,14 @@ extension AccountProtocol {
 
     var useInfo: UseInfo {
         .init(asset: .btc, network: network)
+    }
+    
+    var isDeleted: Bool {
+        false
+    }
+    
+    var isFault: Bool {
+        false
     }
 }
 
