@@ -30,6 +30,10 @@
 		7937A692284DB54D00DE8E11 /* PolicyPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7937A691284DB54D00DE8E11 /* PolicyPicker.swift */; };
 		7937A694284DB67D00DE8E11 /* PolicyPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7937A693284DB67D00DE8E11 /* PolicyPreset.swift */; };
 		7937A698284DC8BB00DE8E11 /* NotesEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7937A697284DC8BB00DE8E11 /* NotesEditor.swift */; };
+		793F67FF287A5E5100B1BA5A /* AppScanButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793F67FE287A5E5100B1BA5A /* AppScanButton.swift */; };
+		793F6801287BBA2100B1BA5A /* KeyboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793F6800287BBA2100B1BA5A /* KeyboardToolbar.swift */; };
+		793F6804287BFBA100B1BA5A /* ApproveResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793F6803287BFBA100B1BA5A /* ApproveResponse.swift */; };
+		793F6806287BFE0E00B1BA5A /* ApproveOutputDescriptorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793F6805287BFE0E00B1BA5A /* ApproveOutputDescriptorResponse.swift */; };
 		7951B12D2859749000E5C3C0 /* ClipboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7951B12C2859749000E5C3C0 /* ClipboardView.swift */; };
 		795889D128541DB400DE4114 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795889D028541DB400DE4114 /* MainView.swift */; };
 		79651E5A28484C6F00991464 /* AppChapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79651E5928484C6F00991464 /* AppChapter.swift */; };
@@ -115,6 +119,10 @@
 		7937A691284DB54D00DE8E11 /* PolicyPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyPicker.swift; sourceTree = "<group>"; };
 		7937A693284DB67D00DE8E11 /* PolicyPreset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyPreset.swift; sourceTree = "<group>"; };
 		7937A697284DC8BB00DE8E11 /* NotesEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesEditor.swift; sourceTree = "<group>"; };
+		793F67FE287A5E5100B1BA5A /* AppScanButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppScanButton.swift; sourceTree = "<group>"; };
+		793F6800287BBA2100B1BA5A /* KeyboardToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardToolbar.swift; sourceTree = "<group>"; };
+		793F6803287BFBA100B1BA5A /* ApproveResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveResponse.swift; sourceTree = "<group>"; };
+		793F6805287BFE0E00B1BA5A /* ApproveOutputDescriptorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveOutputDescriptorResponse.swift; sourceTree = "<group>"; };
 		7951B12C2859749000E5C3C0 /* ClipboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardView.swift; sourceTree = "<group>"; };
 		795889D028541DB400DE4114 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		79651E5928484C6F00991464 /* AppChapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppChapter.swift; sourceTree = "<group>"; };
@@ -239,6 +247,15 @@
 			path = Old;
 			sourceTree = "<group>";
 		};
+		793F6802287BFB8F00B1BA5A /* Transactions */ = {
+			isa = PBXGroup;
+			children = (
+				793F6803287BFBA100B1BA5A /* ApproveResponse.swift */,
+				793F6805287BFE0E00B1BA5A /* ApproveOutputDescriptorResponse.swift */,
+			);
+			path = Transactions;
+			sourceTree = "<group>";
+		};
 		7951B1292859358500E5C3C0 /* AccountSetup */ = {
 			isa = PBXGroup;
 			children = (
@@ -270,6 +287,8 @@
 			isa = PBXGroup;
 			children = (
 				79C4DC662853251400CB3638 /* AppToolbar.swift */,
+				793F6800287BBA2100B1BA5A /* KeyboardToolbar.swift */,
+				793F67FE287A5E5100B1BA5A /* AppScanButton.swift */,
 				79C4DC682853253200CB3638 /* ViewExtensions.swift */,
 				7937A68F284D7FBD00DE8E11 /* NameEditor.swift */,
 				7937A697284DC8BB00DE8E11 /* NotesEditor.swift */,
@@ -349,6 +368,7 @@
 				799B54C0283DECA00043EB90 /* ErrorMessage.swift */,
 				79BB4ABA2856A66900FB45A4 /* Clipboard.swift */,
 				792066ED286D11700014B679 /* Transformer.swift */,
+				793F6802287BFB8F00B1BA5A /* Transactions */,
 				7951B1292859358500E5C3C0 /* AccountSetup */,
 				79C4DC6A2853C75100CB3638 /* Accounts */,
 				7937A684284C110D00DE8E11 /* Account */,
@@ -554,6 +574,7 @@
 				795889D128541DB400DE4114 /* MainView.swift in Sources */,
 				79349BB328518E680058CF5D /* SlotDetail.swift in Sources */,
 				799BA663283F0A1A00285135 /* WalletSweeper.swift in Sources */,
+				793F6806287BFE0E00B1BA5A /* ApproveOutputDescriptorResponse.swift in Sources */,
 				79349B9528508E220058CF5D /* SlotList.swift in Sources */,
 				79BB4AB32855A7B200FB45A4 /* ImageExtensions.swift in Sources */,
 				79EC77772835BC67009E4466 /* CoordinatorModel.xcdatamodeld in Sources */,
@@ -562,6 +583,7 @@
 				799B54C1283DECA00043EB90 /* ErrorMessage.swift in Sources */,
 				79BB4ABB2856A66900FB45A4 /* Clipboard.swift in Sources */,
 				79349B8F28506AB30058CF5D /* Slot.swift in Sources */,
+				793F6801287BBA2100B1BA5A /* KeyboardToolbar.swift in Sources */,
 				79651E5C2848903700991464 /* AppLogo.swift in Sources */,
 				79349B9128506DF70058CF5D /* SlotStatus.swift in Sources */,
 				7937A690284D7FBD00DE8E11 /* NameEditor.swift in Sources */,
@@ -569,8 +591,10 @@
 				79EC779B2835BD92009E4466 /* ContentViewOld.swift in Sources */,
 				79C4DC602851E7C200CB3638 /* AccountProtocol.swift in Sources */,
 				79349B9328506E0B0058CF5D /* AccountStatus.swift in Sources */,
+				793F6804287BFBA100B1BA5A /* ApproveResponse.swift in Sources */,
 				79B8DC9128641CE500212974 /* SlotUtils.swift in Sources */,
 				7937A686284C114B00DE8E11 /* AppStorage.swift in Sources */,
+				793F67FF287A5E5100B1BA5A /* AppScanButton.swift in Sources */,
 				799B54BF283DC7D20043EB90 /* SyncButton.swift in Sources */,
 				79C4DC692853253200CB3638 /* ViewExtensions.swift in Sources */,
 				79C4DC6C2853C7EA00CB3638 /* AppViewModelProtocol.swift in Sources */,

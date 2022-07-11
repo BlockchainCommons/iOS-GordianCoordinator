@@ -27,8 +27,6 @@ struct SlotDetail<Slot: SlotProtocol>: View
             KeyboardToolbar {
                 focusedField = nil
             }
-
-            AppToolbar()
         }
         .onAppear {
             self.name = slot.name

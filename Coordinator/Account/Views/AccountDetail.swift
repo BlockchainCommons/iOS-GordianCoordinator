@@ -37,12 +37,11 @@ struct AccountDetail<Account: AccountProtocol>: View {
             KeyboardToolbar {
                 focusedField = nil
             }
-
-            AppToolbar()
         }
         .onAppear {
             self.name = account.name
             self.notes = account.notes
+            AppToolbar.setScanVisible(false)
         }
     }
     

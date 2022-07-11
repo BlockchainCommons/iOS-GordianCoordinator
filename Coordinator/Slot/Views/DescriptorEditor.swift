@@ -102,20 +102,19 @@ struct DescriptorEditor<Slot: SlotProtocol>: View
         }
         .buttonStyle(.bordered)
         .sheet(isPresented: $isSheetPresented) {
-            DisplayRequest(
+            DisplayTransaction(
                 isPresented: $isSheetPresented,
                 isSensitive: false,
                 ur: slot.outputDescriptorRequest.ur,
                 title: "Descriptor Request",
                 caption: "You are requesting another party to provide an output descriptor for this slot."
             ) {
-                HStack {
+                Rebus {
                     Asset.btc.icon
                     slot.account.network.icon
                     Symbol.outputDescriptor
                     Image.questionmark
                 }
-                .font(.title)
             }
         }
     }

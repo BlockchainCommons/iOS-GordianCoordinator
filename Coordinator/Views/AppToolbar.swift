@@ -1,21 +1,26 @@
 import SwiftUI
 import BCApp
-import WolfSwiftUI
+import Combine
 
 struct AppToolbar: ToolbarContent {
-    let isTop: Bool
+    private static let scanVisibleSubject = CurrentValueSubject<Bool, Never>(true)
     
-    init(isTop: Bool = false) {
-        self.isTop = isTop
+    static func setScanVisible(_ scanVisible: Bool) {
+        scanVisibleSubject.send(scanVisible)
+    }
+    
+    @State var scanVisible: Bool
+    
+    init() {
+        _scanVisible = State(initialValue: Self.scanVisibleSubject.value)
     }
     
     var body: some ToolbarContent {
         ToolbarItemGroup(placement: .bottomBar) {
             HStack(spacing: 10) {
                 UserGuideButton<AppChapter>()
-                ScanButton {
-                }
-                .hidden(!isTop)
+                AppScanButton()
+                    .hidden(!scanVisible)
             }
             
             Spacer()
@@ -26,25 +31,14 @@ struct AppToolbar: ToolbarContent {
             Spacer()
             
             Button {
-
+                
             } label: {
                 Image.settings
             }
             .accessibility(label: Text("Settings"))
-            .hidden(!isTop)
-        }
-    }
-}
-
-struct KeyboardToolbar: ToolbarContent {
-    let action: () -> Void
-    
-    var body: some ToolbarContent {
-        ToolbarItemGroup(placement: .keyboard) {
-            HStack {
-                Spacer()
-                DoneButton {
-                    action()
+            .onReceive(Self.scanVisibleSubject) { scanVisible in
+                withAnimation {
+                    self.scanVisible = scanVisible
                 }
             }
         }

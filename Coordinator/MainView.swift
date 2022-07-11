@@ -11,7 +11,13 @@ struct MainView: View {
     }
     
     var body: some View {
-        AccountsList(viewModel: viewModel)
-            .environmentObject(persistence)
+        NavigationView {
+            AccountsList(viewModel: viewModel)
+        }
+        .environmentObject(persistence)
+        .navigationViewStyle(.stack)
+        .toolbar {
+            AppToolbar()
+        }
     }
 }

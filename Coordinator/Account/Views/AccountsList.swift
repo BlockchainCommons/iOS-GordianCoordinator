@@ -17,36 +17,39 @@ where AppViewModel: AppViewModelProtocol, Account == AppViewModel.Account
     @State private var isDetailValid: Bool = true
     @State private var accountForDeletion: Account?
     @State private var isAccountSetupPresented: Bool = false
+    @State private var editMode: EditMode = .inactive
     
     init(viewModel: AppViewModel) {
         self.viewModel = viewModel
     }
     
     var body: some View {
-        NavigationView {
-            list
-                .frame(maxWidth: 600)
-                .navigationTitle("Accounts")
-                .sheet(isPresented: $isAccountSetupPresented) {
-                    AccountSetup(isPresented: $isAccountSetupPresented) {
-                        addItem($0)
-                    }
+        list
+            .frame(maxWidth: 600)
+            .navigationTitle("Accounts")
+            .sheet(isPresented: $isAccountSetupPresented) {
+                AccountSetup(isPresented: $isAccountSetupPresented) {
+                    addItem($0)
                 }
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        EditButton()
-                    }
-                    ToolbarItem {
-                        Button(action: presentAccountSetup) {
-                            Label("Add Account", icon: .add)
-                        }
-                    }
+            }
+            .onAppear {
+                AppToolbar.setScanVisible(true)
+            }
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    addButton
+                    EditButton()
                 }
-                .toolbar {
-                    AppToolbar(isTop: true)
-                }
+            }
+            .animation(nil, value: editMode)
+            .environment(\.editMode, $editMode)
+    }
+    
+    var addButton: some View {
+        Button(action: presentAccountSetup) {
+            Label("Add Account", icon: .add)
         }
-        .navigationViewStyle(.stack)
+        .opacity(editMode.isEditing ? 0 : 1)
     }
     
     @ViewBuilder
@@ -105,6 +108,7 @@ where AppViewModel: AppViewModelProtocol, Account == AppViewModel.Account
         @Binding var isDetailValid: Bool
         @StateObject var lifeHashState: LifeHashState
         let saveChanges: @MainActor () -> Void
+        @Environment(\.editMode) var editMode
         
         init(account: Account, isDetailValid: Binding<Bool>, saveChanges: @MainActor @escaping () -> Void) {
             self.account = account
@@ -113,37 +117,49 @@ where AppViewModel: AppViewModelProtocol, Account == AppViewModel.Account
             _lifeHashState = .init(wrappedValue: LifeHashState(input: account, version: .version2))
         }
         
+        var isEditing: Bool {
+            editMode?.wrappedValue.isEditing ?? false
+        }
+        
         @ViewBuilder
         var body: some View {
             if account.isFault {
                 EmptyView()
             } else {
-                NavigationLink {
-                    LazyView(
-                        AccountDetail(account: account, generateName: { Self.generateName(for: account) })
-                    )
-                } label: {
-                    VStack {
-#if targetEnvironment(macCatalyst)
-                        Spacer().frame(height: 10)
-#endif
-                        ObjectIdentityBlock(model: .constant(account), allowLongPressCopy: false)
-                            .frame(height: 80)
-                            .padding()
-                        
-#if targetEnvironment(macCatalyst)
-                        Spacer().frame(height: 10)
-                        Divider()
-#endif
+                if isEditing {
+                    label(account: account)
+                } else {
+                    NavigationLink {
+                        LazyView(
+                            AccountDetail(account: account, generateName: { Self.generateName(for: account) })
+                        )
+                    } label: {
+                        label(account: account)
                     }
+                    .isDetailLink(true)
+                    .accessibility(label: Text("Account: \(account.accountID)"))
                 }
-                .isDetailLink(true)
-                .accessibility(label: Text("Account: \(account.accountID)"))
             }
         }
         
         private static func generateName(for account: Account) -> String {
             LifeHashNameGenerator.generate(from: account.accountID)
+        }
+        
+        func label(account: Account) -> some View {
+            VStack {
+    #if targetEnvironment(macCatalyst)
+                Spacer().frame(height: 10)
+    #endif
+                ObjectIdentityBlock(model: .constant(account), allowLongPressCopy: false)
+                    .frame(height: 80)
+                    .padding()
+                
+    #if targetEnvironment(macCatalyst)
+                Spacer().frame(height: 10)
+                Divider()
+    #endif
+            }
         }
     }
     
