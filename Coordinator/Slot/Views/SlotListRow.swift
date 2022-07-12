@@ -4,6 +4,7 @@ import BCFoundation
 struct SlotListRow<Slot: SlotProtocol>: View {
     @ObservedObject var slot: Slot
     let hideIndex: Bool
+    let hideDisclosure: Bool
     
     var body: some View {
         HStack(spacing: 10) {
@@ -11,11 +12,12 @@ struct SlotListRow<Slot: SlotProtocol>: View {
             slot.status.icon
             title
             Spacer()
-            Image.disclosureIndicator
+            if !hideDisclosure {
+                Image.disclosureIndicator
+            }
         }
         .font(.largeTitle)
         .foregroundColor(.primary)
-        .padding()
     }
 
     @ViewBuilder
@@ -62,7 +64,7 @@ struct SlotListRow_Host: View {
     }
 
     var body: some View {
-        SlotListRow(slot: slot, hideIndex: hideIndex)
+        SlotListRow(slot: slot, hideIndex: hideIndex, hideDisclosure: false)
     }
 }
 

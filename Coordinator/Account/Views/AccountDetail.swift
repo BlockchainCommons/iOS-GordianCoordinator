@@ -41,7 +41,7 @@ struct AccountDetail<Account: AccountProtocol>: View {
         .onAppear {
             self.name = account.name
             self.notes = account.notes
-            AppToolbar.setScanVisible(false)
+//            setScanVisible(false)
         }
     }
     

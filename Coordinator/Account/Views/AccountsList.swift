@@ -9,9 +9,10 @@ import WolfSwiftUI
 
 fileprivate let logger = Logger(subsystem: Application.bundleIdentifier, category: "AccountsList")
 
-struct AccountsList<AppViewModel, Account>: View
-where AppViewModel: AppViewModelProtocol, Account == AppViewModel.Account
+struct AccountsList<AppViewModel: AppViewModelProtocol>: View
 {
+    typealias Account = AppViewModel.Account
+    
     @ObservedObject var viewModel: AppViewModel
     
     @State private var isDetailValid: Bool = true
@@ -33,7 +34,7 @@ where AppViewModel: AppViewModelProtocol, Account == AppViewModel.Account
                 }
             }
             .onAppear {
-                AppToolbar.setScanVisible(true)
+                setScanVisible(true)
             }
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {

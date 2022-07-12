@@ -10,11 +10,12 @@ class DesignTimeAppViewModel: AppViewModelProtocol {
     @Published var accounts: [DesignTimeAccount] = []
     
     init() {
-        let a = newAccount(accountID: UUID(), name: Lorem.bytewords(4), policy: .single, ordinal: [0])
+        _ = newAccount(accountID: UUID(), name: Lorem.bytewords(4), policy: .threshold(quorum: 2, slots: 3), ordinal: [0])
+
+        let a = newAccount(accountID: UUID(), name: Lorem.bytewords(4), policy: .single, ordinal: [1])
         a.slots.first!.descriptor = randomDescriptor()
         a.updateStatus()
         
-        _ = newAccount(accountID: UUID(), name: Lorem.bytewords(4), policy: .threshold(quorum: 2, slots: 3), ordinal: [1])
         _ = newAccount(accountID: UUID(), name: Lorem.bytewords(4), policy: .threshold(quorum: 3, slots: 5), ordinal: [2])
     }
     

@@ -2,17 +2,18 @@ import SwiftUI
 import BCApp
 import WolfSwiftUI
 
-struct ApproveResponse: View {
+struct ApproveResponse<AppViewModel: AppViewModelProtocol>: View {
     @Binding var isPresented: Bool
     let response: TransactionResponse
-    
+    @ObservedObject var viewModel: AppViewModel
+
     var body: some View {
         NavigationView {
             ScrollView {
                 Group {
                     switch response.body {
                     case .outputDescriptor(let responseBody):
-                        ApproveOutputDescriptorResponse(transactionID: response.id, responseBody: responseBody)
+                        ApproveOutputDescriptorResponse(isPresented: $isPresented, transactionID: response.id, responseBody: responseBody, viewModel: viewModel)
                     default:
                         ResultScreen<Void, GeneralError>(isPresented: $isPresented, result: .failure(.init("Unknown response.")))
                     }
@@ -20,8 +21,8 @@ struct ApproveResponse: View {
                 .padding()
             }
             .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    DoneButton($isPresented)
+                ToolbarItem(placement: .cancellationAction) {
+                    CancelButton($isPresented)
                 }
             }
             .copyConfirmation()

@@ -2,24 +2,27 @@ import SwiftUI
 import BCApp
 import Combine
 
-struct AppToolbar: ToolbarContent {
-    private static let scanVisibleSubject = CurrentValueSubject<Bool, Never>(true)
-    
-    static func setScanVisible(_ scanVisible: Bool) {
-        scanVisibleSubject.send(scanVisible)
-    }
+private let scanVisibleSubject = CurrentValueSubject<Bool, Never>(true)
+
+func setScanVisible(_ scanVisible: Bool) {
+    scanVisibleSubject.send(scanVisible)
+}
+
+struct AppToolbar<AppViewModel: AppViewModelProtocol>: ToolbarContent {
+    @ObservedObject var viewModel: AppViewModel
     
     @State var scanVisible: Bool
     
-    init() {
-        _scanVisible = State(initialValue: Self.scanVisibleSubject.value)
+    init(viewModel: AppViewModel) {
+        _viewModel = ObservedObject(initialValue: viewModel)
+        _scanVisible = State(initialValue: scanVisibleSubject.value)
     }
     
     var body: some ToolbarContent {
         ToolbarItemGroup(placement: .bottomBar) {
             HStack(spacing: 10) {
                 UserGuideButton<AppChapter>()
-                AppScanButton()
+                AppScanButton(viewModel: viewModel)
                     .hidden(!scanVisible)
             }
             
@@ -36,7 +39,7 @@ struct AppToolbar: ToolbarContent {
                 Image.settings
             }
             .accessibility(label: Text("Settings"))
-            .onReceive(Self.scanVisibleSubject) { scanVisible in
+            .onReceive(scanVisibleSubject) { scanVisible in
                 withAnimation {
                     self.scanVisible = scanVisible
                 }

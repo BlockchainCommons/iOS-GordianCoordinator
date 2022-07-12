@@ -5,11 +5,12 @@ import WolfSwiftUI
 
 fileprivate let logger = Logger(subsystem: Application.bundleIdentifier, category: "AppScanButton")
 
-struct AppScanButton: View {
+struct AppScanButton<AppViewModel: AppViewModelProtocol>: View {
     @State var isPresented = false
     @State var presentedResponse: TransactionResponse?
     @State var isUnknownPresented = false
-    
+    @ObservedObject var viewModel: AppViewModel
+
     var body: some View {
         let isResponsePresented = Binding<Bool>(
             get: {
@@ -40,7 +41,7 @@ struct AppScanButton: View {
         .background(
             Color.clear
                 .sheet(isPresented: isResponsePresented) {
-                    ApproveResponse(isPresented: isResponsePresented, response: presentedResponse!)
+                    ApproveResponse(isPresented: isResponsePresented, response: presentedResponse!, viewModel: viewModel)
                 }
         )
         .background(

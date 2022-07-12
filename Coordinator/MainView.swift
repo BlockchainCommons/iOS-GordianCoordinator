@@ -17,7 +17,7 @@ struct MainView: View {
         .environmentObject(persistence)
         .navigationViewStyle(.stack)
         .toolbar {
-            AppToolbar()
+            AppToolbar(viewModel: viewModel)
         }
     }
 }
