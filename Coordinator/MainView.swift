@@ -15,7 +15,6 @@ struct MainView: View {
             AccountsList(viewModel: viewModel)
         }
         .environmentObject(persistence)
-        .navigationViewStyle(.stack)
         .toolbar {
             AppToolbar(viewModel: viewModel)
         }

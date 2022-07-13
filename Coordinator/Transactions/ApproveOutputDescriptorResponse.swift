@@ -21,7 +21,7 @@ struct ApproveOutputDescriptorResponse<AppViewModel: AppViewModelProtocol>: View
             }
             
             GroupBox {
-                Text(responseBody.descriptor.source)
+                Text(responseBody.descriptor.sourceWithChecksum)
                     .font(.caption)
             }
             

@@ -125,6 +125,7 @@
 		793F6805287BFE0E00B1BA5A /* ApproveOutputDescriptorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveOutputDescriptorResponse.swift; sourceTree = "<group>"; };
 		7951B12C2859749000E5C3C0 /* ClipboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardView.swift; sourceTree = "<group>"; };
 		795889D028541DB400DE4114 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		79642414287E8712003F43AD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		79651E5928484C6F00991464 /* AppChapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppChapter.swift; sourceTree = "<group>"; };
 		79651E5B2848903700991464 /* AppLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogo.swift; sourceTree = "<group>"; };
 		79651E5D28489DA600991464 /* Markdown */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Markdown; sourceTree = "<group>"; };
@@ -335,6 +336,7 @@
 		79EC775E2835BC65009E4466 = {
 			isa = PBXGroup;
 			children = (
+				79642414287E8712003F43AD /* README.md */,
 				79EC77692835BC65009E4466 /* Coordinator */,
 				79EC777F2835BC67009E4466 /* CoordinatorTests */,
 				79EC77892835BC67009E4466 /* CoordinatorUITests */,
