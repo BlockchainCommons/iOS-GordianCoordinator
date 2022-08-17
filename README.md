@@ -9,6 +9,10 @@
 
 ## Version History
 
+### 1.0 (2), August 17, 2022
+
+* Requests and responses are now based on the Envelope type.
+
 ### 1.0 (1), July 12, 2022
 
 * First early alpha release.

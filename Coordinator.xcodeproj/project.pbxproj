@@ -776,7 +776,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Coordinator/Preview Content\"";
 				DEVELOPMENT_TEAM = YZHG975W3A;
 				ENABLE_PREVIEWS = YES;
@@ -819,7 +819,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Coordinator/Preview Content\"";
 				DEVELOPMENT_TEAM = YZHG975W3A;
 				ENABLE_PREVIEWS = YES;
