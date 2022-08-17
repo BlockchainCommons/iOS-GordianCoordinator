@@ -70,7 +70,6 @@
 		79EC778D2835BC67009E4466 /* CoordinatorUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EC778C2835BC67009E4466 /* CoordinatorUITestsLaunchTests.swift */; };
 		79EC779B2835BD92009E4466 /* ContentViewOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EC779A2835BD92009E4466 /* ContentViewOld.swift */; };
 		79EC779E28360AEC009E4466 /* WolfBase in Frameworks */ = {isa = PBXBuildFile; productRef = 79EC779D28360AEC009E4466 /* WolfBase */; };
-		79EC77A128360B38009E4466 /* BCFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 79EC77A028360B38009E4466 /* BCFoundation */; };
 		79EC77A428361BE7009E4466 /* WolfAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 79EC77A328361BE7009E4466 /* WolfAPI */; };
 		79EC77A728361C7D009E4466 /* WolfActivityRing in Frameworks */ = {isa = PBXBuildFile; productRef = 79EC77A628361C7D009E4466 /* WolfActivityRing */; };
 		79EC77AA28361DAB009E4466 /* WolfLorem in Frameworks */ = {isa = PBXBuildFile; productRef = 79EC77A928361DAB009E4466 /* WolfLorem */; };
@@ -178,7 +177,6 @@
 				79EC77A728361C7D009E4466 /* WolfActivityRing in Frameworks */,
 				79EC77B62836205F009E4466 /* Esplora in Frameworks */,
 				79EC77AD28361E28009E4466 /* WolfSwiftUI in Frameworks */,
-				79EC77A128360B38009E4466 /* BCFoundation in Frameworks */,
 				7905B0252849AAB5008BC79D /* WolfOrdinal in Frameworks */,
 				79EC779E28360AEC009E4466 /* WolfBase in Frameworks */,
 				799BA6662844A2DA00285135 /* CloudKit.framework in Frameworks */,
@@ -430,7 +428,6 @@
 			name = Coordinator;
 			packageProductDependencies = (
 				79EC779D28360AEC009E4466 /* WolfBase */,
-				79EC77A028360B38009E4466 /* BCFoundation */,
 				79EC77A328361BE7009E4466 /* WolfAPI */,
 				79EC77A628361C7D009E4466 /* WolfActivityRing */,
 				79EC77A928361DAB009E4466 /* WolfLorem */,
@@ -514,7 +511,6 @@
 			mainGroup = 79EC775E2835BC65009E4466;
 			packageReferences = (
 				79EC779C28360AEC009E4466 /* XCRemoteSwiftPackageReference "WolfBase" */,
-				79EC779F28360B38009E4466 /* XCRemoteSwiftPackageReference "BCSwiftFoundation" */,
 				79EC77A228361BE7009E4466 /* XCRemoteSwiftPackageReference "WolfAPI" */,
 				79EC77A528361C7D009E4466 /* XCRemoteSwiftPackageReference "WolfActivityRing" */,
 				79EC77A828361DAB009E4466 /* XCRemoteSwiftPackageReference "WolfLorem" */,
@@ -987,8 +983,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/BlockchainCommons/BCSwiftApp.git";
 			requirement = {
-				branch = master;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
 			};
 		};
 		79EC779C28360AEC009E4466 /* XCRemoteSwiftPackageReference "WolfBase" */ = {
@@ -997,14 +993,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 4.0.0;
-			};
-		};
-		79EC779F28360B38009E4466 /* XCRemoteSwiftPackageReference "BCSwiftFoundation" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/blockchaincommons/BCSwiftFoundation";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
 			};
 		};
 		79EC77A228361BE7009E4466 /* XCRemoteSwiftPackageReference "WolfAPI" */ = {
@@ -1072,11 +1060,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 79EC779C28360AEC009E4466 /* XCRemoteSwiftPackageReference "WolfBase" */;
 			productName = WolfBase;
-		};
-		79EC77A028360B38009E4466 /* BCFoundation */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 79EC779F28360B38009E4466 /* XCRemoteSwiftPackageReference "BCSwiftFoundation" */;
-			productName = BCFoundation;
 		};
 		79EC77A328361BE7009E4466 /* WolfAPI */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -14,7 +14,7 @@ class Slot: NSManagedObject, SlotProtocol {
     convenience init(context: NSManagedObjectContext?, index: Int) {
         self.init(entity: Slot.entity(), insertInto: context)
         
-        self.slotID = UUID()
+        self.slotID = CID()
         self.name_ = ""
         self.notes_ = ""
         self.index = Int16(index)
@@ -24,8 +24,16 @@ class Slot: NSManagedObject, SlotProtocol {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Slot> {
         return NSFetchRequest<Slot>(entityName: "Slot")
     }
+    
+    override func awakeFromFetch() {
+        super.awakeFromFetch()
+        if slotID2_ == nil {
+            slotID2_ = CID().data
+            try? managedObjectContext?.save()
+        }
+    }
 
-    @NSManaged public var slotID: UUID
+    @NSManaged public var slotID2_: Data?
     @NSManaged public var name_: String
     @NSManaged public var notes_: String
     @NSManaged public var index: Int16
@@ -53,6 +61,13 @@ class Slot: NSManagedObject, SlotProtocol {
         $0?.jsonString
     })
     var descriptor: OutputDescriptor?
+
+    @Transformer(rawKeyPath: \Slot.slotID2_, toValue: { source in
+        CID(source!)!
+    }, toRaw: {
+        $0.data
+    })
+    var slotID: CID
 }
 
 extension Slot: Comparable {

@@ -154,7 +154,7 @@ struct AccountsList<AppViewModel: AppViewModelProtocol>: View
     #endif
                 ObjectIdentityBlock(model: .constant(account), allowLongPressCopy: false)
                     .frame(height: 80)
-                    .padding()
+                    .padding(5)
                 
     #if targetEnvironment(macCatalyst)
                 Spacer().frame(height: 10)

@@ -7,7 +7,7 @@ protocol SlotProtocol: ObservableObject, Identifiable {
     associatedtype Account: AccountProtocol
     
     var id: ID { get }
-    var slotID: UUID { get }
+    var slotID: CID { get }
     var account: Account { get }
     var displayIndex: Int { get }
     var name: String { get set }

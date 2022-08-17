@@ -2,6 +2,10 @@ import SwiftUI
 
 let initializeCloudKitSchema = false
 
+// https://stackoverflow.com/questions/30182521/use-production-cloudkit-during-development
+// To run against production, add to entitlements:
+// com.apple.developer.icloud-container-environment: Production
+
 @main
 struct CoordinatorApp: App {
     var body: some Scene {

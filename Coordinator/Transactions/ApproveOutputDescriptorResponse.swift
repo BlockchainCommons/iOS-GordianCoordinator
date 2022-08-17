@@ -6,7 +6,7 @@ struct ApproveOutputDescriptorResponse<AppViewModel: AppViewModelProtocol>: View
     typealias Slot = Account.Slot
     
     @Binding var isPresented: Bool
-    let transactionID: UUID
+    let transactionID: CID
     let responseBody: OutputDescriptorResponseBody
     @ObservedObject var viewModel: AppViewModel
 
@@ -120,7 +120,7 @@ struct ApproveOutputDescriptorResponse<AppViewModel: AppViewModelProtocol>: View
 
 struct ApproveOutputDescriptorResponse_Host: View {
     @StateObject var viewModel: DesignTimeAppViewModel
-    let transactionID: UUID
+    let transactionID: CID
     let responseBody: OutputDescriptorResponseBody
 
     init(invalidID: Bool = false, invalidChallenge: Bool = false, filledDifferent: Bool = false, filledSame: Bool = false) {
@@ -152,7 +152,7 @@ struct ApproveOutputDescriptorResponse_Host: View {
         
         let challengeSignature = invalidChallenge ? SecureRandomNumberGenerator.shared.data(count: 64) : signingKey.ecPrivateKey!.ecdsaSign(message: slot.challenge)
 
-        self.transactionID = invalidID ? UUID() : slot.slotID
+        self.transactionID = invalidID ? CID() : slot.slotID
         self.responseBody = OutputDescriptorResponseBody(descriptor: descriptor, challengeSignature: challengeSignature)
     }
     
