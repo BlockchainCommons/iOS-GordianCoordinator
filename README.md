@@ -9,6 +9,10 @@
 
 ## Version History
 
+### 1.0 (3), August 17, 2022
+
+* Envelope format has changed, so the app has been updated to use the latest format for requests and responses.
+
 ### 1.0 (2), August 17, 2022
 
 * Requests and responses are now based on the Envelope type.
