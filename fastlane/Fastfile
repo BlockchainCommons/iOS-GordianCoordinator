@@ -1,0 +1,98 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+# bdefault_platform(:ios)
+
+platform :ios do
+  lane :screenshots do
+    capture_screenshots(workspace: "Coordinator.xcworkspace", scheme: "CoordinatorUITests")
+  end
+
+    lane :precheck_metadata do
+        precheck(
+            platform: "ios"
+        )
+    end
+
+  lane :upload_metadata_and_screenshots do
+    upload_to_app_store(skip_binary_upload: true, overwrite_screenshots: true)
+  end
+
+  lane :upload_metadata do
+    upload_to_app_store(skip_binary_upload: true, overwrite_screenshots: false)
+  end
+  
+  lane :build do
+    build_ios_app(
+        scheme: "Coordinator",
+        output_directory: "./build-ios",
+        xcargs: "-allowProvisioningUpdates",
+    )
+  end
+
+  lane :beta do
+    ensure_git_status_clean
+    increment_build_number
+    commit_version_bump
+    add_git_tag
+    push_to_git_remote
+    build_ios_app(
+        scheme: "Coordinator",
+        output_directory: "./build-ios",
+        xcargs: "-allowProvisioningUpdates",
+    )
+    upload_to_testflight(
+        app_platform: "ios",
+        ipa: "./build-ios/Coordinator.ipa"
+    )
+  end
+end
+
+platform :mac do
+    lane :beta do
+        build_mac_app(
+            scheme: "Coordinator",
+            destination: "generic/platform=macOS,variant=Mac Catalyst,name=Any Mac",
+            output_directory: "./build-mac",
+            xcargs: "-allowProvisioningUpdates"
+        )
+        upload_to_testflight(
+            app_platform: "osx",
+            pkg: "./build-mac/Coordinator.pkg",
+            skip_submission: true
+        )
+    end
+
+## These aren't supported by Fastlane yet.
+
+#    lane :precheck_metadata do
+#        precheck(
+#            platform: "osx"
+#        )
+#    end
+    
+#  lane :screenshots do
+#    capture_screenshots(workspace: "Coordinator.xcworkspace", scheme: "CoordinatorUITests")
+#    # upload_to_app_store(skip_binary_upload: true, overwrite_screenshots: true)
+#  end
+
+#  lane :upload_metadata_and_screenshots do
+#    upload_to_app_store(skip_binary_upload: true, overwrite_screenshots: true)
+#  end
+
+#  lane :upload_metadata do
+#    upload_to_app_store(skip_binary_upload: true, overwrite_screenshots: false)
+#  end
+end

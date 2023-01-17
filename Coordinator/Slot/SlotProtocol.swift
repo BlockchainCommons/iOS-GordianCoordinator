@@ -26,7 +26,7 @@ extension SlotProtocol {
     var outputDescriptorRequest: TransactionRequest {
         TransactionRequest(
             id: slotID,
-            body: .outputDescriptor(.init(name: name, useInfo: account.useInfo, challenge: challenge)),
+            body: OutputDescriptorRequestBody(name: name, useInfo: account.useInfo, challenge: challenge),
             note: notes
         )
     }

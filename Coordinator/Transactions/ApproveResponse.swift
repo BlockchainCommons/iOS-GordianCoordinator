@@ -12,7 +12,7 @@ struct ApproveResponse<AppViewModel: AppViewModelProtocol>: View {
             ScrollView {
                 Group {
                     switch response.body {
-                    case .outputDescriptor(let responseBody):
+                    case let responseBody as OutputDescriptorResponseBody:
                         ApproveOutputDescriptorResponse(isPresented: $isPresented, transactionID: response.id, responseBody: responseBody, viewModel: viewModel)
                     default:
                         ResultScreen<Void, GeneralError>(isPresented: $isPresented, result: .failure(.init("Unknown response.")))

@@ -149,6 +149,7 @@
 		79C4DC6B2853C7EA00CB3638 /* AppViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModelProtocol.swift; sourceTree = "<group>"; };
 		79C4DC6D2853C81300CB3638 /* DesignTimeAppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignTimeAppViewModel.swift; sourceTree = "<group>"; };
 		79CBB265284B431800EBE0DE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		79D2B45329766FAB0066ED93 /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = "<group>"; };
 		79EC77672835BC65009E4466 /* Coordinator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coordinator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79EC776A2835BC65009E4466 /* CoordinatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorApp.swift; sourceTree = "<group>"; };
 		79EC776C2835BC65009E4466 /* AccountsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsList.swift; sourceTree = "<group>"; };
@@ -334,6 +335,7 @@
 		79EC775E2835BC65009E4466 = {
 			isa = PBXGroup;
 			children = (
+				79D2B45329766FAB0066ED93 /* fastlane */,
 				79642414287E8712003F43AD /* README.md */,
 				79EC77692835BC65009E4466 /* Coordinator */,
 				79EC777F2835BC67009E4466 /* CoordinatorTests */,
@@ -992,7 +994,7 @@
 			repositoryURL = "https://github.com/wolfmcnally/WolfBase.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
+				minimumVersion = 5.0.0;
 			};
 		};
 		79EC77A228361BE7009E4466 /* XCRemoteSwiftPackageReference "WolfAPI" */ = {
