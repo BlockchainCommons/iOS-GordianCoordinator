@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/BlockchainCommons/BCSwiftApp.git",
       "state" : {
-        "revision" : "1352fb7d6026aad11d63e12c5bbbd3575b6e6c07",
-        "version" : "2.2.0"
+        "revision" : "8cbc9b12df893910638397cf7caa77dd9e48eab1",
+        "version" : "2.3.0"
       }
     },
     {
@@ -160,15 +160,6 @@
       "state" : {
         "branch" : "master",
         "revision" : "8d171f9810909c47400e48610675229fa06c2610"
-      }
-    },
-    {
-      "identity" : "interpolate",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/wolfmcnally/Interpolate",
-      "state" : {
-        "revision" : "23cf999962ac629b9bf552ea780cbe386301561a",
-        "version" : "2.0.0"
       }
     },
     {
@@ -313,15 +304,6 @@
       "state" : {
         "revision" : "f47ff5ac3fde68b52e3cf26cac2a464fbc113bb9",
         "version" : "5.0.1"
-      }
-    },
-    {
-      "identity" : "wolfcolor",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/wolfmcnally/WolfColor.git",
-      "state" : {
-        "revision" : "11e711c4d2e34f203368c744408e29ff294597f4",
-        "version" : "6.0.0"
       }
     },
     {
